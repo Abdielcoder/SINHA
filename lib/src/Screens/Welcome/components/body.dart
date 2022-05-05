@@ -4,6 +4,7 @@ import 'package:uber_clone_flutter/src/Screens/Login/login_screen.dart';
 import 'package:uber_clone_flutter/src/Screens/Signup/signup_screen.dart';
 import 'package:uber_clone_flutter/src/components/rounded_button.dart';
 import 'package:uber_clone_flutter/src/constants.dart';
+import 'package:uber_clone_flutter/src/utils/my_colors.dart';
 
 import 'background.dart';
 
@@ -18,7 +19,7 @@ class Body extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              "WELCOME TO EDU",
+              "BIENVENIDO A VOITU",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             SizedBox(height: size.height * 0.05),
@@ -28,7 +29,7 @@ class Body extends StatelessWidget {
             ),
             SizedBox(height: size.height * 0.05),
             RoundedButton(
-              text: "LOGIN",
+              text: "INICIA",
               press: () {
                 Navigator.push(
                   context,
@@ -41,8 +42,8 @@ class Body extends StatelessWidget {
               },
             ),
             RoundedButton(
-              text: "SIGN UP",
-              color: kPrimaryLightColor,
+              text: "RESGISTRATE",
+              color: MyColors.primaryOpacityColor,
               textColor: Colors.black,
               press: () {
                 Navigator.push(
