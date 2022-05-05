@@ -116,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: [
                      _imageBanner(),
-                     _lottieAnimation(),
+                    // _lottieAnimation(),
                     _textFieldEmail(),
                     _textFieldPassword(),
                     _buttonLogin(),
@@ -232,6 +232,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
   Widget _buttonLoginFacebook() {
     return Container(
       width: double.infinity,

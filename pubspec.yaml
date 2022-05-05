@@ -58,12 +58,14 @@ dependencies:
   flutter_colorpicker: ^1.0.3
   dropdown_search: ^3.0.1
   cool_alert: ^1.1.0
-  flutter_native_splash: ^2.1.6
+  #flutter_native_splash: ^2.1.6
+  simple_animations: ^4.0.2
+  supercharged: ^2.1.1
 
 
-flutter_native_splash:
-  color: "#0a2240"
-  image: 'assets/img/splash.png'
+#flutter_native_splash:
+#  color: "#0a2240"
+#  image: 'assets/img/splash.png'
 
 flutter_icons:
   image_path: "assets/img/logo.png"

@@ -25,6 +25,7 @@ import 'package:uber_clone_flutter/src/pages/restaurant/categories/create/restau
 import 'package:uber_clone_flutter/src/pages/restaurant/orders/list/restaurant_orders_list_page.dart';
 import 'package:uber_clone_flutter/src/pages/restaurant/products/create/restaurant_products_create_page.dart';
 import 'package:uber_clone_flutter/src/pages/roles/roles_page.dart';
+import 'package:uber_clone_flutter/src/pages/splashscreen/splash_screen_page.dart';
 import 'package:uber_clone_flutter/src/provider/push_notifications_provider.dart';
 
 import 'package:uber_clone_flutter/src/utils/my_colors.dart';
@@ -73,10 +74,11 @@ class _MyappState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title:'Car Wash App',
+      title:'Voitu',
       debugShowCheckedModeBanner: false,
-      initialRoute: 'login',
+      initialRoute: 'splashScreen',
       routes: {
+        'splashScreen':(BuildContext context) => SplashScreenPage(),
         'login':(BuildContext context) => LoginPage(),
         'register': (BuildContext context) => RegisterPage(),
         'roles': (BuildContext context) => RolesPage(),

@@ -24,7 +24,7 @@ class LoginController {
     print('Usuario: ${user.toJson()}');
 
     if (user?.sessionToken != null) {
-      pushNotificationsProvider.saveToken(user,context);
+     // pushNotificationsProvider.saveToken(user,context);
       // Navigator.pushNamedAndRemoveUntil(
           // context, 'client/products/list', (route) => false);
       if (user.roles.length > 1) {
