@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uber_clone_flutter/src/Screens/Login/login_screen.dart';
 import 'package:uber_clone_flutter/src/pages/client/address/create/client_address_create_page.dart';
 import 'package:uber_clone_flutter/src/pages/client/address/list/client_address_list_page.dart';
 import 'package:uber_clone_flutter/src/pages/client/address/map/client_address_map_page.dart';
@@ -79,7 +80,7 @@ class _MyappState extends State<MyApp> {
       initialRoute: 'splashScreen',
       routes: {
         'splashScreen':(BuildContext context) => SplashScreenPage(),
-        'login':(BuildContext context) => LoginPage(),
+        'login':(BuildContext context) => LoginScreen(),
         'register': (BuildContext context) => RegisterPage(),
         'roles': (BuildContext context) => RolesPage(),
         'client/products/list': (BuildContext context) => ClientProductsListPage(),

@@ -11,6 +11,7 @@ import '../../provider/push_notifications_provider.dart';
 import '../../provider/users_provider.dart';
 import '../../utils/my_snackbar.dart';
 import '../../utils/shared_pref.dart';
+
 import 'loggin_controller.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -26,6 +27,7 @@ final GoogleSignIn _googleSignIn = GoogleSignIn(
     'email'
   ]
 );
+
 
 class _LoginPageState extends State<LoginPage> {
   GoogleSignInAccount _currentUser;
@@ -399,4 +401,5 @@ class _LoginPageState extends State<LoginPage> {
        MySnackbar.show(context, responseApi.message);
      }
    }
+
 }

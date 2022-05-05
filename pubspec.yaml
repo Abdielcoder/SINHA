@@ -61,6 +61,7 @@ dependencies:
   #flutter_native_splash: ^2.1.6
   simple_animations: ^4.0.2
   supercharged: ^2.1.1
+  flutter_svg: ^1.0.3
 
 
 #flutter_native_splash:
@@ -98,6 +99,8 @@ flutter:
   assets:
     - assets/img/
     - assets/json/
+    - assets/icons/
+    - assets/images/
   fonts:
     - family: NimbusSans
       fonts:
