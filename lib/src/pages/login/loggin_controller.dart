@@ -27,7 +27,7 @@ class LoginController {
 
     print('Usuario: ${user.toJson()}');
 
-    _progressDialog = new ProgressDialog();
+    MyProgressDialog.show(context, 'Validando Información', false);
 
     if (user?.sessionToken != null) {
      // pushNotificationsProvider.saveToken(user,context);

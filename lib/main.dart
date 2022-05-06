@@ -14,6 +14,7 @@ import 'package:uber_clone_flutter/src/pages/client/payments/status/client_payme
 import 'package:uber_clone_flutter/src/pages/client/payments/stripe/existingcards/stripe_existing_cards_menu_page.dart';
 import 'package:uber_clone_flutter/src/pages/client/payments/stripe/stripe_existing_cards_page.dart';
 import 'package:uber_clone_flutter/src/pages/client/payments/stripe/stripe_store_cards_page.dart';
+import 'package:uber_clone_flutter/src/pages/client/products/list/client_menu_list.dart';
 import 'package:uber_clone_flutter/src/pages/client/products/list/client_products_list_page.dart';
 import 'package:uber_clone_flutter/src/pages/client/update/client_update_page.dart';
 import 'package:uber_clone_flutter/src/pages/delivery/orders/finish/finish_clean_page.dart';
@@ -82,7 +83,7 @@ class _MyappState extends State<MyApp> {
         'login':(BuildContext context) => LoginPage(),
         'register': (BuildContext context) => RegisterPage(),
         'roles': (BuildContext context) => RolesPage(),
-        'client/products/list': (BuildContext context) => ClientProductsListPage(),
+        'client/products/list': (BuildContext context) => ClientMenuListPage(),
         'client/update': (BuildContext context) => ClientUpdatePage(),
         'client/create/car': (BuildContext context) => CLientCarCreatePage(),
         'client/car/list': (BuildContext context) => ClientCarsListPage(),
