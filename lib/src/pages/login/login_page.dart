@@ -36,15 +36,19 @@ final GoogleSignIn _googleSignIn = GoogleSignIn(
 class _LoginPageState extends State<LoginPage> {
   //
   int _pageState = 1;
+
+  var _backgroundColor = Colors.white;
+  var _headingColor = Color(0xFFB40284A);
+  double _headingTop = 100;
   double _loginWidth = 0;
   double _loginHeight = 0;
+  double _loginOpacity = 1;
   double _loginYOffset = 0;
   double _loginXOffset = 0;
   double _registerYOffset = 0;
   double _registerHeight = 0;
   double windowWidth = 0;
   double windowHeight = 0;
-
   bool _keyboardVisible = false;
   bool  _passwordVisible;
 //

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:sn_progress_dialog/sn_progress_dialog.dart';
+
 import 'package:uber_clone_flutter/src/models/response_api.dart';
 import 'package:uber_clone_flutter/src/models/user.dart';
 import 'package:uber_clone_flutter/src/provider/users_provider.dart';
 import 'package:uber_clone_flutter/src/utils/my_snackbar.dart';
+import 'package:uber_clone_flutter/src/utils/progress_dialog.dart';
 import 'package:uber_clone_flutter/src/utils/shared_pref.dart';
 
 import '../../provider/push_notifications_provider.dart';
@@ -15,6 +18,7 @@ class LoginController {
   UsersProvider usersProvider = new UsersProvider();
   PushNotificationsProvider pushNotificationsProvider = new PushNotificationsProvider();
   SharedPref _sharedPref = new SharedPref();
+  ProgressDialog _progressDialog;
 
   Future init(BuildContext context) async {
     this.context = context;
@@ -22,6 +26,8 @@ class LoginController {
     User user = User.fromJson(await _sharedPref.read('user') ?? {});
 
     print('Usuario: ${user.toJson()}');
+
+    _progressDialog = new ProgressDialog();
 
     if (user?.sessionToken != null) {
      // pushNotificationsProvider.saveToken(user,context);
@@ -43,6 +49,7 @@ class LoginController {
   }
 
   void login() async {
+    MyProgressDialog.show(context, 'Validando Información', true);
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
     ResponseApi responseApi = await usersProvider.login(email, password);
@@ -52,12 +59,13 @@ class LoginController {
     // print('Respuesta: ${responseApi.toJson()}');
 
     if (responseApi.success) {
+      MyProgressDialog.show(context, 'Validando Información', false);
       User user = User.fromJson(responseApi.data);
       _sharedPref.save('user', user.toJson());
       Navigator.pushNamedAndRemoveUntil(
           context, 'client/products/list', (route) => false);
       pushNotificationsProvider.saveToken(user,context);
-
+      _progressDialog.close();
       print('USUARIO LOGEADO: ${user.toJson()}');
         if (user.roles.length > 1) {
           Navigator.pushNamedAndRemoveUntil(context, 'roles', (route) => false);
@@ -68,6 +76,7 @@ class LoginController {
 
       }
       else {
+      MyProgressDialog.show(context, 'Validando Información', false);
         MySnackbar.show(context, responseApi.message);
       }
 
