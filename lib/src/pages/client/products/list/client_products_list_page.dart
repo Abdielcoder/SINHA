@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:simple_animations/multi_tween/multi_tween.dart';
+import 'package:simple_animations/stateless_animation/play_animation.dart';
 import 'package:uber_clone_flutter/src/models/category.dart';
 import 'package:uber_clone_flutter/src/models/product.dart';
 import 'package:uber_clone_flutter/src/pages/client/products/list/client_products_list_controller.dart';
 import 'package:uber_clone_flutter/src/utils/my_colors.dart';
 import 'package:uber_clone_flutter/src/widgets/no_data_widget.dart';
 
+import '../../../../utils/animacion_particulas.dart';
 import '../../../drawer/DrawerScreen.dart';
 
 class ClientProductsListPage extends StatefulWidget {
@@ -25,7 +30,7 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
     // TODO: implement initState
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-    //  _con.init(context, refresh);
+      //  _con.init(context, refresh);
     });
   }
   double xOffset = 0;
@@ -41,7 +46,7 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
         ..rotateZ(isDrawerOpen ? -50 : 0),
       duration: Duration(milliseconds: 200),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.purple[900],
         borderRadius:
         isDrawerOpen ? BorderRadius.circular(40) : BorderRadius.circular(0),
       ),
@@ -52,13 +57,15 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
               height: 50,
             ),
             Container(
+
               margin: EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   isDrawerOpen
                       ? GestureDetector(
-                    child: Icon(Icons.arrow_back_ios),
+                    child: Icon(Icons.arrow_back_ios,
+                    color: MyColors.colorWhite,),
                     onTap: () {
                       setState(() {
                         xOffset = 0;
@@ -68,7 +75,8 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
                     },
                   )
                       : GestureDetector(
-                    child: Icon(Icons.menu),
+                    child: Icon(Icons.menu,
+                      color: MyColors.colorWhite,),
                     onTap: () {
                       setState(() {
                         xOffset = 290;
@@ -78,57 +86,148 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
                     },
                   ),
                   Text(
-                    'Beautiful Drawer',
+                    'Solicita servicio',
                     style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black87,
+                        fontFamily: "Lexendeca-Regular",
+                        fontSize: 39,
+                        color: MyColors.colorWhite,
                         decoration: TextDecoration.none),
                   ),
                   Container(),
+
                 ],
               ),
+
+
+
             ),
             SizedBox(
               height: 40,
             ),
+            Container(
+              child: FadeAnimation(
+                  1,
+                  // Text(
+                  //   "Login & Sign Up Screen",
+                  //   style: TextStyle(
+                  //       color: Colors.white,
+                  //       fontSize: 30,
+                  //       fontWeight: FontWeight.w700,
+                  //       fontFamily: "Sofia"),
+                  // )
+                  Stack(
+                    children: <Widget>[
+
+                      Padding(
+                        padding: const EdgeInsets
+                            .only(top: 60,left: 90),
+                        child: CircleAvatar(
+                          backgroundColor: Colors
+                              .white.withOpacity(0.3),
+                          radius: 130,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets
+                            .only(top: 80,left: 70),
+                        child: CircleAvatar(
+                          backgroundColor: Colors
+                              .white.withOpacity(0.3),
+                          radius: 130,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets
+                            .only(top: 70),
+                        child: Container(
+                          width: 400,
+                          height: 200,
+
+                          child: Lottie.asset(
+                              'assets/json/wash.json',
+                              fit: BoxFit.fill
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets
+                            .only(top: 400,left: 50),
+                        child: Container(
+                          width: 300,
+                          height: 70,
+
+                            child: ElevatedButton(
+                                onPressed: (){},
+                                child: Text('SERVICIO'),
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.black87,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(30)
+                                    ),
+                                    padding: EdgeInsets.symmetric(vertical: 15)
+                                )
+                            )
+                        ),
+                      ),
+
+
+
+
+                    ],
+                  )
+
+              ),
+            ),
+
             Column(
               children: <Widget>[
-                NewPadding(
-                  image1: 'assets/img/monkey.png',
-                  text1: 'Monkey',
-                  image2: 'assets/fox.png',
-                  text2: 'Fox',
-                ),
-                SizedBox(
-                  height: 40,
-                ),
-                NewPadding(
-                  image1: 'assets/img/cat.png',
-                  text1: 'Cat',
-                  image2: 'assets/img/dog.png',
-                  text2: 'Dog',
-                ),
-                SizedBox(
-                  height: 40,
-                ),
-                NewPadding(
-                  image1: 'assets/img/fish.png',
-                  text1: 'Fish',
-                  image2: 'assets/img/turtle.png',
-                  text2: 'Turtle',
-                ),
-                SizedBox(
-                  height: 40,
-                ),
-                NewPadding(
-                  image1: 'assets/img/bird.png',
-                  text1: 'Bird',
-                  image2: 'assets/img/owl.png',
-                  text2: 'Owl',
-                ),
-                SizedBox(
-                  height: 40,
-                ),
+                Stack(
+                  children: <Widget>[
+                    AnimatedContainer(
+                        width: double.infinity,
+                        curve: Curves.fastLinearToSlowEaseIn,
+                        duration: Duration(milliseconds: 1000),
+                        decoration: BoxDecoration(
+                            gradient: RadialGradient(colors: [
+                              Colors.purple[800],
+                              Colors.purple[800],
+                              Colors.purple[900]
+
+
+                            ])),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment
+                              .spaceBetween,
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.all(20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment
+                                    .start,
+                                children: <Widget>[
+                                  SizedBox(
+                                    height: 440.0,
+                                  ),
+
+
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+
+
+                    ),
+                    Positioned.fill(
+                      child: Opacity(
+                          opacity: 0.5,
+                          child: const AnimacionParticulas(23)),
+                    ),
+
+
+                  ],
+                )
+
               ],
             )
           ],
@@ -155,110 +254,27 @@ class NewPadding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 35),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Container(
-            width: 150,
-            height: 150,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.1),
-                  spreadRadius: 2,
-                  blurRadius: 5,
-                  offset: Offset(0, 0),
-                ),
-              ],
-            ),
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8),
-                  child: Image(
-                    height: 100,
-                    width: 100,
-                    image: AssetImage(image1),
-                  ),
-                ),
-                Text(
-                  text1,
-                  style: TextStyle(
-                      color: Colors.black87,
-                      fontSize: 15,
-                      decoration: TextDecoration.none),
-                )
-              ],
-            ),
-          ),
-          Container(
-            width: 150,
-            height: 150,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.1),
-                  spreadRadius: 2,
-                  blurRadius: 5,
-                  offset: Offset(0, 0),
-                ),
-              ],
-            ),
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8),
-                  child: Image(
-                    height: 100,
-                    width: 100,
-                    image: AssetImage(image2),
-                  ),
-                ),
-                Text(
-                  text2,
-                  style: TextStyle(
-                      color: Colors.black87,
-                      fontSize: 15,
-                      decoration: TextDecoration.none),
-                )
-              ],
-            ),
-          ),
-        ],
-      ),
+      padding: EdgeInsets.symmetric(horizontal: 0),
     );
   }
 
 /*
   @override
   Widget build(BuildContext context) {
-
-
     return DefaultTabController(
-
       length: _con.categories?.length,
-
       child: Scaffold(
-
         key: _con.key,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(145),
           child: AppBar(
             automaticallyImplyLeading: false,
             backgroundColor: MyColors.primaryColor,
-
             actions: [
               _shoppingBag()
             ],
             flexibleSpace: Column(
-
               children: [
-
                 SizedBox(height: 30),
                 _menuDrawer(),
                 SizedBox(height: 40),
@@ -266,14 +282,12 @@ class NewPadding extends StatelessWidget {
               ],
             ),
             bottom: TabBar(
-
               indicatorColor: MyColors.primaryOpacityColor,
               labelColor: MyColors.colorAmarrillo,
               unselectedLabelColor: Colors.grey[200],
               isScrollable: true,
               tabs: List<Widget>.generate(_con.categories.length, (index) {
                 return Tab(
-
                   child: Text(_con.categories[index].name ?? ''),
                 );
               }),
@@ -282,18 +296,12 @@ class NewPadding extends StatelessWidget {
         ),
         drawer: _drawer(),
         body: TabBarView(
-
           children: _con.categories.map((Category category) {
-
             return FutureBuilder(
-
                 future:_con.getProducts(category.id, _con.productName),
                 builder: (context, AsyncSnapshot<List<Product>> snapshot) {
-
                   if (snapshot.hasData) {
-
                     if (snapshot.data.length > 0) {
-
                       return GridView.builder(
                           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -303,10 +311,8 @@ class NewPadding extends StatelessWidget {
                           itemCount: snapshot.data?.length ?? 0,
                           itemBuilder: (_, index) {
                             return _cardProduct(snapshot.data[index]);
-
                           }
                       );
-
                     }
                     else {
                       return NoDataWidget(text: 'No hay productos');
@@ -322,11 +328,8 @@ class NewPadding extends StatelessWidget {
       ),
     );
   }
-
   Widget _cardProduct(Product product) {
-
     return GestureDetector(
-
       onTap: () {
         _con.openBottomSheet(product);
       },
@@ -385,7 +388,6 @@ class NewPadding extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 20,),
                     child: Text(
@@ -405,20 +407,15 @@ class NewPadding extends StatelessWidget {
       ),
     );
   }
-
   Widget _shoppingBag() {
     return GestureDetector(
       onTap: _con.goToOrderCreatePage,
       child: Container(
         margin: EdgeInsets.only(right: 20,top:10),
-
         child: Image.asset('assets/img/carrito.png', width: 64, height: 64),
       ),
-
     );
-
   }
-
   // Widget _textFieldSearch() {
   //   return Container(
   //     margin: EdgeInsets.symmetric(horizontal: 20),
@@ -452,7 +449,6 @@ class NewPadding extends StatelessWidget {
   //     ),
   //   );
   // }
-
   Widget _menuDrawer() {
     return GestureDetector(
       onTap: _con.openDrawer,
@@ -463,7 +459,6 @@ class NewPadding extends StatelessWidget {
       ),
     );
   }
-
   Widget _drawer() {
     return Drawer(
       child: ListView(
@@ -517,7 +512,6 @@ class NewPadding extends StatelessWidget {
                       placeholder: AssetImage('assets/img/no-image.png'),
                     ),
                   )
-
                 ],
               )
           ),
@@ -562,9 +556,52 @@ class NewPadding extends StatelessWidget {
       ),
     );
   }
-
   void refresh() {
     setState(() {}); // CTRL + S
   }*/
+  Widget _buttonRequest() {
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.symmetric(horizontal: 50, vertical: 30),
+      child: ElevatedButton(
+        onPressed: (){},
+        child: Text('REGISTRARSE'),
+        style: ElevatedButton.styleFrom(
+            primary: MyColors.primaryColor,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30)
+            ),
+            padding: EdgeInsets.symmetric(vertical: 15)
+        ),
+      ),
+    );
+  }
+}
+class FadeAnimation extends StatelessWidget {
+  final double delay;
+  final Widget child;
 
+  FadeAnimation(this.delay, this.child);
+
+  @override
+  Widget build(BuildContext context) {
+    final tween = MultiTween<String>()
+      ..add("opacity", Tween(begin: 0.0, end: 1.0),
+          Duration(milliseconds: 500))..add(
+          "translateY", Tween(begin: -30.0, end: 0.0),
+          Duration(milliseconds: 500), Curves.easeOut);
+
+    return PlayAnimation<MultiTweenValues<String>>(
+      delay: Duration(milliseconds: (500 * delay).round()),
+      duration: tween.duration,
+      tween: tween,
+      child: child,
+      builder: (context, child, animation) =>
+          Opacity(
+            opacity: animation.get("opacity"),
+            child: Transform.translate(
+                offset: Offset(0, animation.get("translateY")), child: child),
+          ),
+    );
+  }
 }

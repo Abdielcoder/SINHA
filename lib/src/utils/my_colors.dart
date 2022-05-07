@@ -15,5 +15,6 @@ class MyColors {
   static const Color colorTitulosSegundos= Color(0xFF163870);
   static const kPrimaryColor = Color(0xFF6F35A5);
   static const kPrimaryLightColor = Color(0xFFF1E6FF);
+  static const colorWhite = Color(0xFFFFFFFF);
 
 }
