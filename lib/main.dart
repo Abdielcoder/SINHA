@@ -3,6 +3,7 @@ import 'package:uber_clone_flutter/src/pages/client/address/create/client_addres
 import 'package:uber_clone_flutter/src/pages/client/address/list/client_address_list_page.dart';
 import 'package:uber_clone_flutter/src/pages/client/address/map/client_address_map_page.dart';
 import 'package:uber_clone_flutter/src/pages/client/create/client_car_create_page.dart';
+import 'package:uber_clone_flutter/src/pages/client/introduction/introduction_screen.dart';
 import 'package:uber_clone_flutter/src/pages/client/listcars/client_car_list_page.dart';
 import 'package:uber_clone_flutter/src/pages/client/listcarspay/list_car_pay_page.dart';
 import 'package:uber_clone_flutter/src/pages/client/orders/create/client_orders_create_page.dart';
@@ -20,6 +21,7 @@ import 'package:uber_clone_flutter/src/pages/client/update/client_update_page.da
 import 'package:uber_clone_flutter/src/pages/delivery/orders/finish/finish_clean_page.dart';
 import 'package:uber_clone_flutter/src/pages/delivery/orders/list/delivery_orders_list_page.dart';
 import 'package:uber_clone_flutter/src/pages/delivery/orders/map/delivery_orders_map_page.dart';
+import 'package:uber_clone_flutter/src/pages/login/login_check_arguments_page.dart';
 import 'package:uber_clone_flutter/src/pages/login/login_page.dart';
 import 'package:uber_clone_flutter/src/pages/register/register_page.dart';
 import 'package:uber_clone_flutter/src/pages/restaurant/categories/create/restaurant_categories_create_page.dart';
@@ -79,6 +81,8 @@ class _MyappState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       initialRoute: 'splashScreen',
       routes: {
+        'arguments': (BuildContext context) => LoginCheckArgumentsPage(),
+        'introduction': (BuildContext context) => IntroductionScreenPage(),
         'splashScreen':(BuildContext context) => SplashScreenPage(),
         'login':(BuildContext context) => LoginPage(),
         'register': (BuildContext context) => RegisterPage(),

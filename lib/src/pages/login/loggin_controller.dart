@@ -27,6 +27,10 @@ class LoginController {
 
     print('Usuario: ${user.toJson()}');
 
+    var argumentsIntroductionScreen = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
+    print(argumentsIntroductionScreen['intro']);
+    String valorIntro = argumentsIntroductionScreen['intro'];
+
     MyProgressDialog.show(context, 'Validando Información', false);
 
     if (user?.sessionToken != null) {
@@ -43,6 +47,7 @@ class LoginController {
 
 
   }
+
 
   void goToRegisterPage() {
     Navigator.pushNamed(context, 'register');
