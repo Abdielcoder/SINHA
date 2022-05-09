@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../../utils/animated_indicator.dart';
-import '../../../utils/my_colors.dart';
+import 'package:lottie/lottie.dart';
+
+import '../../../../utils/animated_indicator.dart';
+import '../../../../utils/my_colors.dart';
+import '../../products/list/client_menu_list.dart';
+
 
 const blue = Color(0xFF4781ff);
 const kTitleStyle = TextStyle(
@@ -10,14 +14,14 @@ const kTitleStyle = TextStyle(
 const kSubtitleStyle = TextStyle(fontSize: 18, color: MyColors.colorWhite);
 
 
-class IntroductionScreenPage extends StatefulWidget {
-  const IntroductionScreenPage({Key key}) : super(key: key);
+class RequestCleanerPage extends StatefulWidget {
+  const RequestCleanerPage({Key key}) : super(key: key);
 
   @override
-  _IntroductionScreenPageState createState() => _IntroductionScreenPageState();
+  _RequestCleanerPagePageState createState() => _RequestCleanerPagePageState();
 }
 
-class _IntroductionScreenPageState extends State<IntroductionScreenPage> {
+class _RequestCleanerPagePageState extends State<RequestCleanerPage> {
   PageController pageController = new PageController(initialPage: 0);
 
   @override
@@ -41,33 +45,21 @@ class _IntroductionScreenPageState extends State<IntroductionScreenPage> {
                 physics: NeverScrollableScrollPhysics(),
                 children: [
                   Slide(
-                      hero: Image.asset("./assets/images/intro1.png"),
-                      title: "Rápido y Fácil",
+                      hero: Lottie.asset(
+                          'assets/json/buscalavador.json',
+                          fit: BoxFit.fill
+                      ),
+                      title: "Buscando personal disponible",
                       subtitle:
-                      "Pide un servicio y despreocupate",
+                      "En unos momentos te sera asignado...",
                       onNext: nextPage),
-                  Slide(
-                      hero: Image.asset("./assets/images/intro2.png"),
-                      title: "Seguro",
-                      subtitle:
-                      "Todos nuestro personal esta verificado, despreocupate",
-                      onNext: nextPage),
-                  Slide(
-                      hero: Image.asset("./assets/images/introcard.png"),
-                      title: "Pagos seguros",
-                      subtitle:
-                      "Nuestra plata forma cuenta con pasarelas de pago seguras, para que tengas la mejor experiencia.",
-
-                      onNext: goToLogin),
-
                 ])),
       ),
     );
   }
 
   void nextPage() {
-    pageController.nextPage(
-        duration: const Duration(milliseconds: 200), curve: Curves.ease);
+
   }
 
   void goToLogin() {
@@ -94,7 +86,7 @@ class Slide extends StatelessWidget {
         children: [
           Expanded(child: hero),
           Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(1),
             child: Column(
               children: [
                 Text(
@@ -111,21 +103,28 @@ class Slide extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(
-                  height: 35,
+                  height: 15,
                 ),
                 ProgressButton(onNext: onNext),
               ],
             ),
           ),
           GestureDetector(
-            onTap: onNext,
+            onTap: () {
+              Navigator.push(
+                context,
+                new MaterialPageRoute(
+                  builder: (context) => new ClientMenuListPage(),
+                ),
+              );
+            },
             child: Text(
-              "Skip",
+              "Cancelar",
               style: kSubtitleStyle,
             ),
           ),
           SizedBox(
-            height: 4,
+            height: 50,
           )
         ],
       ),
@@ -140,31 +139,54 @@ class ProgressButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 75,
-      height: 75,
+      width: 140,
+      height: 140,
       child: Stack(children: [
-        AnimatedIndicator(
-          duration: const Duration(seconds: 10),
-          size: 75,
-          callback: onNext,
+        Container(
+          height: 500,
+          width: 500,
+          child: Lottie.asset(
+            'assets/json/pulse.json',
+            width: 500,
+            height: 500,
+          ),
         ),
+
         Center(
           child: GestureDetector(
+
             child: Container(
               height: 60,
               width: 60,
+
               child: Center(
-                child: SvgPicture.asset(
-                  "./assets/img/arrow.svg",
-                  width: 10,
+
+                child: Image.asset(
+                  "./assets/images/cancelarlavador.png",
+                  width: 600,
                 ),
               ),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(99), color: blue),
+                borderRadius: BorderRadius.circular(99),
+                color: Colors.deepPurpleAccent,
+                boxShadow: [
+                  BoxShadow(color: Colors.white, spreadRadius: 3),
+                ],
+              ),
+
             ),
-            onTap: onNext,
+            onTap: () {
+              Navigator.push(
+                context,
+                new MaterialPageRoute(
+                  builder: (context) => new ClientMenuListPage(),
+                ),
+              );
+            },
           ),
-        )
+
+        ),
+
       ]),
     );
   }

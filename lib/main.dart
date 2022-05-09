@@ -17,6 +17,7 @@ import 'package:uber_clone_flutter/src/pages/client/payments/stripe/stripe_exist
 import 'package:uber_clone_flutter/src/pages/client/payments/stripe/stripe_store_cards_page.dart';
 import 'package:uber_clone_flutter/src/pages/client/products/list/client_menu_list.dart';
 import 'package:uber_clone_flutter/src/pages/client/products/list/client_products_list_page.dart';
+import 'package:uber_clone_flutter/src/pages/client/states/request/request_cleaner_page.dart';
 import 'package:uber_clone_flutter/src/pages/client/update/client_update_page.dart';
 import 'package:uber_clone_flutter/src/pages/delivery/orders/finish/finish_clean_page.dart';
 import 'package:uber_clone_flutter/src/pages/delivery/orders/list/delivery_orders_list_page.dart';
@@ -81,12 +82,13 @@ class _MyappState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       initialRoute: 'splashScreen',
       routes: {
+        'splashScreen':(BuildContext context) => SplashScreenPage(),
         'arguments': (BuildContext context) => LoginCheckArgumentsPage(),
         'introduction': (BuildContext context) => IntroductionScreenPage(),
-        'splashScreen':(BuildContext context) => SplashScreenPage(),
         'login':(BuildContext context) => LoginPage(),
         'register': (BuildContext context) => RegisterPage(),
         'roles': (BuildContext context) => RolesPage(),
+        'client/states/cleaner': (BuildContext context) => RequestCleanerPage(),
         'client/products/list': (BuildContext context) => ClientMenuListPage(),
         'client/update': (BuildContext context) => ClientUpdatePage(),
         'client/create/car': (BuildContext context) => CLientCarCreatePage(),
