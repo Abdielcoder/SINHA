@@ -17,6 +17,9 @@ import 'package:uber_clone_flutter/src/pages/client/payments/stripe/stripe_exist
 import 'package:uber_clone_flutter/src/pages/client/payments/stripe/stripe_store_cards_page.dart';
 import 'package:uber_clone_flutter/src/pages/client/products/list/client_menu_list.dart';
 import 'package:uber_clone_flutter/src/pages/client/products/list/client_products_list_page.dart';
+import 'package:uber_clone_flutter/src/pages/client/states/finish/finish_cleaner_page.dart';
+import 'package:uber_clone_flutter/src/pages/client/states/inprogress/inprogress_cleaner_page.dart';
+import 'package:uber_clone_flutter/src/pages/client/states/onway/onway_cleaner_page.dart';
 import 'package:uber_clone_flutter/src/pages/client/states/request/request_cleaner_page.dart';
 import 'package:uber_clone_flutter/src/pages/client/update/client_update_page.dart';
 import 'package:uber_clone_flutter/src/pages/delivery/orders/finish/finish_clean_page.dart';
@@ -89,6 +92,11 @@ class _MyappState extends State<MyApp> {
         'register': (BuildContext context) => RegisterPage(),
         'roles': (BuildContext context) => RolesPage(),
         'client/states/cleaner': (BuildContext context) => RequestCleanerPage(),
+
+        'client/onway/cleaner': (BuildContext context) => OnwayCleanerPage(),
+        'client/inprogress/cleaner': (BuildContext context) => InprogressCleanerPage(),
+        'client/finish/cleaner': (BuildContext context) => FinishCleanerPage(),
+
         'client/products/list': (BuildContext context) => ClientMenuListPage(),
         'client/update': (BuildContext context) => ClientUpdatePage(),
         'client/create/car': (BuildContext context) => CLientCarCreatePage(),
