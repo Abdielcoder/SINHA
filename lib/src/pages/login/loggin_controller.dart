@@ -13,6 +13,7 @@ import '../../provider/push_notifications_provider.dart';
 class LoginController {
 
   BuildContext context;
+
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
   UsersProvider usersProvider = new UsersProvider();

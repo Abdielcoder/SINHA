@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/svg.dart';
@@ -31,15 +33,15 @@ class _RequestCleanerPagePageState extends State<RequestCleanerPage> {
       body: SafeArea(
         child: Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: <Color>[
-                  MyColors.colorAqua,
-                  MyColors.primaryColor,
-                ],
+              image: DecorationImage(
+                image: ExactAssetImage("assets/images/abdiel.jpeg"),
+                fit: BoxFit.cover,
               ),
             ),
+             child: ClipRRect( // make sure we apply clip it properly
+             child: BackdropFilter(
+             filter: ImageFilter.blur(sigmaX: 60, sigmaY: 90),
+
             child: PageView(
                 controller: pageController,
                 physics: NeverScrollableScrollPhysics(),
@@ -54,6 +56,8 @@ class _RequestCleanerPagePageState extends State<RequestCleanerPage> {
                       "En unos momentos te sera asignado...",
                       onNext: nextPage),
                 ])),
+      ),
+    )
       ),
     );
   }

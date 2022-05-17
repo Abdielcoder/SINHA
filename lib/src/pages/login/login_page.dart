@@ -7,6 +7,7 @@ import 'package:lottie/lottie.dart';
 import 'package:simple_animations/multi_tween/multi_tween.dart';
 import 'package:simple_animations/stateless_animation/play_animation.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
+import 'package:uber_clone_flutter/src/pages/register/register_controller.dart';
 import 'package:uber_clone_flutter/src/utils/my_colors.dart';
 import '../../models/response_api.dart';
 import '../../models/user.dart';
@@ -59,6 +60,7 @@ class _LoginPageState extends State<LoginPage> {
   UsersProvider usersProvider = new UsersProvider();
   ProgressDialog _progressDialog;
   LoginController _con = new LoginController();
+  RegisterController _reg = new RegisterController();
   SharedPref _sharedPref = new SharedPref();
   //GENERETED ALEATORI ID SESSION.
 
@@ -462,10 +464,13 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 20),
                     GestureDetector(
                       onTap: () {
-                        print('sign up working');
-                        setState(() {
-                          _pageState = 2;
-                        });
+                        print('Boton Registrarse');
+                          Navigator.pushNamed(context, 'register');
+
+
+                        // setState(() {
+                        //   _pageState = 2;
+                        // });
                       },
                       child: Container(
                         child: FadeAnimation(
@@ -531,12 +536,13 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Container(
-                            padding: EdgeInsets.all(5),
+                            padding: EdgeInsets.all(1),
                             decoration: BoxDecoration(
                                 border: Border(
                                     bottom: BorderSide(
                                         color: Colors.grey.shade200))),
                             child: TextField(
+                              controller: _reg.emailController,
                               decoration: InputDecoration(
                                   prefixIcon: Icon(
                                     Icons.email,
@@ -548,12 +554,61 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           Container(
-                            padding: EdgeInsets.all(5),
+                            padding: EdgeInsets.all(1),
                             decoration: BoxDecoration(
                                 border: Border(
                                     bottom: BorderSide(
                                         color: Colors.grey.shade200))),
                             child: TextField(
+                              controller: _reg.nameController,
+                              decoration: InputDecoration(
+                                  prefixIcon: Icon(Icons.vpn_key),
+                                  hintText: "Nombre",
+                                  hintStyle: TextStyle(
+                                      color: Colors.grey, fontFamily: "Sofia"),
+                                  border: InputBorder.none),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(1),
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        color: Colors.grey.shade200))),
+                            child: TextField(
+                              controller: _reg.lastnameController,
+                              decoration: InputDecoration(
+                                  prefixIcon: Icon(Icons.vpn_key),
+                                  hintText: "Apellido",
+                                  hintStyle: TextStyle(
+                                      color: Colors.grey, fontFamily: "Sofia"),
+                                  border: InputBorder.none),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(1),
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        color: Colors.grey.shade200))),
+                            child: TextField(
+                              controller: _reg.phoneController,
+                              decoration: InputDecoration(
+                                  prefixIcon: Icon(Icons.vpn_key),
+                                  hintText: "Telefono",
+                                  hintStyle: TextStyle(
+                                      color: Colors.grey, fontFamily: "Sofia"),
+                                  border: InputBorder.none),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(1),
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        color: Colors.grey.shade200))),
+                            child: TextField(
+                              controller: _con.passwordController,
                               decoration: InputDecoration(
                                   prefixIcon: Icon(Icons.vpn_key),
                                   hintText: "Contraseña",
@@ -563,7 +618,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           Container(
-                            padding: EdgeInsets.all(5),
+                            padding: EdgeInsets.all(1),
                             decoration: BoxDecoration(
                                 border: Border(
                                     bottom: BorderSide(
@@ -607,101 +662,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 30,
-                ),
-                FadeAnimation(
-                    1.7,
-                    Text(
-                      "Continua con login Soicial & OTP",
-                      style: TextStyle(color: Colors.grey, fontFamily: "Sofia"),
-                    )),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      child: FadeAnimation(
-                          1.8,
-                          Container(
-                              child: MaterialButton(
-                                onPressed: () {},
-                                color: Color(0xFF3b5998),
-                                textColor: Colors.white,
-                                child: Icon(
-                                  FontAwesomeIcons.facebookF,
-                                  size: 22,
-                                ),
-                                padding: EdgeInsets.all(16),
-                                shape: CircleBorder(),
-                              ))),
-                    ),
-                    // SizedBox(width: 10,),
-                    Container(
-                      child: FadeAnimation(
-                          1.9,
-                          Container(
-                              child: MaterialButton(
-                                onPressed: () {},
-                                color: Color(0xFFEA4335),
-                                textColor: Colors.white,
-                                child: Icon(
-                                  FontAwesomeIcons.google,
-                                  size: 22,
-                                ),
-                                padding: EdgeInsets.all(16),
-                                shape: CircleBorder(),
-                              ))),
-                    ),
-                    Container(
-                      child: FadeAnimation(
-                          1.9,
-                          Container(
-                              child: MaterialButton(
-                                onPressed: () {},
-                                color: Color(0xFF34A853),
-                                textColor: Colors.white,
-                                child: Icon(
-                                  FontAwesomeIcons.mobileAlt,
-                                  size: 22,
-                                ),
-                                padding: EdgeInsets.all(16),
-                                shape: CircleBorder(),
-                              ))),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
-                GestureDetector(
-                  onTap: () {
-                    print('Login is  working');
-                    setState(() {
-                      _pageState = 1;
-                    });
-                  },
-                  child: Container(
-                    child: FadeAnimation(
-                        1.5,
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "¿Ya tienes una cuenta ? ",
-                                style: TextStyle(
-                                    color: Colors.grey, fontFamily: "Sofia"),
-                              ),
-                              Text(
-                                "Inicia",
-                                style: TextStyle(
-                                    color: Colors.blue.shade900,
-                                    fontFamily: "Sofia",
-                                    fontWeight: FontWeight.bold),
-                              )
-                            ])),
-                  ),
-                ),
+
               ],
             ),
           )

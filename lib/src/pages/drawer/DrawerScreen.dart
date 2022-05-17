@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:uber_clone_flutter/src/pages/drawer/DrawerScreenController.dart';
 import 'package:uber_clone_flutter/src/utils/my_colors.dart';
+
+import '../../provider/users_provider.dart';
 
 class DrawerScreen extends StatefulWidget {
   @override
@@ -7,6 +11,18 @@ class DrawerScreen extends StatefulWidget {
 }
 
 class _DrawerScreenState extends State<DrawerScreen> {
+  DrawerScreenController _con = DrawerScreenController();
+  UsersProvider usersProvider = new UsersProvider();
+
+  void initState() {
+    usersProvider.init(context);
+    // TODO: implement initState
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      _con.init(context);
+    });
+
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -81,9 +97,17 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 SizedBox(
                   width: 10,
                 ),
-                Text(
-                  'Cerrar sesion',
-                  style: TextStyle(color: Colors.white.withOpacity(0.5)),
+                InkWell(
+                  onTap: _con.logout,
+                  child: Text(
+                    /*
+                    *  void logout() {
+    _sharedPref.logout(context, user.id);
+  }
+                    * */
+                    'Cerrar sesion',
+                    style: TextStyle(color: Colors.white.withOpacity(0.5)),
+                  ),
                 )
               ],
             )

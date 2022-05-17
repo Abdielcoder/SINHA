@@ -34,6 +34,7 @@ class RegisterController {
 
   //REGISTER USER WITH EMAIL
   void register() async {
+    print("SE PRECIONO EL BOTON REGISTRAR");
     String email = emailController.text.trim();
     String name = nameController.text;
     String lastname = lastnameController.text;
