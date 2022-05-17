@@ -57,30 +57,43 @@ class _DrawerScreenState extends State<DrawerScreen> {
             ),
             Column(
               children: <Widget>[
-                NewRow(
-                  text: 'Editar perfil',
-                  icon: Icons.account_circle,
+                InkWell(
+                  onTap: _con.goToEditProfile,
+                  child: NewRow(
+                    //client/update
+                    text: 'Editar perfil',
+                    icon: Icons.account_circle,
+                  ),
                 ),
                 SizedBox(
                   height: 20,
                 ),
-                NewRow(
-                  text: 'Vehículos',
-                  icon: Icons.directions_car,
+                InkWell(
+                  onTap: _con.goToCreateCar,
+                  child: NewRow(
+                    text: 'Vehículos',
+                    icon: Icons.directions_car,
+                  ),
                 ),
                 SizedBox(
                   height: 20,
                 ),
-                NewRow(
-                  text: 'Mis servicios',
-                  icon: Icons.domain_verification_sharp,
+                InkWell(
+                  onTap: _con.goToMyServices,
+                  child: NewRow(
+                    text: 'Mis servicios',
+                    icon: Icons.domain_verification_sharp,
+                  ),
                 ),
                 SizedBox(
                   height: 20,
                 ),
-                NewRow(
-                  text: 'Métodos de pago',
-                  icon: Icons.add_card,
+                InkWell(
+                  onTap: _con.goToPaymentMethod,
+                  child: NewRow(
+                    text: 'Métodos de pago',
+                    icon: Icons.add_card,
+                  ),
                 ),
                 SizedBox(
                   height: 20,
@@ -92,7 +105,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
               children: <Widget>[
                 Icon(
                   Icons.cancel,
-                  color: Colors.white.withOpacity(0.5),
+                  color: Colors.black.withOpacity(0.5),
                 ),
                 SizedBox(
                   width: 10,
@@ -100,13 +113,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 InkWell(
                   onTap: _con.logout,
                   child: Text(
-                    /*
-                    *  void logout() {
-    _sharedPref.logout(context, user.id);
-  }
-                    * */
                     'Cerrar sesion',
-                    style: TextStyle(color: Colors.white.withOpacity(0.5)),
+                    style: TextStyle(color: Colors.white.withOpacity(0.9)),
                   ),
                 )
               ],
