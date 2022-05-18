@@ -1,9 +1,9 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
+import 'package:uber_clone_flutter/src/pages/client/states/request/request_cleaner_controller.dart';
 
 import '../../../../utils/animated_indicator.dart';
 import '../../../../utils/my_colors.dart';
@@ -25,6 +25,17 @@ class RequestCleanerPage extends StatefulWidget {
 
 class _RequestCleanerPagePageState extends State<RequestCleanerPage> {
   PageController pageController = new PageController(initialPage: 0);
+  RequestCleanerCOntroller _con = new RequestCleanerCOntroller();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      _con.init(context, refresh);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +45,7 @@ class _RequestCleanerPagePageState extends State<RequestCleanerPage> {
         child: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: ExactAssetImage("assets/images/abdiel.jpeg"),
+                image: ExactAssetImage("assets/img/hero-1.png"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -70,8 +81,12 @@ class _RequestCleanerPagePageState extends State<RequestCleanerPage> {
     Navigator.pushNamedAndRemoveUntil(context, 'login', (route) => false);
 
   }
-
+  void refresh() {
+    setState(() {}); // CTRL + S
+  }
 }
+
+
 
 class Slide extends StatelessWidget {
   final Widget hero;
@@ -194,5 +209,8 @@ class ProgressButton extends StatelessWidget {
       ]),
     );
   }
+
+
+
 
 }

@@ -89,7 +89,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   height: 20,
                 ),
                 InkWell(
-                  onTap: _con.goToPaymentMethod,
+                  //onTap: _con.goTO,
                   child: NewRow(
                     text: 'Métodos de pago',
                     icon: Icons.add_card,
