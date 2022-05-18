@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
@@ -6,6 +7,7 @@ import '../../../../models/order.dart';
 import '../../../../models/user.dart';
 import '../../../../provider/orders_provider.dart';
 import '../../../../utils/shared_pref.dart';
+import '../onway/onway_cleaner_page.dart';
 
 
 class RequestCleanerCOntroller{
@@ -59,11 +61,19 @@ class RequestCleanerCOntroller{
     print("ENTRE METODO ADD STATUS");
     if(status=="ONWAY"){
       print("Navego a siguiente pantalla");
+      Navigator.push(
+        context,
+        new MaterialPageRoute(
+          builder: (context) => new OnwayCleanerPage(),
+        ),
+      );
+
+      refresh();
     }else{
       print("Algo paso mal sigo en la pantalla");
     }
 
-    refresh();
+
   }
 
 

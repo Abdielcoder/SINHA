@@ -45,13 +45,13 @@ class _RequestCleanerPagePageState extends State<RequestCleanerPage> {
         child: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: ExactAssetImage("assets/img/hero-1.png"),
+                image: ExactAssetImage("assets/img/buscando.jpg"),
                 fit: BoxFit.cover,
               ),
             ),
              child: ClipRRect( // make sure we apply clip it properly
              child: BackdropFilter(
-             filter: ImageFilter.blur(sigmaX: 60, sigmaY: 90),
+             filter: ImageFilter.blur(sigmaX: 30, sigmaY: 10),
 
             child: PageView(
                 controller: pageController,
@@ -59,7 +59,7 @@ class _RequestCleanerPagePageState extends State<RequestCleanerPage> {
                 children: [
                   Slide(
                       hero: Lottie.asset(
-                          'assets/json/buscalavador.json',
+                          'assets/json/buscando.json',
                           fit: BoxFit.fill
                       ),
                       title: "Buscando personal disponible",

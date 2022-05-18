@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:lottie/lottie.dart';
@@ -26,34 +28,37 @@ class _OnwayCleanerPageState extends State<OnwayCleanerPage> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(
-        child: Container(
+          child: Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: <Color>[
-                  MyColors.colorAqua,
-                  MyColors.primaryColor,
-                ],
+              image: DecorationImage(
+                image: ExactAssetImage("assets/img/encamino.jpg"),
+                fit: BoxFit.cover,
               ),
             ),
-            child: PageView(
-                controller: pageController,
-                physics: NeverScrollableScrollPhysics(),
-                children: [
-                  Slide(
-                      hero: Lottie.asset(
-                          'assets/json/buscalavador.json',
-                          fit: BoxFit.fill
-                      ),
-                      title: "Buscando personal disponible",
-                      subtitle:
-                      "En unos momentos te sera asignado...",
-                      onNext: nextPage),
-                ])),
+            child: ClipRRect( // make sure we apply clip it properly
+              child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 30, sigmaY: 10),
+
+                  child: PageView(
+                      controller: pageController,
+                      physics: NeverScrollableScrollPhysics(),
+                      children: [
+                        Slide(
+                            hero: Lottie.asset(
+                                'assets/json/encamino.json',
+                                fit: BoxFit.fill
+                            ),
+                            title: "Tú servicio esta en camino",
+                            subtitle:
+                            "En espera de llegada...",
+                            onNext: nextPage),
+                      ])),
+            ),
+          )
       ),
     );
   }
+
 
   void nextPage() {
 
@@ -106,20 +111,20 @@ class Slide extends StatelessWidget {
               ],
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                new MaterialPageRoute(
-                  builder: (context) => new ClientMenuListPage(),
-                ),
-              );
-            },
-            child: Text(
-              "Cancelar",
-              style: kSubtitleStyle,
-            ),
-          ),
+          // GestureDetector(
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       new MaterialPageRoute(
+          //         builder: (context) => new ClientMenuListPage(),
+          //       ),
+          //     );
+          //   },
+          //   child: Text(
+          //     "Cancelar",
+          //     style: kSubtitleStyle,
+          //   ),
+          // ),
           SizedBox(
             height: 50,
           )
@@ -149,40 +154,40 @@ class ProgressButton extends StatelessWidget {
           ),
         ),
 
-        Center(
-          child: GestureDetector(
-
-            child: Container(
-              height: 60,
-              width: 60,
-
-              child: Center(
-
-                child: Image.asset(
-                  "./assets/images/cancelarlavador.png",
-                  width: 600,
-                ),
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(99),
-                color: Colors.deepPurpleAccent,
-                boxShadow: [
-                  BoxShadow(color: Colors.white, spreadRadius: 3),
-                ],
-              ),
-
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                new MaterialPageRoute(
-                  builder: (context) => new ClientMenuListPage(),
-                ),
-              );
-            },
-          ),
-
-        ),
+        // Center(
+        //   child: GestureDetector(
+        //
+        //     child: Container(
+        //       height: 60,
+        //       width: 60,
+        //
+        //       child: Center(
+        //
+        //         child: Image.asset(
+        //           "./assets/images/cancelarlavador.png",
+        //           width: 600,
+        //         ),
+        //       ),
+        //       decoration: BoxDecoration(
+        //         borderRadius: BorderRadius.circular(99),
+        //         color: Colors.deepPurpleAccent,
+        //         boxShadow: [
+        //           BoxShadow(color: Colors.white, spreadRadius: 3),
+        //         ],
+        //       ),
+        //
+        //     ),
+        //     onTap: () {
+        //       Navigator.push(
+        //         context,
+        //         new MaterialPageRoute(
+        //           builder: (context) => new ClientMenuListPage(),
+        //         ),
+        //       );
+        //     },
+        //   ),
+        //
+        // ),
 
       ]),
     );
