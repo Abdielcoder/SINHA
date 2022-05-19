@@ -1,8 +1,12 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:lottie/lottie.dart';
+import 'package:uber_clone_flutter/src/pages/client/states/inprogress/inprogress_cleaner_controller.dart';
 import '../../../../utils/my_colors.dart';
 import '../../products/list/client_menu_list.dart';
+import 'finish_cleaner_controller.dart';
 
 
 const blue = Color(0xFF4781ff);
@@ -15,42 +19,57 @@ class FinishCleanerPage extends StatefulWidget {
   const FinishCleanerPage({Key key}) : super(key: key);
 
   @override
-  _FinishCleanerPageState createState() => _FinishCleanerPageState();
+  _FinishCleanerPage createState() => _FinishCleanerPage();
 }
 
-class _FinishCleanerPageState extends State<FinishCleanerPage> {
+class _FinishCleanerPage extends State<FinishCleanerPage> {
   PageController pageController = new PageController(initialPage: 0);
+  FinishCleanearController _con = new FinishCleanearController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      _con.init(context, refresh);
+    });
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(
-        child: Container(
+          child: Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: <Color>[
-                  MyColors.colorAqua,
-                  MyColors.primaryColor,
-                ],
+              image: DecorationImage(
+                image: ExactAssetImage("assets/img/buscando.jpg"),
+                fit: BoxFit.cover,
               ),
             ),
-            child: PageView(
-                controller: pageController,
-                physics: NeverScrollableScrollPhysics(),
-                children: [
-                  Slide(
-                      hero: Lottie.asset(
-                          'assets/json/buscalavador.json',
-                          fit: BoxFit.fill
-                      ),
-                      title: "Buscando personal disponible",
-                      subtitle:
-                      "En unos momentos te sera asignado...",
-                      onNext: nextPage),
-                ])),
+            child: ClipRRect( // make sure we apply clip it properly
+              child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 30, sigmaY: 10),
+
+                  child: PageView(
+                      controller: pageController,
+                      physics: NeverScrollableScrollPhysics(),
+                      children: [
+                        Slide(
+                            hero: Lottie.asset(
+                                'assets/json/limpio.json',
+                                fit: BoxFit.fill
+                            ),
+                            title: "TU servicio ha concluido",
+                            subtitle:
+                            "Tu auto esta listo para rrecojida...",
+                            onNext: nextPage),
+                      ])),
+            ),
+          )
       ),
     );
   }
@@ -63,8 +82,12 @@ class _FinishCleanerPageState extends State<FinishCleanerPage> {
     Navigator.pushNamedAndRemoveUntil(context, 'login', (route) => false);
 
   }
-
+  void refresh() {
+    setState(() {}); // CTRL + S
+  }
 }
+
+
 
 class Slide extends StatelessWidget {
   final Widget hero;
@@ -116,7 +139,7 @@ class Slide extends StatelessWidget {
               );
             },
             child: Text(
-              "Cancelar",
+              "Aceptar",
               style: kSubtitleStyle,
             ),
           ),
@@ -158,9 +181,9 @@ class ProgressButton extends StatelessWidget {
 
               child: Center(
 
-                child: Image.asset(
-                  "./assets/images/cancelarlavador.png",
-                  width: 600,
+                child: Lottie.asset(
+                    'assets/json/check.json',
+                    fit: BoxFit.fill
                 ),
               ),
               decoration: BoxDecoration(
@@ -187,5 +210,8 @@ class ProgressButton extends StatelessWidget {
       ]),
     );
   }
+
+
+
 
 }

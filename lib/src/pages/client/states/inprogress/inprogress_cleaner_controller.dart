@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:uber_clone_flutter/src/pages/client/states/finish/finish_cleaner_page.dart';
 
 import '../../../../api/environment.dart';
 import '../../../../models/order.dart';
@@ -60,12 +61,12 @@ class InprogressCleanerController{
   // }
   void addStatus(String status) {
     print("ENTRE METODO ADD STATUS");
-    if(status=="ARRIVE"){
+    if(status=="FINISH"){
       print("Navego a siguiente pantalla");
       Navigator.push(
         context,
         new MaterialPageRoute(
-          builder: (context) => new InprogressCleanerPage(),
+          builder: (context) => new FinishCleanerPage(),
         ),
       );
 
