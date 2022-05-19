@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:lottie/lottie.dart';
+import 'package:uber_clone_flutter/src/pages/client/states/onway/onway_cleaner_controller.dart';
 import '../../../../utils/my_colors.dart';
 import '../../products/list/client_menu_list.dart';
 
@@ -22,6 +23,17 @@ class OnwayCleanerPage extends StatefulWidget {
 
 class _OnwayCleanerPageState extends State<OnwayCleanerPage> {
   PageController pageController = new PageController(initialPage: 0);
+  OnWayCleanerController _con = new OnWayCleanerController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      _con.init(context, refresh);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +80,9 @@ class _OnwayCleanerPageState extends State<OnwayCleanerPage> {
     Navigator.pushNamedAndRemoveUntil(context, 'login', (route) => false);
 
   }
-
+  void refresh() {
+    setState(() {}); // CTRL + S
+  }
 }
 
 class Slide extends StatelessWidget {

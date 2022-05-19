@@ -1,6 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:lottie/lottie.dart';
+import 'package:uber_clone_flutter/src/pages/client/states/inprogress/inprogress_cleaner_controller.dart';
 import '../../../../utils/my_colors.dart';
 import '../../products/list/client_menu_list.dart';
 
@@ -20,40 +23,58 @@ class InprogressCleanerPage extends StatefulWidget {
 
 class _InprogressCleanerPageState extends State<InprogressCleanerPage> {
   PageController pageController = new PageController(initialPage: 0);
+  InprogressCleanerController _con = new InprogressCleanerController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      _con.init(context, refresh);
+    });
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(
-        child: Container(
+          child: Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: <Color>[
-                  MyColors.colorAqua,
-                  MyColors.primaryColor,
-                ],
+              image: DecorationImage(
+                image: ExactAssetImage("assets/img/limpiando.jpg"),
+                fit: BoxFit.cover,
               ),
             ),
-            child: PageView(
-                controller: pageController,
-                physics: NeverScrollableScrollPhysics(),
-                children: [
-                  Slide(
-                      hero: Lottie.asset(
-                          'assets/json/buscalavador.json',
-                          fit: BoxFit.fill
-                      ),
-                      title: "Buscando personal disponible",
-                      subtitle:
-                      "En unos momentos te sera asignado...",
-                      onNext: nextPage),
-                ])),
+            child: ClipRRect( // make sure we apply clip it properly
+              child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 30, sigmaY: 10),
+
+                  child: PageView(
+                      controller: pageController,
+                      physics: NeverScrollableScrollPhysics(),
+                      children: [
+                        Container(
+                          child: Slide(
+                              hero: Lottie.asset(
+                                  'assets/json/limpiando.json',
+                                  fit: BoxFit.fill
+                              ),
+                              title: "Tú servicio esta en curso",
+                              subtitle:
+                              "En espera de terminar el servicio...",
+                              onNext: nextPage),
+                        ),
+                      ])),
+            ),
+          )
       ),
     );
   }
+
 
   void nextPage() {
 
@@ -63,7 +84,9 @@ class _InprogressCleanerPageState extends State<InprogressCleanerPage> {
     Navigator.pushNamedAndRemoveUntil(context, 'login', (route) => false);
 
   }
-
+  void refresh() {
+    setState(() {}); // CTRL + S
+  }
 }
 
 class Slide extends StatelessWidget {
@@ -81,7 +104,7 @@ class Slide extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(child: hero),
+              Expanded(child: hero),
           Padding(
             padding: const EdgeInsets.all(1),
             child: Column(
@@ -106,20 +129,20 @@ class Slide extends StatelessWidget {
               ],
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                new MaterialPageRoute(
-                  builder: (context) => new ClientMenuListPage(),
-                ),
-              );
-            },
-            child: Text(
-              "Cancelar",
-              style: kSubtitleStyle,
-            ),
-          ),
+          // GestureDetector(
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       new MaterialPageRoute(
+          //         builder: (context) => new ClientMenuListPage(),
+          //       ),
+          //     );
+          //   },
+          //   child: Text(
+          //     "Cancelar",
+          //     style: kSubtitleStyle,
+          //   ),
+          // ),
           SizedBox(
             height: 50,
           )
@@ -149,40 +172,40 @@ class ProgressButton extends StatelessWidget {
           ),
         ),
 
-        Center(
-          child: GestureDetector(
-
-            child: Container(
-              height: 60,
-              width: 60,
-
-              child: Center(
-
-                child: Image.asset(
-                  "./assets/images/cancelarlavador.png",
-                  width: 600,
-                ),
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(99),
-                color: Colors.deepPurpleAccent,
-                boxShadow: [
-                  BoxShadow(color: Colors.white, spreadRadius: 3),
-                ],
-              ),
-
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                new MaterialPageRoute(
-                  builder: (context) => new ClientMenuListPage(),
-                ),
-              );
-            },
-          ),
-
-        ),
+        // Center(
+        //   child: GestureDetector(
+        //
+        //     child: Container(
+        //       height: 60,
+        //       width: 60,
+        //
+        //       child: Center(
+        //
+        //         child: Image.asset(
+        //           "./assets/images/cancelarlavador.png",
+        //           width: 600,
+        //         ),
+        //       ),
+        //       decoration: BoxDecoration(
+        //         borderRadius: BorderRadius.circular(99),
+        //         color: Colors.deepPurpleAccent,
+        //         boxShadow: [
+        //           BoxShadow(color: Colors.white, spreadRadius: 3),
+        //         ],
+        //       ),
+        //
+        //     ),
+        //     onTap: () {
+        //       Navigator.push(
+        //         context,
+        //         new MaterialPageRoute(
+        //           builder: (context) => new ClientMenuListPage(),
+        //         ),
+        //       );
+        //     },
+        //   ),
+        //
+        // ),
 
       ]),
     );
