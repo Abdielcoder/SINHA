@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
@@ -34,33 +35,52 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: MyColors.primaryColor,
-        title: Text('Vehiculos'),
-        automaticallyImplyLeading: false, //
-        actions: [
-          _iconAdd()
-        ],
+        backgroundColor: Colors.black,
       ),
-      body: Stack(
-        children: [
-          Positioned(
-              top: 0,
-              child: _textSelectAddress()
-          ),
-          Positioned(
-              top: 0,
-              child: _textSeleciion()
-          ),
-          Container(
-              margin: EdgeInsets.only(top: 100),
-              child: _listAddress()
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: ExactAssetImage("assets/img/astracitem.jpg"),
+            fit: BoxFit.cover,
           ),
 
+        ),
 
-        ],
+        child: ClipRRect(
+    child: BackdropFilter(
+    filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Stack(
+              alignment: Alignment.center,
+            children: [
+
+
+              Positioned(
+                  top: 0,
+                  child: _textSelectAddress()
+              ),
+              Container(
+                  margin: EdgeInsets.only(top: 100),
+                  child: _listAddress()
+              ),
+              Align(
+                alignment: FractionalOffset.bottomCenter,
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 10.0),
+                  child: Positioned(
+                      top: 0,
+                      child: _buttonNewCar()
+                  ),
+                ),
+              ),
+
+
+            ],
+          ),
+
+        ),
       ),
 
-
+      )
     );
 
   }
@@ -68,11 +88,14 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
   Widget _noCars() {
     return Column(
       children: [
-        Container(
-            margin: EdgeInsets.only(top: 30),
-            child: NoDataWidget(text: 'No tienes ningún Vehiculo, agrega uno')
+        InkWell(
+          child: Container(
+              margin: EdgeInsets.only(top: 0),
+              child: NoDataWidget(text: 'No tienes ningún Vehiculo, agrega uno')
+          ),
+          onTap: _con.goToNewCard,
         ),
-        _buttonNewCar()
+        // _buttonNewCar()
       ],
     );
   }
@@ -87,7 +110,7 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
             'Nuevo Vehiculo'
         ),
         style: ElevatedButton.styleFrom(
-            primary: MyColors.primaryColor
+            primary: Colors.black
         ),
       ),
     );
@@ -301,30 +324,31 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
       alignment: Alignment.centerLeft,
       margin: EdgeInsets.symmetric(horizontal: 40, vertical: 40),
       child: Text(
-        'Selecciona un vehiculo para el servicio ',
+        'Selecciona un vehiculo o añade uno ',
         style: TextStyle(
+          color: Colors.white,
             fontSize: 19,
-            fontFamily: 'Lexendeca-Black',
+            fontFamily: 'Lexendeca-Regular',
             fontWeight: FontWeight.bold
         ),
       ),
     );
   }
-
-  Widget _textSeleciion() {
-    return Container(
-      alignment: Alignment.centerLeft,
-      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 80),
-      child: Text(
-        'Presiona el botón para para seleccionar auto',
-        style: TextStyle(
-          fontFamily: 'Lexendeca-Regular',
-          fontSize: 15,
-
-        ),
-      ),
-    );
-  }
+  //
+  // Widget _textSeleciion() {
+  //   return Container(
+  //     alignment: Alignment.centerLeft,
+  //     margin: EdgeInsets.symmetric(horizontal: 40, vertical: 80),
+  //     child: Text(
+  //       'Presiona el botón para para seleccionar auto',
+  //       style: TextStyle(
+  //         fontFamily: 'Lexendeca-Regular',
+  //         fontSize: 15,
+  //
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _iconAdd() {
 

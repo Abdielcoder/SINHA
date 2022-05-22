@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -44,13 +46,18 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
   @override
   Widget build(BuildContext context) {
     return Container(//BODY BACKGROUND COLOR
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [Colors.blue.shade900, Colors.cyan.shade900])
-      ),
-      child: Scaffold(
+
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: ExactAssetImage("assets/img/astracitem.jpg"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: ClipRRect( // make sure we apply clip it properly
+    child: BackdropFilter(
+    filter: ImageFilter.blur(sigmaX: 30, sigmaY: 10),
+
+    child: Scaffold(
         //Bottom overflowed by x pixels when showing keyboard
         resizeToAvoidBottomInset : false,
         backgroundColor: Colors.transparent,
@@ -74,6 +81,8 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
 
         bottomNavigationBar: _buttonCreate(),
       ),
+    )
+        )
     );
   }
 
@@ -167,7 +176,7 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
             style: TextStyle(
               fontFamily: 'Lexendeca-Regular',
             ),),
-            color: MyColors.primaryColor,
+            color: Colors.black,
             textColor: Colors.white,
         ),
       ],
@@ -364,7 +373,7 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
         style: ElevatedButton.styleFrom(
 
           onPrimary: Colors.black,
-            primary: MyColors.primaryColor,
+            primary: Colors.black,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30)
             ),

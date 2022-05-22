@@ -13,6 +13,7 @@ import 'package:uber_clone_flutter/src/widgets/no_data_widget.dart';
 
 import '../../../../utils/animacion_particulas.dart';
 import '../../../drawer/DrawerScreen.dart';
+import '../../listcarspay/list_car_pay_page.dart';
 import '../../states/request/request_cleaner_page.dart';
 
 class ClientProductsListPage extends StatefulWidget {
@@ -159,12 +160,20 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
 
                             child: ElevatedButton(
                                 onPressed: () {
+                                  // Navigator.push(
+                                  //   context,
+                                  //   new MaterialPageRoute(
+                                  //     builder: (context) => new RequestCleanerPage(),
+                                  //   ),
+                                  // );
                                   Navigator.push(
                                     context,
                                     new MaterialPageRoute(
-                                      builder: (context) => new RequestCleanerPage(),
+                                      builder: (context) => new ListCarPayPage(),
                                     ),
                                   );
+
+
                                 },
                                 child: Text('SERVICIO'),
                                 style: ElevatedButton.styleFrom(

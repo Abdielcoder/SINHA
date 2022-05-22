@@ -8,6 +8,7 @@ import '../../../models/car.dart';
 import '../../../models/user.dart';
 import '../../../provider/car_provider.dart';
 import '../../../utils/dialog.dart';
+import '../create/client_car_create_page.dart';
 
 
 class ListCarPayController {
@@ -99,13 +100,12 @@ class ListCarPayController {
   }
 
   void goToNewCard() async {
-    var result = await Navigator.pushNamed(context, 'client/create/car');
+    Navigator.pushAndRemoveUntil<void>(
+      context,
+      MaterialPageRoute<void>(builder: (BuildContext context) => const CLientCarCreatePage()),
+      ModalRoute.withName('client/create/car'),
+    );
 
-    if (result != null) {
-      if (result) {
-        refresh();
-      }
-    }
   }
 
   void goBack() async {

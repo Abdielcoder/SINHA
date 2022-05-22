@@ -39,7 +39,7 @@ class ClientCarCreateController {
   TextEditingController marcaController = new TextEditingController();
   TextEditingController modeloController = new TextEditingController();
   TextEditingController placaController = new TextEditingController();
-  PickedFile pickedFile;
+  PickedFile pickedFile= null;
   File imageFile;
 
   CarProvider _carProvider = new CarProvider();
@@ -67,8 +67,9 @@ class ClientCarCreateController {
     pickedFile = await ImagePicker().getImage(source: imageSource);
     if (pickedFile != null) {
       imageFile = File(pickedFile.path);
+      Navigator.of(context, rootNavigator: true).pop('dialog');
     }
-    Navigator.pop(context);
+    // Navigator.pop(context);
     refresh();
   }
 
@@ -145,7 +146,9 @@ class ClientCarCreateController {
       MySnackbar.show(context, responseApi.message);
 
       if (responseApi.success) {
-        MyDialog.show(context, 'Vehículo Agregado','Tu Informacion se cargo correctamente','client/car/list');
+        //WHEN NO CARS ADDED
+        _progressDialog.close();
+        MyDialog.show(context, 'Vehículo Agregado','Tu Informacion se cargo correctamente','client/list/car/pay');
         // Future.delayed(Duration(seconds: 3), () {
         //   Navigator.pushReplacementNamed(context, 'login');
         // });
