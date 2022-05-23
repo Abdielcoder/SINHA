@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:uber_clone_flutter/src/models/order.dart';
 import 'package:uber_clone_flutter/src/models/product.dart';
 import 'package:uber_clone_flutter/src/utils/shared_pref.dart';
 
@@ -8,6 +9,7 @@ import '../../../models/car.dart';
 import '../../../models/user.dart';
 import '../../../provider/car_provider.dart';
 import '../../../utils/dialog.dart';
+import '../address/list/client_address_list_page.dart';
 import '../create/client_car_create_page.dart';
 
 
@@ -15,17 +17,12 @@ class ListCarPayController {
 
   BuildContext context;
   Function refresh;
-
   Product product;
-
   int counter = 1;
   double productPrice;
-
   SharedPref _sharedPref = new SharedPref();
-
   List<Product> selectedProducts = [];
   double total = 0;
-
   List<Car> cars = [];
   CarProvider _carProvider = new CarProvider();
   User user;
@@ -96,7 +93,13 @@ class ListCarPayController {
     // _sharedPref.save('cars', cars.id);
     // Car idcar = Car.fromJson(await _sharedPref.read('cars') ?? {});
     // print("valor id car : ${idcar}");
-    Navigator.pushNamed(context, 'client/address/list');
+
+    Navigator.push(
+      context,
+      new MaterialPageRoute(
+        builder: (context) => new ClientAddressListPage(),
+      ),
+    );
   }
 
   void goToNewCard() async {

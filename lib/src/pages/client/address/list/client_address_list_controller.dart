@@ -151,11 +151,9 @@ class ClientAddressListController {
 
 
   void getTotalPayment() {
-    progressDialog.show(max: 100, msg: 'Realizando transaccion');
-    selectedProducts.forEach((product) {
-      totalPayment = totalPayment + (product.quantity * product.price);
+    // progressDialog.show(max: 100, msg: 'Realizando transaccion');
+    totalPayment = 120;
       print('Total a pagar: ${(totalPayment*100).floor()}');
-    });
     refresh();
     progressDialog.close();
   }
