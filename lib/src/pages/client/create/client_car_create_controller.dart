@@ -5,6 +5,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'package:uber_clone_flutter/src/models/response_api.dart';
 import 'package:uber_clone_flutter/src/models/user.dart';
+import 'package:uber_clone_flutter/src/pages/client/listcars/client_car_list_page.dart';
+import 'package:uber_clone_flutter/src/pages/client/listcarspay/list_car_pay_page.dart';
 import 'package:uber_clone_flutter/src/provider/car_provider.dart';
 import 'package:uber_clone_flutter/src/utils/my_snackbar.dart';
 import 'package:uber_clone_flutter/src/utils/shared_pref.dart';
@@ -120,7 +122,7 @@ class ClientCarCreateController {
       MySnackbar.show(context, 'Selecciona una imagen');
       return;
     }
-    _progressDialog.show(max: 100, msg: 'Espere un momento...');
+    // _progressDialog.show(max: 100, msg: 'Espere un momento...');
 
     //CREATE OBJECT FROM INPUTS
     Car mycar = new Car(
@@ -138,7 +140,7 @@ class ClientCarCreateController {
     //SEND DATA INCLUDE DE IMAGE
     Stream stream = await _carProvider.createWithImage(mycar, imageFile);
     stream.listen((res) {
-      _progressDialog.close();
+      // _progressDialog.close();
 
       // ResponseApi responseApi = await usersProvider.create(user);
       ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
@@ -147,11 +149,17 @@ class ClientCarCreateController {
 
       if (responseApi.success) {
         //WHEN NO CARS ADDED
-        _progressDialog.close();
-        MyDialog.show(context, 'Vehículo Agregado','Tu Informacion se cargo correctamente','client/list/car/pay');
+        //
+        // MyDialog.show(context, 'Vehículo Agregado','Tu Informacion se cargo correctamente','client/list/car/pay');
         // Future.delayed(Duration(seconds: 3), () {
         //   Navigator.pushReplacementNamed(context, 'login');
         // });
+        Navigator.pushAndRemoveUntil<void>(
+          context,
+          MaterialPageRoute<void>(builder: (BuildContext context) => const ListCarPayPage()),
+          ModalRoute.withName('client/list/car/pay'),
+        );
+
       }
       // else {
       //   isEnable = true;
