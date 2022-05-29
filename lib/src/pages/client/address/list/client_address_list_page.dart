@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:lottie/lottie.dart';
 import 'package:uber_clone_flutter/src/models/addresss.dart';
 import 'package:uber_clone_flutter/src/models/cards_client.dart';
 import 'package:uber_clone_flutter/src/utils/my_colors.dart';
@@ -38,26 +40,48 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: MyColors.primaryColor,
-        title: Text('Direcciones'),
-        actions: [
-          _iconAdd()
-        ],
-      ),
-      body: Stack(
-        children: [
-          Positioned(
-              top: 0,
-              child: _textSelectAddress()
+      // appBar: AppBar(
+      //   backgroundColor: Colors.transparent,
+      //   title: Text('Direcciones'),
+      //   actions: [
+      //     _iconAdd()
+      //   ],
+      // ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: ExactAssetImage("assets/img/astracitem.jpg"),
+            fit: BoxFit.cover,
           ),
-          Container(
-              margin: EdgeInsets.only(top: 50),
-              child: _listAddress()
-          ),
+        ),
+          child: ClipRRect(
+
+            child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
 
 
-        ],
+    child: Stack(
+
+          children: [
+            Positioned.fill(
+                top: 100,
+                child: Align(
+                    alignment: Alignment.topCenter,
+                    child: _textSelectAddress()
+                )
+
+
+            ),
+            Container(
+                margin: EdgeInsets.only(top: 50),
+                child: _listAddress()
+            ),
+
+
+          ],
+        )
+    )
+    )
       ),
 
 
@@ -66,14 +90,17 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
   }
 
   Widget _noAddress() {
-    return Column(
-      children: [
-        Container(
-            margin: EdgeInsets.only(top: 30),
-            child: NoDataWidget(text: 'No tienes ninguna direccion agrega una nueva')
-        ),
-        _buttonNewAddress()
-      ],
+    return InkWell(
+      onTap: _con.goToNewAddress,
+      child: Column(
+        children: [
+          Container(
+              margin: EdgeInsets.only(top: 30),
+              child: NoDataWidget(text: 'No tienes ninguna direccion agrega una nueva')
+          ),
+          // _buttonNewAddress()
+        ],
+      ),
     );
   }
 
@@ -276,8 +303,7 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
 
   Widget _textSelectAddress() {
     return Container(
-      alignment: Alignment.centerLeft,
-      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+      margin: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
       child: Text(
         'Elige donde recibir tus compras',
         style: TextStyle(

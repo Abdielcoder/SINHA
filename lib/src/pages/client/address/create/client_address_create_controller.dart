@@ -9,6 +9,8 @@ import 'package:uber_clone_flutter/src/provider/address_provider.dart';
 import 'package:uber_clone_flutter/src/utils/my_snackbar.dart';
 import 'package:uber_clone_flutter/src/utils/shared_pref.dart';
 
+import '../list/client_address_list_page.dart';
+
 class ClientAddressCreateController {
 
   BuildContext context;
@@ -60,7 +62,11 @@ class ClientAddressCreateController {
         _sharedPref.save('address', address);
 
         MySnackbar.show(context, responseApi.message);
-        Navigator.pop(context, true);
+        Navigator.pushAndRemoveUntil<void>(
+          context,
+          MaterialPageRoute<void>(builder: (BuildContext context) => ClientAddressListPage()),
+          ModalRoute.withName('client/address/create'),
+        );
       }
     }catch(e){
       print('Error adress: ${e}');

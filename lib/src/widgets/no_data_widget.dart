@@ -20,7 +20,7 @@ class NoDataWidget extends StatelessWidget {
       ),
       child: ClipRRect( // make sure we apply clip it properly
         child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 30, sigmaY: 10),
+            filter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
 
                     child: Lottie.asset(
                         'assets/json/additem.json',

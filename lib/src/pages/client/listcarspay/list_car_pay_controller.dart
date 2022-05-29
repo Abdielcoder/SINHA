@@ -1,10 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:uber_clone_flutter/src/models/order.dart';
 import 'package:uber_clone_flutter/src/models/product.dart';
 import 'package:uber_clone_flutter/src/utils/shared_pref.dart';
-
 import '../../../models/car.dart';
 import '../../../models/user.dart';
 import '../../../provider/car_provider.dart';
@@ -94,12 +91,19 @@ class ListCarPayController {
     // Car idcar = Car.fromJson(await _sharedPref.read('cars') ?? {});
     // print("valor id car : ${idcar}");
 
-    Navigator.push(
+    // Navigator.push(
+    //   context,
+    //   new MaterialPageRoute(
+    //     builder: (context) => new ClientAddressListPage(),
+    //   ),
+    // );
+
+    Navigator.pushAndRemoveUntil<void>(
       context,
-      new MaterialPageRoute(
-        builder: (context) => new ClientAddressListPage(),
-      ),
+      MaterialPageRoute<void>(builder: (BuildContext context) => ClientAddressListPage()),
+      ModalRoute.withName('client/address/create'),
     );
+
   }
 
   void goToNewCard() async {

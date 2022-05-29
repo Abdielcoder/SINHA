@@ -14,6 +14,8 @@ import 'package:uber_clone_flutter/src/utils/my_snackbar.dart';
 // import 'package:uber_clone_flutter/src/provider/orders_provider.dart';
 import 'package:uber_clone_flutter/src/utils/shared_pref.dart';
 
+import '../create/client_address_create_page.dart';
+
 class ClientAddressListController {
 
   BuildContext context;
@@ -185,13 +187,26 @@ class ClientAddressListController {
   }
 
   void goToNewAddress() async {
-    var result = await Navigator.pushNamed(context, 'client/address/create');
+    // var result = await Navigator.pushNamed(context, 'client/address/create');
 
-    if (result != null) {
-      if (result) {
-        refresh();
-      }
-    }
+    // var result = await  Navigator.push(
+    //   context,
+    //   new MaterialPageRoute(
+    //     builder: (context) => new ClientAddressCreatePage(),
+    //   ),
+    // );
+
+    var result = await Navigator.pushAndRemoveUntil<void>(
+      context,
+      MaterialPageRoute<void>(builder: (BuildContext context) => const ClientAddressCreatePage()),
+      ModalRoute.withName('client/address/create'),
+    );
+
+    // if (result != null) {
+    //   if (result) {
+    //     refresh();
+    //   }
+    // }
   }
 
 }
