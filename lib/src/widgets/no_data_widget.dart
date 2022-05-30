@@ -14,7 +14,7 @@ class NoDataWidget extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: ExactAssetImage("assets/img/astracitem.jpg"),
+          image: ExactAssetImage("assets/img/encamino.jpg"),
           fit: BoxFit.cover,
         ),
       ),

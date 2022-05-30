@@ -49,7 +49,7 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
 
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: ExactAssetImage("assets/img/astracitem.jpg"),
+            image: ExactAssetImage("assets/img/encamino.jpg"),
             fit: BoxFit.cover,
           ),
         ),

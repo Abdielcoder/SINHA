@@ -36,13 +36,16 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
+        resizeToAvoidBottomInset : false,
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          title: Text('Atras'),
       ),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: ExactAssetImage("assets/img/astracitem.jpg"),
+            image: ExactAssetImage("assets/img/encamino.jpg"),
             fit: BoxFit.cover,
           ),
 
@@ -225,7 +228,7 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
                       backgroundImage: cars.image != null
                           ? NetworkImage(cars.image)
                           : AssetImage('assets/img/placac.png'),
-                      radius: 50,
+                      radius: 40,
                       backgroundColor: Colors.grey[200],
                     ),
                 )],
@@ -234,21 +237,22 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 8,bottom: 5),
+                      padding: const EdgeInsets.only(left: 28,bottom: 5),
                       child: Text(
                         cars?.marca ?? '',
                         style: TextStyle(
-                            color: MyColors.colorTitulosSegundos,
+                            color: MyColors.colorWhite,
                             fontSize: 13,
                             fontWeight: FontWeight.bold
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 8,bottom: 5),
+                      padding: const EdgeInsets.only(left: 28,bottom: 5),
                       child: Text(
                         cars?.modelo ?? '',
                         style: TextStyle(
+                          color: Colors.white54,
                           fontSize: 12,
                         ),
                       ),
@@ -263,7 +267,7 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
                       child: Text(
                         'AÑO',
                         style: TextStyle(
-                            color: MyColors.colorTitulosSegundos,
+                            color: MyColors.colorWhite,
                             fontSize: 13,
                             fontWeight: FontWeight.bold
                         ),
@@ -275,7 +279,7 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
                         cars?.year ?? '',
                         style: TextStyle(
                           fontSize: 12,
-
+                          color: Colors.white54,
                         ),
                       ),
                     ),
@@ -290,7 +294,7 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
                       child: Text(
                         'COLOR',
                         style: TextStyle(
-                            color: MyColors.colorTitulosSegundos,
+                            color: MyColors.colorWhite,
                             fontSize: 13,
                             fontWeight: FontWeight.bold
                         ),
@@ -300,7 +304,7 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
                       padding: const EdgeInsets.only(left: 18,bottom: 5),
                       child: CircleAvatar(
                         radius: 8,
-                        backgroundColor: Colors.black,
+                        backgroundColor: Colors.white,
                         child: CircleAvatar(
                           backgroundImage: cars.color != null
                               ? AssetImage('')
@@ -320,7 +324,7 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
                       child: Text(
                         'PLACA',
                         style: TextStyle(
-                            color: MyColors.colorTitulosSegundos,
+                            color: MyColors.colorWhite,
                             fontSize: 13,
                             fontWeight: FontWeight.bold
                         ),
@@ -332,7 +336,7 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
                         cars?.placa ?? '',
                         style: TextStyle(
                           fontSize: 12,
-
+                          color: Colors.white54,
                         ),
                       ),
                     ),
@@ -368,7 +372,7 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
       alignment: Alignment.centerLeft,
       margin: EdgeInsets.symmetric(horizontal: 40, vertical: 40),
       child: Text(
-        'Selecciona un vehiculo o añade uno ',
+        'Selecciona un vehículo o añade uno ',
         style: TextStyle(
           color: Colors.white,
             fontSize: 19,
