@@ -222,6 +222,11 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
                       }
                   ),
                     Container(
+                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.250),
+
+                      child: _buttonNewAddress(),
+                    ),
+                    Container(
                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.450),
 
                       child: _buttonAcceptCreateCard(),

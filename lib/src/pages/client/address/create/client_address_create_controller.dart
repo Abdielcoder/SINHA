@@ -36,12 +36,14 @@ class ClientAddressCreateController {
   void createAddress() async {
 
     try{
-      String addressName = 'Domicilio conocido';
-      String neighborhood = 'Sin número';
+      String addressName = refPointController.text;
+      String neighborhood = '';
       double lat = refPoint['lat'] ?? 0;
       double lng = refPoint['lng'] ?? 0;
 
-      if (addressName.isEmpty || neighborhood.isEmpty || lat == 0 || lng == 0) {
+      print('Valores map: $addressName');
+
+      if (addressName.isEmpty ||  lat == 0 || lng == 0) {
         MySnackbar.show(context, 'Completa todos los campos');
         return;
       }
