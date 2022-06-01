@@ -36,8 +36,8 @@ class ClientAddressCreateController {
   void createAddress() async {
 
     try{
-      String addressName = addressController.text;
-      String neighborhood = neighborhoodController.text;
+      String addressName = 'Domicilio conocido';
+      String neighborhood = 'Sin número';
       double lat = refPoint['lat'] ?? 0;
       double lng = refPoint['lng'] ?? 0;
 
