@@ -7,6 +7,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:lottie/lottie.dart';
 import 'package:uber_clone_flutter/src/models/addresss.dart';
 import 'package:uber_clone_flutter/src/models/cards_client.dart';
+import 'package:uber_clone_flutter/src/pages/client/address/create/client_address_create_page.dart';
 import 'package:uber_clone_flutter/src/utils/my_colors.dart';
 import 'package:uber_clone_flutter/src/widgets/no_data_widget.dart';
 import 'package:auto_reload/auto_reload.dart';
@@ -40,13 +41,6 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Colors.transparent,
-      //   title: Text('Direcciones'),
-      //   actions: [
-      //     _iconAdd()
-      //   ],
-      // ),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -55,16 +49,12 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
           ),
         ),
           child: ClipRRect(
-
             child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
-
-
+                filter: ImageFilter.blur(sigmaX: 140, sigmaY: 100),
     child: Stack(
-
           children: [
             Positioned.fill(
-                top: 100,
+                top: 170,
                 child: Align(
                     alignment: Alignment.topCenter,
                     child: _textSelectAddress()
@@ -73,7 +63,7 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
 
             ),
             Container(
-                margin: EdgeInsets.only(top: 50),
+                margin: EdgeInsets.only(top: 10),
                 child: _listAddress()
             ),
 
@@ -106,62 +96,160 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
 
 
   Widget _buttonNewAddress() {
-    return Container(
-      height: 40,
-      child: ElevatedButton(
-        onPressed: _con.goToNewAddress,
-        child: Text(
-            'Nueva direccion'
+    return SizedBox(
+      width: 100,
+      height: 140,
+      child: Stack(children: [
+        Container(
+          height: 500,
+          width: 500,
+          child: Lottie.asset(
+            'assets/json/pulse.json',
+            width: 500,
+            height: 500,
+          ),
         ),
-        style: ElevatedButton.styleFrom(
-            primary: MyColors.primaryColor
+        Center(
+          child: GestureDetector(
+            child: Container(
+              height: 60,
+              width: 60,
+              child: Center(
+                child: Image.asset(
+                  "./assets/images/pinmaps.png",
+                  width: 600,
+                ),
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(99),
+                color: Colors.deepPurpleAccent,
+                boxShadow: [
+                  BoxShadow(color: Colors.white, spreadRadius: 3),
+                ],
+              ),
+
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                new MaterialPageRoute(
+                  builder: (context) => new ClientAddressCreatePage(),
+                ),
+              );
+            },
+          ),
+
         ),
-      ),
+
+      ]),
     );
   }
 
   Widget _buttonAccept() {
-
-      return Container(
-        height: 50,
-        width: double.infinity,
-        margin: EdgeInsets.symmetric(horizontal: 50),
-        child: ElevatedButton(
-          onPressed:  _con.createOrder,
-          child: Text(
-              'Pagar con tarjeta'
-
-          ),
-          style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30)
-              ),
-              primary: MyColors.primaryColor
+    return SizedBox(
+      width: 100,
+      height: 140,
+      child: Stack(children: [
+        Container(
+          height: 500,
+          width: 500,
+          child: Lottie.asset(
+            'assets/json/pulse.json',
+            width: 500,
+            height: 500,
           ),
         ),
-      );
 
+        Center(
+          child: GestureDetector(
+
+            child: Container(
+              height: 60,
+              width: 60,
+
+              child: Center(
+
+                child: Image.asset(
+                  "./assets/images/debit.png",
+                  width: 600,
+                ),
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(99),
+                color: Colors.deepPurpleAccent,
+                boxShadow: [
+                  BoxShadow(color: Colors.white, spreadRadius: 3),
+                ],
+              ),
+
+            ),
+            // onTap: () {
+            //   Navigator.push(
+            //     context,
+            //     new MaterialPageRoute(
+            //       builder: (context) => new ClientMenuListPage(),
+            //     ),
+            //   );
+            // },
+          ),
+
+        ),
+
+      ]),
+    );
   }
 
   Widget _buttonAcceptCash() {
-
-    return Container(
-      height: 50,
-      width: double.infinity,
-      margin: EdgeInsets.symmetric( horizontal: 50),
-      child: ElevatedButton(
-        onPressed:  _con.createOrderCash,
-        child: Text(
-            'Pagar con efectivo'
-
+    return SizedBox(
+      width: 100,
+      height: 140,
+      child: Stack(children: [
+        Container(
+          height: 500,
+          width: 500,
+          child: Lottie.asset(
+            'assets/json/pulse.json',
+            width: 500,
+            height: 500,
+          ),
         ),
-        style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30)
+
+        Center(
+          child: GestureDetector(
+
+            child: Container(
+              height: 60,
+              width: 60,
+
+              child: Center(
+
+                child: Image.asset(
+                  "./assets/images/coin.png",
+                  width: 600,
+                ),
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(99),
+                color: Colors.deepPurpleAccent,
+                boxShadow: [
+                  BoxShadow(color: Colors.white, spreadRadius: 3),
+                ],
+              ),
+
             ),
-            primary: MyColors.primaryColor
+            // onTap: () {
+            //   Navigator.push(
+            //     context,
+            //     new MaterialPageRoute(
+            //       builder: (context) => new ClientMenuListPage(),
+            //     ),
+            //   );
+            // },
+          ),
+
         ),
-      ),
+
+      ]),
     );
 
   }
@@ -169,39 +257,57 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
 
 
   Widget _buttonAcceptCreateCard() {
-
-      return Container(
-        height: 50,
-        width: double.infinity,
-        margin: EdgeInsets.symmetric( horizontal: 50),
-        child: ElevatedButton(
-          onPressed: (){
-            _con.cardsStore.length > 2?AwesomeDialog(
-              context: context,
-              dialogType: DialogType.ERROR,
-              animType: AnimType.BOTTOMSLIDE,
-              title: 'Solo puedes ingresar hasta 3 tarjetas elimina Una.',
-              desc: '',
-              btnOkOnPress: () {
-
-              },
-            ).show():Navigator.pushNamed(
-                context,
-                'client/payments/create');
-            ;
-          },
-          child: Text(
-              'Agregar Tarjeta'
-          ),
-          style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30)
-              ),
-              primary: MyColors.primaryColor
+    return SizedBox(
+      width: 100,
+      height: 140,
+      child: Stack(children: [
+        Container(
+          height: 500,
+          width: 500,
+          child: Lottie.asset(
+            'assets/json/pulse.json',
+            width: 500,
+            height: 500,
           ),
         ),
-      );
 
+        Center(
+          child: GestureDetector(
+
+            child: Container(
+              height: 60,
+              width: 60,
+
+              child: Center(
+
+                child: Image.asset(
+                  "./assets/images/creditcard.png",
+                  width: 50,
+                ),
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(99),
+                color: Colors.deepPurpleAccent,
+                boxShadow: [
+                  BoxShadow(color: Colors.white, spreadRadius: 3),
+                ],
+              ),
+
+            ),
+            // onTap: () {
+            //   Navigator.push(
+            //     context,
+            //     new MaterialPageRoute(
+            //       builder: (context) => new ClientMenuListPage(),
+            //     ),
+            //   );
+            // },
+          ),
+
+        ),
+
+      ]),
+    );
 
   }
 
@@ -214,32 +320,123 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
             if (snapshot.data.length > 0) {//VALIDATED
 
               return Stack(
-                  children: [ListView.builder(
-                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                      itemCount: snapshot.data?.length ?? 0,
-                      itemBuilder: (_, index) {
-                        return _radioSelectorAddress(snapshot.data[index], index);
-                      }
+                  children: [Container(
+                    margin: EdgeInsets.only(top:180),
+                    child: ListView.builder(
+                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                        itemCount: snapshot.data?.length ?? 0,
+                        itemBuilder: (_, index) {
+                          return _radioSelectorAddress(snapshot.data[index], index);
+                        }
+                    ),
                   ),
-                    Container(
-                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.250),
 
-                      child: _buttonNewAddress(),
+                     Container(
+                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.height * 0.050),
+                       child: Row(
+                            // mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                               child:  _buttonNewAddress(),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  'Agrega Dirección',
+                                    style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Roboto',
+                                    ),
+
+                                ),
+                              ),
+
+                            ],
+                          ),
+                     ),
+
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(left: MediaQuery.of(context).size.height * 0.050,top:MediaQuery.of(context).size.height * 0.590),
+                          child: Row(
+                            // mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                child:  _buttonAccept(),
+                              ),
+                              Expanded(
+                                child: Text(
+                                    'Añade \n Tarjeta',
+                                      style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Roboto',
+                                      ),
+                                ),
+                              ),
+
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    Container(
-                     margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.450),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(left: MediaQuery.of(context).size.height * 0.250,top:MediaQuery.of(context).size.height * 0.590),
+                          child: Row(
+                            // mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                child:  _buttonAcceptCreateCard(),
+                              ),
+                              Expanded(
+                                child: Text(
+                                    'Pago \nTarjeta',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Roboto',
+                                  ),
+                                ),
+                              ),
 
-                      child: _buttonAcceptCreateCard(),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    Container(
-                     margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.550),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(left: MediaQuery.of(context).size.height * 0.430,top:MediaQuery.of(context).size.height * 0.590),
+                          child: Row(
+                            // mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                child:  _buttonAcceptCash(),
+                              ),
+                              Expanded(
+                                child: Text(
+                                    'Pago\n Efectivo',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Roboto',
+                                  ),
+                                ),
+                              ),
 
-                      child: _buttonAccept(),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.650),
-
-                      child: _buttonAcceptCash(),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ]
               );
@@ -264,14 +461,14 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
   Widget _radioSelectorAddress(Addresss address, int index) {
 
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20),
+      margin: EdgeInsets.only(top:0,right: 40,left: 40),
       child: Column(
         children: [
           Row(
-
             children: [
-
               Radio(
+                fillColor: MaterialStateColor.resolveWith((states) => Colors.white),
+
                 value: index,
                 groupValue: _con.radioValue,
                 onChanged:_con.handleRadioValueChange,
@@ -283,16 +480,18 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
                   Text(
                     address?.address ?? '',
                     style: TextStyle(
+                      color: Colors.white,
                         fontSize: 13,
                         fontWeight: FontWeight.bold
                     ),
                   ),
-                  Text(
-                    address?.neighborhood ?? '',
-                    style: TextStyle(
-                      fontSize: 12,
-                    ),
-                  )
+                  // Text(
+                  //   address?.neighborhood ?? '',
+                  //   style: TextStyle(
+                  //     color: Colors.white,
+                  //     fontSize: 12,
+                  //   ),
+                  // )
                 ],
               ),
 
@@ -313,6 +512,8 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
         'Elige donde recibir tus compras',
         style: TextStyle(
             fontSize: 19,
+            fontFamily: 'NimbusSans',
+            color: Colors.white,
             fontWeight: FontWeight.bold
         ),
       ),
