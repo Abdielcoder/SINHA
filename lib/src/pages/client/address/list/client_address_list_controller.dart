@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 import 'package:uber_clone_flutter/src/models/addresss.dart';
@@ -13,7 +14,9 @@ import 'package:uber_clone_flutter/src/provider/orders_provider.dart';
 import 'package:uber_clone_flutter/src/utils/my_snackbar.dart';
 // import 'package:uber_clone_flutter/src/provider/orders_provider.dart';
 import 'package:uber_clone_flutter/src/utils/shared_pref.dart';
-
+import 'package:easy_dialog/easy_dialog.dart';
+import '../../products/list/client_menu_list.dart';
+import '../../states/request/request_cleaner_page.dart';
 import '../create/client_address_create_page.dart';
 
 class ClientAddressListController {
@@ -55,7 +58,7 @@ class ClientAddressListController {
     _ordersProvider.init(context, user);
     _stripeProvider.init(context);
     getTotalPayment();
-
+    selectedProducts.clear();
     Addresss a = Addresss.fromJson(await _sharedPref.read('address') ?? {});
     if (a.id !=null) {
 
@@ -103,6 +106,7 @@ class ClientAddressListController {
     int index =    selectedProducts.indexWhere((p) => p.id == product.id);
     selectedProducts[index].quantity = selectedProducts[index].quantity;
     _sharedPref.save('order', selectedProducts);
+
   }
 
   void createOrder() async {
@@ -151,6 +155,7 @@ class ClientAddressListController {
     creteService();
     //Reading addresses in Shared preferences
     Addresss addresses = Addresss.fromJson(await _sharedPref.read('address') ?? {});
+
     //Reading de Order
     List<Product> selectedProducts = Product.fromJsonList(await _sharedPref.read('order')).toList;
     print('ClientAdreess *SELECTED PRODUCTS CONTAINS*: $selectedProducts');
@@ -158,21 +163,28 @@ class ClientAddressListController {
     Order order = new Order(
         idClient: user.id,
         idAddress: addresses.id,
+        lat: addresses.lat,
+        lng: addresses.lng,
         products: selectedProducts
     );
+
     //Sending data to API
     ResponseApi responseApi = await _ordersProvider.createOrderCash(order);
     if(responseApi.success){
-      print('ClientAdreess *PAGO TOTAL* : $totalPayment');
       SharedPreferences preferences = await SharedPreferences.getInstance();
+      await preferences.remove('order');
+      print('ClientAdreess *PAGO TOTAL* : $totalPayment');
+
       //Remove order when order s successful
       await preferences.remove('order');
       Future.delayed(Duration.zero, () {
-        Navigator.pushNamedAndRemoveUntil(
-            context,
-            'client/products/list',
-                (route) => false,
+
+        Navigator.pushAndRemoveUntil<void>(
+          context,
+          MaterialPageRoute<void>(builder: (BuildContext context) => const RequestCleanerPage()),
+          ModalRoute.withName('client/states/cleaner',),
         );
+
       });
 
     }

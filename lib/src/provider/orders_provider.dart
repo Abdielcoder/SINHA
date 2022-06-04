@@ -128,6 +128,7 @@ class OrdersProvider {
     try {
       Uri url = Uri.http(_url, '$_api/create/cash');
       String bodyParams = json.encode(order);
+      print('OrdersProvider *BODY PARAMS* $bodyParams');
       Map<String, String> headers = {
         'Content-type': 'application/json',
         'Authorization': sessionUser.sessionToken
