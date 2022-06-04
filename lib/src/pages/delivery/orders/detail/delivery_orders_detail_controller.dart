@@ -63,8 +63,6 @@ class DeliveryOrdersDetailController {
 
   void updateOrder() async {
 
-    // order.idClient = idClient;
-
     if (order.status == 'DESPACHADO') {
       ResponseApi responseApi = await _ordersProvider.updateToOnTheWay(order);
 

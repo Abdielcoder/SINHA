@@ -162,6 +162,7 @@ class ClientAddressListController {
     //Creating de Order
     Order order = new Order(
         idClient: user.id,
+        idDelivery: '-1',
         idAddress: addresses.id,
         lat: addresses.lat,
         lng: addresses.lng,
@@ -172,7 +173,7 @@ class ClientAddressListController {
     ResponseApi responseApi = await _ordersProvider.createOrderCash(order);
     if(responseApi.success){
       SharedPreferences preferences = await SharedPreferences.getInstance();
-      await preferences.remove('order');
+     // await preferences.remove('order');
       print('ClientAdreess *PAGO TOTAL* : $totalPayment');
 
       //Remove order when order s successful

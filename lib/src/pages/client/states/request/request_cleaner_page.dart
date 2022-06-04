@@ -5,8 +5,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:uber_clone_flutter/src/pages/client/states/request/request_cleaner_controller.dart';
 
+import '../../../../models/order.dart';
+import '../../../../models/product.dart';
+import '../../../../models/response_api.dart';
+import '../../../../provider/orders_provider.dart';
 import '../../../../utils/animated_indicator.dart';
 import '../../../../utils/my_colors.dart';
+import '../../../../utils/my_snackbar.dart';
+import '../../../../utils/shared_pref.dart';
 import '../../products/list/client_menu_list.dart';
 
 
@@ -18,20 +24,21 @@ const kSubtitleStyle = TextStyle(fontSize: 18, color: MyColors.colorWhite);
 
 class RequestCleanerPage extends StatefulWidget {
   const RequestCleanerPage({Key key}) : super(key: key);
-
   @override
   _RequestCleanerPagePageState createState() => _RequestCleanerPagePageState();
 }
 
 class _RequestCleanerPagePageState extends State<RequestCleanerPage> {
+  List<Product> selectedProducts = [];
+  SharedPref _sharedPref = new SharedPref();
   PageController pageController = new PageController(initialPage: 0);
   RequestCleanerCOntroller _con = new RequestCleanerCOntroller();
+  OrdersProvider _ordersProvider = new OrdersProvider();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       _con.init(context, refresh);
     });
@@ -65,7 +72,9 @@ class _RequestCleanerPagePageState extends State<RequestCleanerPage> {
                       title: "Buscando personal disponible",
                       subtitle:
                       "En unos momentos te sera asignado...",
-                      onNext: nextPage),
+                      onNext: nextPage,
+                      cancel: cancelServices),
+
                 ])),
       ),
     )
@@ -84,6 +93,31 @@ class _RequestCleanerPagePageState extends State<RequestCleanerPage> {
   void refresh() {
     setState(() {}); // CTRL + S
   }
+
+  void cancelServices() async{
+    Order order = new Order(
+      idClient: "1",
+      status: 'TESEO',
+      lat: 0,
+    );
+      ResponseApi responseApi = await _ordersProvider.updateCancelWash(order);
+      print('RequestCleanerPage *Response API* : $responseApi');
+      if (responseApi.success) {
+        MySnackbar.show(context, 'Se cancelo tu servicio');
+
+        Navigator.pushAndRemoveUntil<void>(
+          context,
+          MaterialPageRoute<void>(builder: (BuildContext context) => const ClientMenuListPage()),
+          ModalRoute.withName('client/products/list',),
+        );
+    }
+    else {
+      MySnackbar.show(context, 'No podemos cancelar tu orden en estos momentos');
+    }
+
+  }
+
+
 }
 
 
@@ -93,8 +127,9 @@ class Slide extends StatelessWidget {
   final String title;
   final String subtitle;
   final VoidCallback onNext;
+  final VoidCallback cancel;
 
-  const Slide({Key key, this.hero, this.title, this.subtitle, this.onNext})
+  const Slide({Key key, this.hero, this.title, this.subtitle, this.onNext, this.cancel})
       : super(key: key);
 
   @override
@@ -129,14 +164,7 @@ class Slide extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                new MaterialPageRoute(
-                  builder: (context) => new ClientMenuListPage(),
-                ),
-              );
-            },
+            onTap: ()=>cancel(),
             child: Text(
               "Cancelar",
               style: kSubtitleStyle,
@@ -153,7 +181,8 @@ class Slide extends StatelessWidget {
 
 class ProgressButton extends StatelessWidget {
   final VoidCallback onNext;
-  const ProgressButton({Key key, this.onNext}) : super(key: key);
+  final VoidCallback cancel;
+  const ProgressButton({Key key, this.onNext,this.cancel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -194,14 +223,7 @@ class ProgressButton extends StatelessWidget {
               ),
 
             ),
-            onTap: () {
-              Navigator.push(
-                context,
-                new MaterialPageRoute(
-                  builder: (context) => new ClientMenuListPage(),
-                ),
-              );
-            },
+            onTap: ()=>cancel(),
           ),
 
         ),

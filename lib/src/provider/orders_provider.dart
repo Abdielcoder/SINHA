@@ -22,6 +22,9 @@ class OrdersProvider {
     this.sessionUser = sessionUser;
   }
 
+
+
+
   //Get oder by status
   Future<List<Order>> getByStatus(String status) async {
     try {
@@ -150,6 +153,32 @@ class OrdersProvider {
     }
   }
 
+  // Future<ResponseApi> updateCancelOrder(Order order) async {
+  //   try {
+  //     Uri url = Uri.http(_url, '$_api/updateCancelOrder');
+  //     String bodyParams = json.encode(order);
+  //     Map<String, String> headers = {
+  //       'Content-type': 'application/json',
+  //
+  //     };
+  //     final res = await http.put(url, headers: headers, body: bodyParams);
+  //
+  //     if (res.statusCode == 401) {
+  //       MySnackbar.show(context, 'Sesion expirada');
+  //
+  //     }
+  //
+  //     final data = json.decode(res.body);
+  //     ResponseApi responseApi = ResponseApi.fromJson(data);
+  //     return responseApi;
+  //   }
+  //   catch(e) {
+  //     print('Error: $e');
+  //     return null;
+  //   }
+  // }
+
+
   Future<ResponseApi> updateToDispatched(Order order) async {
     try {
       Uri url = Uri.http(_url, '$_api/updateToDispatched');
@@ -224,6 +253,32 @@ class OrdersProvider {
       return null;
     }
   }
+
+  Future<ResponseApi> updateCancelWash(Order order) async {
+    try {
+      Uri url = Uri.http(_url, '$_api/updateCancelWash');
+      String bodyParams = json.encode(order);
+      Map<String, String> headers = {
+        'Content-type': 'application/json',
+
+      };
+      final res = await http.put(url, headers: headers, body: bodyParams);
+
+      if (res.statusCode == 401) {
+        MySnackbar.show(context, 'Sesion expirada');
+
+      }
+
+      final data = json.decode(res.body);
+      ResponseApi responseApi = ResponseApi.fromJson(data);
+      return responseApi;
+    }
+    catch(e) {
+      print('Error: $e');
+      return null;
+    }
+  }
+
 
   Future<ResponseApi> updateLatLng(Order order) async {
     try {
