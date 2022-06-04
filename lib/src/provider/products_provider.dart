@@ -24,6 +24,7 @@ class ProductsProvider {
     this.sessionUser = sessionUser;
   }
 
+  //Products By Category
   Future<List<Product>> getByCategory(String idCategory) async {
     try {
       Uri url = Uri.http(_url, '$_api/findByCategory/$idCategory');
@@ -48,6 +49,7 @@ class ProductsProvider {
     }
   }
 
+  //Category and product
   Future<List<Product>> getByCategoryAndProductName(String idCategory, String productName) async {
     try {
       Uri url = Uri.http(_url, '$_api/findByCategoryAndProductName/$idCategory/$productName');

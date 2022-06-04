@@ -22,6 +22,7 @@ class OrdersProvider {
     this.sessionUser = sessionUser;
   }
 
+  //Get oder by status
   Future<List<Order>> getByStatus(String status) async {
     try {
       print('SESION TOKEN: ${sessionUser.sessionToken}');
@@ -46,6 +47,7 @@ class OrdersProvider {
     }
   }
 
+  //
   Future<List<Order>> getByDeliveryAndStatus(String idDelivery, String status) async {
     try {
       print('SESION TOKEN: ${sessionUser.sessionToken}');
@@ -70,6 +72,7 @@ class OrdersProvider {
     }
   }
 
+  //
   Future<List<Order>> getByClientAndStatus(String idClient, String status) async {
     try {
       print('SESION TOKEN: ${sessionUser.sessionToken}');
@@ -94,6 +97,7 @@ class OrdersProvider {
     }
   }
 
+  //Create client order by credit card
   Future<ResponseApi> create(Order order) async {
     try {
       Uri url = Uri.http(_url, '$_api/create');
@@ -119,6 +123,7 @@ class OrdersProvider {
     }
   }
 
+  //Create order By cash payment
   Future<ResponseApi> createOrderCash(Order order) async {
     try {
       Uri url = Uri.http(_url, '$_api/create/cash');

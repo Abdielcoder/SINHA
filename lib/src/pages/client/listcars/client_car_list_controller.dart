@@ -9,22 +9,17 @@ import '../../../models/user.dart';
 import '../../../provider/car_provider.dart';
 import '../../../utils/dialog.dart';
 
-
+//CAR LIST Various items
 class ClientCarListController {
 
   BuildContext context;
   Function refresh;
-
   Product product;
-
   int counter = 1;
   double productPrice;
-
   SharedPref _sharedPref = new SharedPref();
-
   List<Product> selectedProducts = [];
   double total = 0;
-
   List<Car> cars = [];
   CarProvider _carProvider = new CarProvider();
   User user;
@@ -47,6 +42,7 @@ class ClientCarListController {
     getTotal();
     refresh();
   }
+  //Get car list
   Future<List<Car>> getCars() async {
     cars = await _carProvider.getByUser(user.id);
     //
@@ -62,6 +58,7 @@ class ClientCarListController {
     print('LO QUE TREA CARS  ${cars.toString()}');
     return cars;
   }
+  //Get total price
   void getTotal() {
     total = 0;
     selectedProducts.forEach((product) {
@@ -71,6 +68,7 @@ class ClientCarListController {
     refresh();
   }
 
+  //Add item to list
   void addItem(Product product) {
     int index = selectedProducts.indexWhere((p) => p.id == product.id);
     selectedProducts[index].quantity = selectedProducts[index].quantity + 1;
@@ -78,6 +76,7 @@ class ClientCarListController {
     getTotal();
   }
 
+  //Remove item from list
   void removeItem(Car cars) {
     // if (cars.quantity > 1) {
     //   int index = selectedProducts.indexWhere((p) => p.id == product.id);
@@ -86,6 +85,7 @@ class ClientCarListController {
     //   getTotal();
     // }
   }
+
 
   void deleteItem(Car cars) {
     MyDialog.info(context, 'ELIMINAR','¿Quieres eliminar el Vehiculo?...','client/car/list',cars.id);

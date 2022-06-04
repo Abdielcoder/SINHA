@@ -64,6 +64,20 @@ class ClientAddressListController {
   }
 
 
+
+
+
+  //
+  // //Create Item product
+  // void addItem(Product product) {
+  //   int index = selectedProducts.indexWhere((p) => p.id == product.id);
+  //   selectedProducts[index].quantity = selectedProducts[index].quantity + 1;
+  //   _sharedPref.save('order', selectedProducts);
+  //   getTotal();
+  // }
+
+
+
   void getCards() async {
     cardsStore.forEach((c) {
       print('Tarjetas listadas ${c.toJson()}');
@@ -71,6 +85,26 @@ class ClientAddressListController {
 
     });
   }
+  //Create service lavado.
+  void creteService(){
+    //Create procduct
+
+    Product product = new Product(
+      id: '1',
+      name: 'Lavado',
+      description: 'Lavado Exterior de Vehiculo',
+      price: 120,
+      idCategory: 1,
+      quantity: 1,
+    );
+    //Adding elements to selected products
+    selectedProducts.add(product);
+    //Save order to shared preferences.
+    int index =    selectedProducts.indexWhere((p) => p.id == product.id);
+    selectedProducts[index].quantity = selectedProducts[index].quantity;
+    _sharedPref.save('order', selectedProducts);
+  }
+
   void createOrder() async {
       //
       // Addresss a = Addresss.fromJson(await _sharedPref.read('address') ?? {});
@@ -112,41 +146,39 @@ class ClientAddressListController {
 
   }
 
+  //Orden que se paga en efectivo
   void createOrderCash() async {
-
-    Addresss a = Addresss.fromJson(await _sharedPref.read('address') ?? {});
+    creteService();
+    //Reading addresses in Shared preferences
+    Addresss addresses = Addresss.fromJson(await _sharedPref.read('address') ?? {});
+    //Reading de Order
     List<Product> selectedProducts = Product.fromJsonList(await _sharedPref.read('order')).toList;
+    print('ClientAdreess *SELECTED PRODUCTS CONTAINS*: $selectedProducts');
+    //Creating de Order
     Order order = new Order(
         idClient: user.id,
-        idAddress: a.id,
+        idAddress: addresses.id,
         products: selectedProducts
     );
+    //Sending data to API
     ResponseApi responseApi = await _ordersProvider.createOrderCash(order);
-
-
     if(responseApi.success){
-      print('@222222 $totalPayment');
+      print('ClientAdreess *PAGO TOTAL* : $totalPayment');
       SharedPreferences preferences = await SharedPreferences.getInstance();
+      //Remove order when order s successful
       await preferences.remove('order');
       Future.delayed(Duration.zero, () {
-        //Navigator.pushNamed(context, '  3
-        // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ aQ433client/payments/stripe/existingcards');
         Navigator.pushNamedAndRemoveUntil(
             context,
             'client/products/list',
                 (route) => false,
-
         );
       });
 
     }
     // Navigator.pushNamedAndRemoveUntil(context, 'client/payments/status', (route) => false);
-    print('Producto seleccionado: ${responseApi.message}');
+    print('ClientAdreess *Response API* : ${responseApi.message}');
     progressDialog.close();
-
-    // }else{
-    //   progressDialog.close();
-    // }
 
   }
 
@@ -208,5 +240,7 @@ class ClientAddressListController {
     //   }
     // }
   }
+
+
 
 }

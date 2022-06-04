@@ -78,8 +78,6 @@ class StripeExistingCardsController {
 
   void createOrder() async {
 
-
-
     Addresss a = Addresss.fromJson(await _sharedPref.read('address') ?? {});
     List<Product> selectedProducts = Product.fromJsonList(await _sharedPref.read('order')).toList;
     Order order = new Order(

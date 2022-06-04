@@ -183,14 +183,8 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
               ),
 
             ),
-            // onTap: () {
-            //   Navigator.push(
-            //     context,
-            //     new MaterialPageRoute(
-            //       builder: (context) => new ClientMenuListPage(),
-            //     ),
-            //   );
-            // },
+            onTap: () {}
+
           ),
 
         ),
@@ -237,14 +231,7 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
               ),
 
             ),
-            // onTap: () {
-            //   Navigator.push(
-            //     context,
-            //     new MaterialPageRoute(
-            //       builder: (context) => new ClientMenuListPage(),
-            //     ),
-            //   );
-            // },
+            onTap: _con.createOrderCash,
           ),
 
         ),
@@ -520,13 +507,13 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
     );
   }
 
-
-  Widget _iconAdd() {
-    return IconButton(
-        onPressed: _con.goToNewAddress,
-        icon: Icon(Icons.add, color: Colors.white)
-    );
-  }
+  //
+  // Widget _iconAdd() {
+  //   return IconButton(
+  //       onPressed: _con.goToNewAddress,
+  //       icon: Icon(Icons.add, color: Colors.white)
+  //   );
+  // }
 
   void refresh() {
     setState(() {
