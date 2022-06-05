@@ -44,7 +44,7 @@ class StripeExistingCardsController {
     cardsStore = CardClient.fromJsonList(await _sharedPref.read('card')).toList;
 
     Map<String, dynamic> arguments = ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
-    totalPs = arguments['totalPs'];
+    totalPs = 120;
 
     print('@222222ww222222 $totalPs');
     getCards();

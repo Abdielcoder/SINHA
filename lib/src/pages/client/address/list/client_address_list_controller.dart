@@ -15,6 +15,7 @@ import 'package:uber_clone_flutter/src/utils/my_snackbar.dart';
 // import 'package:uber_clone_flutter/src/provider/orders_provider.dart';
 import 'package:uber_clone_flutter/src/utils/shared_pref.dart';
 import 'package:easy_dialog/easy_dialog.dart';
+import '../../payments/stripe/stripe_existing_cards_page.dart';
 import '../../products/list/client_menu_list.dart';
 import '../../states/request/request_cleaner_page.dart';
 import '../create/client_address_create_page.dart';
@@ -32,7 +33,7 @@ class ClientAddressListController {
   int radioValue = 0;
   bool elestado = false;
   bool isCreated;
-  double totalPayment = 0;
+  double totalPayment = 120;
   double totalPaymentD = 0;
   String pago = '';
   Map<String, dynamic> dataIsCreated;
@@ -57,7 +58,7 @@ class ClientAddressListController {
     _addressProvider.init(context, user);
     _ordersProvider.init(context, user);
     _stripeProvider.init(context);
-    getTotalPayment();
+    //getTotalPayment();
     selectedProducts.clear();
     Addresss a = Addresss.fromJson(await _sharedPref.read('address') ?? {});
     if (a.id !=null) {
@@ -110,44 +111,53 @@ class ClientAddressListController {
   }
 
   void createOrder() async {
-      //
-      // Addresss a = Addresss.fromJson(await _sharedPref.read('address') ?? {});
-      // List<Product> selectedProducts = Product.fromJsonList(await _sharedPref.read('order')).toList;
-      // Order order = new Order(
-      //     idClient: user.id,
-      //     idAddress: a.id,
-      //     products: selectedProducts
-      // );
-      // ResponseApi responseApi = await _ordersProvider.create(order);
-      //
-      //
-      // if(responseApi.success){
-      //   print('@222222 $totalPayment');
-      //   SharedPreferences preferences = await SharedPreferences.getInstance();
-      //   await preferences.remove('order');
+
+      Addresss a = Addresss.fromJson(await _sharedPref.read('address') ?? {});
+      List<Product> selectedProducts = Product.fromJsonList(await _sharedPref.read('order')).toList;
+      Order order = new Order(
+          idClient: user.id,
+          idAddress: a.id,
+          products: selectedProducts
+      );
+      ResponseApi responseApi = await _ordersProvider.create(order);
+      if(responseApi.success) {
+        print('@222222 $totalPayment');
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.remove('order');
         Future.delayed(Duration.zero, () {
           //Navigator.pushNamed(context, '  3
           // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ aQ433client/payments/stripe/existingcards');
-          Navigator.pushNamedAndRemoveUntil(
-               context,
-              'client/payments/stripe/existingcards',
-                  (route) => false,
-              arguments: {
-              'totalPs': totalPayment,
+          // Navigator.pushNamedAndRemoveUntil(
+          //     context,
+          //     'client/payments/stripe/existingcards',
+          //         (route) => false,
+          //     arguments: {
+          //       'totalPs': totalPayment,
+          //
+          //     }
+          // );
+          Future.delayed(Duration.zero, () {
 
-            }
-          );
+            Navigator.pushAndRemoveUntil<void>(
+              context,
+              MaterialPageRoute<void>(builder: (BuildContext context) =>  ExistingCardsPage()),
+              ModalRoute.withName('client/payments/stripe/existingcards',),
+            );
+
+          });
+         
+
         });
 
-     //  }
-     // // Navigator.pushNamedAndRemoveUntil(context, 'client/payments/status', (route) => false);
-     //  print('Producto seleccionado: ${responseApi.message}');
-     //  progressDialog.close();
+        //  }
+        // // Navigator.pushNamedAndRemoveUntil(context, 'client/payments/status', (route) => false);
+        //  print('Producto seleccionado: ${responseApi.message}');
+        //  progressDialog.close();
 
-    // }else{
-    //   progressDialog.close();
-    // }
-
+        // }else{
+        //   progressDialog.close();
+        // }
+      }
   }
 
   //Orden que se paga en efectivo

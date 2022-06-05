@@ -12,6 +12,7 @@ import 'package:uber_clone_flutter/src/utils/my_snackbar.dart';
 import 'package:uber_clone_flutter/src/utils/shared_pref.dart';
 
 import '../../../../models/cards_client.dart';
+import '../stripe/stripe_existing_cards_page.dart';
 
 class ClientPaymentsCreateController {
 
@@ -141,23 +142,15 @@ class ClientPaymentsCreateController {
       MySnackbar.show(context, "Ya has agregado esta tarjeta antes");
       Navigator.pop(context, true);
     }else{
-      Navigator.pushNamedAndRemoveUntil(
-          context,
-          'client/payments/stripe/existingcards',
-              (route) => false,
-          arguments: {
-            'totalPs': totalPs,
-
-          }
+      print('ClientePaymentCreateController *ENTRE AL ELSE*');
+      Navigator.pushAndRemoveUntil<void>(
+        context,
+        MaterialPageRoute<void>(builder: (BuildContext context) =>  ExistingCardsPage()),
+        ModalRoute.withName('client/payments/stripe/existingcards',),
       );
+
     }
 
-
-
-
-    // cardsStore.forEach((c) {
-    //   print('Tarjetas listadas ${c.toJson()}');
-    // });
 
   }
 

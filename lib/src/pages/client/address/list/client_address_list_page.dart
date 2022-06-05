@@ -184,7 +184,7 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
               ),
 
             ),
-            onTap: () {}
+            onTap: _con.createOrder,
 
           ),
 

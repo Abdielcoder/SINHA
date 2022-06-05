@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_credit_card/credit_card_form.dart';
@@ -31,12 +33,16 @@ class _ClientPaymentsCreatePageState extends State<ClientPaymentsCreatePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [Colors.blue.shade200, Colors.cyan.shade900])
-      ),
+      child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: ExactAssetImage("assets/img/encamino.jpg"),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: ClipRRect( // make sure we apply clip it properly
+      child: BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 30, sigmaY: 10),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
@@ -54,7 +60,7 @@ class _ClientPaymentsCreatePageState extends State<ClientPaymentsCreatePage> {
                 cardHolderName: _con.cardHolderName,
                 cvvCode: _con.cvvCode,
                 showBackView: _con.isCvvFocused,
-                cardBgColor: MyColors.primaryColor,
+                cardBgColor: Colors.black87,
                 obscureCardNumber: true,
                 obscureCardCvv: true,
                 animationDuration: Duration(milliseconds: 1000),
@@ -67,35 +73,85 @@ class _ClientPaymentsCreatePageState extends State<ClientPaymentsCreatePage> {
                 cardNumber: '',
                 formKey: _con.keyForm, // Required
                 onCreditCardModelChange: _con.onCreditCardModelChanged, // Required
-                themeColor: Colors.red,
+                themeColor: Colors.white,
+                textColor: Colors.white,
+
                 obscureCvv: true,
                 obscureNumber: true,
+
                 cardNumberDecoration: const InputDecoration(
                   border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
                   labelText: 'Numero de la tarjeta',
                   hintText: 'XXXX XXXX XXXX XXXX',
+                    //hoverColor: Colors.white,
+                    focusColor: Colors.white,
+
+                    hintStyle: const TextStyle(color: Colors.white70),
+                    labelStyle: const TextStyle(color: Colors.white70),
+
+                  floatingLabelStyle: TextStyle(
+                    color: Colors.white,
+
+                  )
                 ),
                 expiryDateDecoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Fecha de expiracion',
+                    border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+
+                  labelText: 'Expiracion',
                   hintText: 'XX/XX',
+                    hintStyle: const TextStyle(color: Colors.white70),
+                    labelStyle: const TextStyle(color: Colors.white70),
+
+                    floatingLabelStyle: TextStyle(
+                      color: Colors.white,
+
+                    )
                 ),
                 cvvCodeDecoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                    border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
                   labelText: 'CVV',
                   hintText: 'XXX',
+                    hintStyle: const TextStyle(color: Colors.white70),
+                    labelStyle: const TextStyle(color: Colors.white70),
+
+                    floatingLabelStyle: TextStyle(
+                      color: Colors.white,
+
+                    )
                 ),
                 cardHolderDecoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                    border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
                   labelText: 'Nombre del titular',
+                    hintStyle: const TextStyle(color: Colors.white70),
+                    labelStyle: const TextStyle(color: Colors.white70),
+
+                    floatingLabelStyle: TextStyle(
+                      color: Colors.white,
+
+                    )
                 ),
-              ),
+                  ),
               // _documentInfo(),
               _buttonNext()
             ],
           ),
-        ),
+        )
+            ),
       ),
+    )
+      )
     );
   }
 

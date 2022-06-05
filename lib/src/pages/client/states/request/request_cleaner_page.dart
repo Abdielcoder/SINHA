@@ -8,6 +8,7 @@ import 'package:uber_clone_flutter/src/pages/client/states/request/request_clean
 import '../../../../models/order.dart';
 import '../../../../models/product.dart';
 import '../../../../models/response_api.dart';
+import '../../../../models/user.dart';
 import '../../../../provider/orders_provider.dart';
 import '../../../../utils/animated_indicator.dart';
 import '../../../../utils/my_colors.dart';
@@ -34,6 +35,7 @@ class _RequestCleanerPagePageState extends State<RequestCleanerPage> {
   PageController pageController = new PageController(initialPage: 0);
   RequestCleanerCOntroller _con = new RequestCleanerCOntroller();
   OrdersProvider _ordersProvider = new OrdersProvider();
+  User user;
 
   @override
   void initState() {
@@ -95,9 +97,12 @@ class _RequestCleanerPagePageState extends State<RequestCleanerPage> {
   }
 
   void cancelServices() async{
+
+    user = User.fromJson(await _sharedPref.read('user'));
+
     Order order = new Order(
-      idClient: "1",
-      status: 'TESEO',
+      idClient: user.id,
+      status: 'CANCEL',
       lat: 0,
     );
       ResponseApi responseApi = await _ordersProvider.updateCancelWash(order);
@@ -159,7 +164,7 @@ class Slide extends StatelessWidget {
                 SizedBox(
                   height: 15,
                 ),
-                ProgressButton(onNext: onNext),
+                ProgressButton(cancel: cancel),
               ],
             ),
           ),
