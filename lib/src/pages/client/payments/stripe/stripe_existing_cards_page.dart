@@ -9,7 +9,7 @@ import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'package:stripe_payment/stripe_payment.dart';
 import 'package:uber_clone_flutter/src/pages/client/payments/stripe/stripe_existing_cards_controller.dart';
 import 'package:uber_clone_flutter/src/utils/my_snackbar.dart';
-
+import 'package:easy_dialog/easy_dialog.dart';
 import '../../../../models/addresss.dart';
 import '../../../../models/cards_client.dart';
 import '../../../../models/order.dart';
@@ -25,6 +25,7 @@ import '../../../../widgets/no_data_widget.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
 import '../../address/list/client_address_list_page.dart';
+import '../create/client_payments_create_page.dart';
 
 class ExistingCardsPage extends StatefulWidget {
   CardClient cardClient;
@@ -502,7 +503,18 @@ class ExistingCardsPageState extends State<ExistingCardsPage> {
               ),
 
             ),
-           // onTap: _con.createOrder,
+           onTap:(){
+              if(_con.cardsStore.length == 3){
+                _dialogFail();
+              }else{
+                Navigator.pushAndRemoveUntil<void>(
+                  context,
+                  MaterialPageRoute<void>(builder: (BuildContext context) => ClientPaymentsCreatePage()),
+                  ModalRoute.withName('client/payments/create'),
+                );
+              }
+
+           }
 
           ),
 
@@ -560,6 +572,15 @@ class ExistingCardsPageState extends State<ExistingCardsPage> {
     );
   }
 
-
+  void _dialogFail() {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.INFO,
+      animType: AnimType.BOTTOMSLIDE,
+      title: 'No puedes agregar más de 3 tarjetas',
+      desc: 'Elimina una para añadir otra',
+      btnOkOnPress: () {},
+    )..show();
+  }
 
 }

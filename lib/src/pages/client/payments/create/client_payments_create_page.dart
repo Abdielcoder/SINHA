@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_credit_card/credit_card_form.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
+import 'package:lottie/lottie.dart';
 import 'package:uber_clone_flutter/src/models/mercado_pago_document_type.dart';
 import 'package:uber_clone_flutter/src/pages/client/payments/create/client_payments_create_controller.dart';
 import 'package:uber_clone_flutter/src/utils/my_colors.dart';
+
+import '../stripe/stripe_existing_cards_page.dart';
 
 
 class ClientPaymentsCreatePage extends StatefulWidget {
@@ -156,49 +159,55 @@ class _ClientPaymentsCreatePageState extends State<ClientPaymentsCreatePage> {
   }
 
   Widget _buttonNext() {
-    return Container(
-      margin: EdgeInsets.all(50),
-      child: ElevatedButton(
-        onPressed: _con.createCardToken,
-        style: ElevatedButton.styleFrom(
-            primary: MyColors.primaryColor,
-            padding: EdgeInsets.symmetric(vertical: 5),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12)
-            )
-        ),
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: Container(
-                height: 50,
-                alignment: Alignment.center,
-                child: Text(
-                  'CONTINUAR',
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold
+   return Padding(
+        padding: const EdgeInsets.only(top: 0),
+        child: Container(
+            margin: EdgeInsets.only(left: MediaQuery.of(context).size.height * 0.0),
+            child: SizedBox(
+              width: 100,
+              height: 140,
+              child: Stack(children: [
+                Container(
+                  height: 500,
+                  width: 500,
+                  child: Lottie.asset(
+                    'assets/json/pulse.json',
+                    width: 500,
+                    height: 500,
                   ),
                 ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                margin: EdgeInsets.only(left: 50, top: 9),
-                height: 30,
-                child: Icon(
-                  Icons.arrow_forward_ios,
-                  color: MyColors.colorNaranja,
-                  size: 30,
-                ),
-              ),
-            )
 
-          ],
-        ),
-      ),
+                Center(
+                  child: GestureDetector(
+
+                      child: Container(
+                        height: 60,
+                        width: 60,
+
+                        child: Center(
+
+                          child: Image.asset(
+                            "./assets/images/creditcard.png",
+                            width: 600,
+                          ),
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(99),
+                          color: Colors.deepPurpleAccent,
+                          boxShadow: [
+                            BoxShadow(color: Colors.white, spreadRadius: 3),
+                          ],
+                        ),
+
+                      ),
+                      onTap: _con.createCardToken,
+                  ),
+
+                ),
+
+              ]),
+            )
+        )
     );
   }
 

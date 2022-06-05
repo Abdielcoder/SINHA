@@ -119,7 +119,7 @@ class ParticleModel {
 
     startTime = DateTime.now().duration();
 
-    size = 0.1 + Random().nextDouble() * 0.4;
+    size = 0.1 + Random().nextDouble() * 0.1;
   }
 
   void shuffle() {

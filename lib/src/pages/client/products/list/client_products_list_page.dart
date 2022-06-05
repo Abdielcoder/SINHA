@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -47,11 +49,15 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
         ..scale(isDrawerOpen ? 0.85 : 1.00)
         ..rotateZ(isDrawerOpen ? -50 : 0),
       duration: Duration(milliseconds: 200),
-      decoration: BoxDecoration(
-        color: Colors.purple[900],
-        borderRadius:
-        isDrawerOpen ? BorderRadius.circular(40) : BorderRadius.circular(0),
-      ),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: ExactAssetImage("assets/img/encamino.jpg"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: ClipRRect(
+        child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 140, sigmaY: 100),
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -88,10 +94,10 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
                     },
                   ),
                   Text(
-                    'Solicita servicio',
+                    'Solicita un servicio',
                     style: TextStyle(
-                        fontFamily: "Lexendeca-Regular",
-                        fontSize: 39,
+                        fontFamily: "Lexendeca-Black",
+                        fontSize: 27,
                         color: MyColors.colorWhite,
                         decoration: TextDecoration.none),
                   ),
@@ -151,49 +157,103 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
                           ),
                         ),
                       ),
+                      // Padding(
+                      //   padding: const EdgeInsets
+                      //       .only(top: 400,left: 50),
+                      //   child: Container(
+                      //     width: 300,
+                      //     height: 70,
+                      //
+                      //       child: ElevatedButton(
+                      //           onPressed: () {
+                      //             // Navigator.push(
+                      //             //   context,
+                      //             //   new MaterialPageRoute(
+                      //             //     builder: (context) => new RequestCleanerPage(),
+                      //             //   ),
+                      //             // );
+                      //             Navigator.push(
+                      //               context,
+                      //               new MaterialPageRoute(
+                      //                 builder: (context) => new ListCarPayPage(),
+                      //               ),
+                      //             );
+                      //
+                      //
+                      //           },
+                      //           child: Text('SERVICIO'),
+                      //           style: ElevatedButton.styleFrom(
+                      //               primary: Colors.black87,
+                      //               shape: RoundedRectangleBorder(
+                      //                   borderRadius: BorderRadius.circular(30)
+                      //               ),
+                      //               padding: EdgeInsets.symmetric(vertical: 15)
+                      //           )
+                      //       )
+                      //   ),
+                      // ),
+
                       Padding(
-                        padding: const EdgeInsets
-                            .only(top: 400,left: 50),
-                        child: Container(
-                          width: 300,
-                          height: 70,
-
-                            child: ElevatedButton(
-                                onPressed: () {
-                                  // Navigator.push(
-                                  //   context,
-                                  //   new MaterialPageRoute(
-                                  //     builder: (context) => new RequestCleanerPage(),
-                                  //   ),
-                                  // );
-                                  Navigator.push(
-                                    context,
-                                    new MaterialPageRoute(
-                                      builder: (context) => new ListCarPayPage(),
+                        padding: const EdgeInsets.only(top: 400),
+                          child: Container(
+                              margin: EdgeInsets.only(left: MediaQuery.of(context).size.height * 0.180),
+                              child: SizedBox(
+                                width: 100,
+                                height: 140,
+                                child: Stack(children: [
+                                  Container(
+                                    height: 500,
+                                    width: 500,
+                                    child: Lottie.asset(
+                                      'assets/json/pulse.json',
+                                      width: 500,
+                                      height: 500,
                                     ),
-                                  );
+                                  ),
 
+                                  Center(
+                                    child: GestureDetector(
 
-                                },
-                                child: Text('SERVICIO'),
-                                style: ElevatedButton.styleFrom(
-                                    primary: Colors.black87,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(30)
+                                      child: Container(
+                                        height: 60,
+                                        width: 60,
+
+                                        child: Center(
+
+                                          child: Image.asset(
+                                            "./assets/images/addwash.png",
+                                            width: 600,
+                                          ),
+                                        ),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(99),
+                                          color: Colors.deepPurpleAccent,
+                                          boxShadow: [
+                                            BoxShadow(color: Colors.white, spreadRadius: 3),
+                                          ],
+                                        ),
+
+                                      ),
+                                       onTap: ()
+                                        {
+                                            Navigator.push(
+                                              context,
+                                              new MaterialPageRoute(
+                                                builder: (context) => new ListCarPayPage(),
+                                              ),
+                                            );
+                                        }
                                     ),
-                                    padding: EdgeInsets.symmetric(vertical: 15)
-                                )
-                            )
-                        ),
-                      ),
 
+                                  ),
 
-
-
-                    ],
-                  )
-
-              ),
+                                ]),
+                              )
+                          )
+                      )
+                ]
+                          )
+      )
             ),
 
             Column(
@@ -206,18 +266,14 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
                         duration: Duration(milliseconds: 1000),
                         decoration: BoxDecoration(
                             gradient: RadialGradient(colors: [
-                              Colors.purple[800],
-                              Colors.purple[800],
-                              Colors.purple[900]
-
-
+                              Colors.transparent,
                             ])),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment
                               .spaceBetween,
                           children: <Widget>[
                             Padding(
-                              padding: EdgeInsets.all(20),
+                              padding: EdgeInsets.all(0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment
                                     .start,
@@ -238,7 +294,7 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
                     Positioned.fill(
                       child: Opacity(
                           opacity: 0.5,
-                          child: const AnimacionParticulas(23)),
+                          child: const AnimacionParticulas(66)),
                     ),
 
 
@@ -250,6 +306,8 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
           ],
         ),
       ),
+    )
+    )
     );
   }
 }
@@ -293,6 +351,10 @@ class NewPadding extends StatelessWidget {
     );
   }
 }
+
+
+
+
 class FadeAnimation extends StatelessWidget {
   final double delay;
   final Widget child;
@@ -318,6 +380,54 @@ class FadeAnimation extends StatelessWidget {
             child: Transform.translate(
                 offset: Offset(0, animation.get("translateY")), child: child),
           ),
+    );
+  }
+
+  Widget _buttonAccept() {
+    return SizedBox(
+      width: 100,
+      height: 140,
+      child: Stack(children: [
+        Container(
+          height: 500,
+          width: 500,
+          child: Lottie.asset(
+            'assets/json/pulse.json',
+            width: 500,
+            height: 500,
+          ),
+        ),
+
+        Center(
+          child: GestureDetector(
+
+            child: Container(
+              height: 60,
+              width: 60,
+
+              child: Center(
+
+                child: Image.asset(
+                  "./assets/images/debit.png",
+                  width: 600,
+                ),
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(99),
+                color: Colors.deepPurpleAccent,
+                boxShadow: [
+                  BoxShadow(color: Colors.white, spreadRadius: 3),
+                ],
+              ),
+
+            ),
+           // onTap: _con.goToCreateCard,
+
+          ),
+
+        ),
+
+      ]),
     );
   }
 }
