@@ -22,7 +22,7 @@ class ListCarPayPage extends StatefulWidget {
 }
 
 class _ListCarPayPageState extends State<ListCarPayPage> {
-
+  bool muestraText;
   ListCarPayController _con = new ListCarPayController();
 
   @override
@@ -61,22 +61,22 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
 
               Positioned(
                   top: 0,
-                  child: _textSelectAddress()
+                  child: _textSelecciona(),
               ),
               Container(
                   margin: EdgeInsets.only(top: 100),
                   child: _listAddress()
               ),
-              Align(
-                alignment: FractionalOffset.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Positioned(
-                      top: 0,
-                      child: _buttonNewCar()
-                  ),
-                ),
-              ),
+              // Align(
+              //   alignment: FractionalOffset.bottomCenter,
+              //   child: Padding(
+              //     padding: const EdgeInsets.all(8.0),
+              //     child: Positioned(
+              //         top: 0,
+              //         child: _buttonNewCar()
+              //     ),
+              //   ),
+              // ),
 
 
             ],
@@ -169,9 +169,10 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
         builder: (context, AsyncSnapshot<List<Car>> snapshot) {
           if (snapshot.hasData) {//VALIDATED
             if (snapshot.data.length > 0) {//VALIDATED
-
+              muestraText = true;
               return Stack(
-                  children: [ListView.builder(
+                  children: [
+                    ListView.builder(
                       reverse: false,
                       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                       itemCount: snapshot.data?.length ?? 0,
@@ -179,18 +180,36 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
                         return _radioSelectorAddress(snapshot.data[index], index);
                       }
                   ),
+                    Align(
+                      alignment: FractionalOffset.bottomCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Positioned(
+                            top: 0,
+                            child: _buttonNewCar()
+                        ),
+                      ),
+                    ),
 
-                  ]
+                  ],
+
               );
-
+;
 
             }
             else {
+              // setState(() {
+              //   muestraText = false;
+              // });
+
               return _noCars();
             }
 
           }
           else {
+            // setState(() {
+            //   muestraText = false;
+            // });
             return _noCars();
           }
 
@@ -367,12 +386,12 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
     );
   }
 
-  Widget _textSelectAddress() {
+  Widget _textSelecciona() {
     return Container(
       alignment: Alignment.centerLeft,
       margin: EdgeInsets.symmetric(horizontal: 40, vertical: 40),
       child: Text(
-        'Selecciona un vehículo o añade uno ',
+        'Selecciona un vehículo o Añade uno ',
         style: TextStyle(
           color: Colors.white,
             fontSize: 19,
@@ -382,6 +401,8 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
       ),
     );
   }
+
+
   //
   // Widget _textSeleciion() {
   //   return Container(
