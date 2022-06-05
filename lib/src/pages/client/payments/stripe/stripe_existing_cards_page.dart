@@ -35,16 +35,16 @@ class ExistingCardsPage extends StatefulWidget {
 }
 
 class ExistingCardsPageState extends State<ExistingCardsPage> {
-
+  ProgressDialog progressDialog;
   StripeExistingCardsController _con = new StripeExistingCardsController();
-
+  double totalPs = 120;
   String totalPaymentString = '';
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    progressDialog = new ProgressDialog(context: context);
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       _con.init(context, refresh, widget.cardClient);
     });
@@ -83,7 +83,7 @@ class ExistingCardsPageState extends State<ExistingCardsPage> {
               indent: 30, //IZQUIERDA
             ),
             //  _textTotalPrice(),
-            (_con.totalPs * 100).floor() >= 0 ? _listAddress() :Container(),
+            (totalPs * 100).floor() >= 0 ? _listAddress() :Container(),
           ],
         ),
       ),
@@ -188,81 +188,75 @@ class ExistingCardsPageState extends State<ExistingCardsPage> {
   // }
 
   payViaExistingCard(BuildContext context, CardClient cardClient) async {
-    //ProgressDialog dialog = new ProgressDialog(context);
+    // ProgressDialog dialog = new ProgressDialog(context);
     // dialog.style(
     //     message: 'Please wait...'
     // );
-    ProgressDialog progressDialog = new ProgressDialog(context: context);
-    progressDialog.show(max: 100, msg: 'Espere un momento');
-    print('El valor es: ${_con.totalPs}');
-    // await dialog.show();
-    var expiryArr = cardClient.expiryDate.split('/');
-    CreditCard stripeCard = CreditCard(
-      number: cardClient.cardNumber,
-      expMonth: int.parse(expiryArr[0]),
-      expYear: int.parse(expiryArr[1]),
-    );
-    try {
-      print('valor psss #### : **** ${(_con.totalPs * 100).floor()}');
-      var response = await StripeService.payViaExistingCard(
-          amount: '${(_con.totalPs * 100).floor()}',
-          currency: 'MXN',
-          card: stripeCard
-      );
-      print('El error: **** ${response.toString()}');
-      MySnackbar.show(context, response.message);
-      if (response.message == 'Transaction successful') {
-        progressDialog.close();
-        MySnackbar.show(context, 'Tu orden ha sido procesada.');
-        AwesomeDialog(
-          context: context,
-          dialogType: DialogType.SUCCES,
-          animType: AnimType.BOTTOMSLIDE,
-          title: 'Tu orden ha sido procesada.',
-          desc: '',
-          btnOkOnPress: () {
-            _con.createOrder();
-          },
-        )
-          ..show();
-      } else {
-        if ((_con.totalPs * 100).floor() == 0) {
-          progressDialog.close();
-          MySnackbar.show(context, response.message);
-          MySnackbar.show(context, 'Aviso.');
-          AwesomeDialog(
-            context: context,
-            dialogType: DialogType.ERROR,
-            animType: AnimType.BOTTOMSLIDE,
-            title: 'En esta Sección solo puede Eliminar o crear tarjetas. .',
-            desc: '',
-            btnOkOnPress: () {
-              _con.cancelOrder();
-            },
-          )
-            ..show();
-        } else {
-          progressDialog.close();
-          MySnackbar.show(context, response.message);
-          MySnackbar.show(
-              context, 'Revisa tu forma de pago, orden no procesada.');
-          AwesomeDialog(
-            context: context,
-            dialogType: DialogType.ERROR,
-            animType: AnimType.BOTTOMSLIDE,
-            title: 'Revisa tu forma de pago, orden no procesada .',
-            desc: '',
-            btnOkOnPress: () {
-              _con.cancelOrder();
-            },
-          )
-            ..show();
-        }
-      }
-    } catch (e) {
-      MySnackbar.show(context, 'El error: **** ${e.message}');
-      print('El error: **** ${e.message}');
-    }
+    _con.createOrder();
+
+    //
+    //  progressDialog.show(max: 100, msg: 'Procesando tú pago.');
+    // print('El valor es: ${totalPs}');
+    // // await dialog.show();
+    // var expiryArr = cardClient.expiryDate.split('/');
+    // CreditCard stripeCard = CreditCard(
+    //   number: cardClient.cardNumber,
+    //   expMonth: int.parse(expiryArr[0]),
+    //   expYear: int.parse(expiryArr[1]),
+    // );
+    // try {
+    //   print('valor psss #### : **** ${(totalPs * 100).floor()}');
+    //   var response = await StripeService.payViaExistingCard(
+    //       amount: '${(totalPs * 100).floor()}',
+    //       currency: 'MXN',
+    //       card: stripeCard
+    //   );
+    //   print('El error: **** ${response.toString()}');
+    //   MySnackbar.show(context, response.message);
+    //   if (response.message == 'Transaction successful') {
+    //     progressDialog.close();
+    //     MySnackbar.show(context, 'Tu orden ha sido procesada.');
+    //     _con.createOrder();
+    //
+    //   } else {
+    //     if ((totalPs * 100).floor() == 0) {
+    //       progressDialog.close();
+    //       MySnackbar.show(context, response.message);
+    //       MySnackbar.show(context, 'Aviso.');
+    //       AwesomeDialog(
+    //         context: context,
+    //         dialogType: DialogType.ERROR,
+    //         animType: AnimType.BOTTOMSLIDE,
+    //         title: 'En esta Sección solo puede Eliminar o crear tarjetas. .',
+    //         desc: '',
+    //         btnOkOnPress: () {
+    //           _con.cancelOrder();
+    //         },
+    //       )
+    //         ..show();
+    //     } else {
+    //       progressDialog.close();
+    //       MySnackbar.show(context, response.message);
+    //       MySnackbar.show(
+    //           context, 'Revisa tu forma de pago, orden no procesada.');
+    //       AwesomeDialog(
+    //         context: context,
+    //         dialogType: DialogType.ERROR,
+    //         animType: AnimType.BOTTOMSLIDE,
+    //         title: 'Revisa tu forma de pago, orden no procesada .',
+    //         desc: '',
+    //         btnOkOnPress: () {
+    //           _con.cancelOrder();
+    //         },
+    //       )
+    //         ..show();
+    //     }
+    //   }
+    // } catch (e) {
+    //   progressDialog.close();
+    //   MySnackbar.show(context, 'El error: **** ${e.message}');
+    //   print('El error: **** ${e.message}');
+    // }
   }
 
   void refresh() {
@@ -350,7 +344,7 @@ class ExistingCardsPageState extends State<ExistingCardsPage> {
               'client/payments/create',
                   (route) => false,
               arguments: {
-                'totalPs': _con.totalPs,
+                'totalPs':totalPs,
 
               }
           );
