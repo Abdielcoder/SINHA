@@ -106,36 +106,42 @@ class ClientAddressListController {
     //Save order to shared preferences.
     int index =    selectedProducts.indexWhere((p) => p.id == product.id);
     selectedProducts[index].quantity = selectedProducts[index].quantity;
-    _sharedPref.save('order', selectedProducts);
+
+    if(index<1){
+      _sharedPref.save('order', selectedProducts);
+    }else{
+
+    }
+
 
   }
 
   void createOrder() async {
-
-      Addresss a = Addresss.fromJson(await _sharedPref.read('address') ?? {});
-      List<Product> selectedProducts = Product.fromJsonList(await _sharedPref.read('order')).toList;
-      Order order = new Order(
-          idClient: user.id,
-          idAddress: a.id,
-          products: selectedProducts
-      );
-      ResponseApi responseApi = await _ordersProvider.create(order);
-      if(responseApi.success) {
-        print('@222222 $totalPayment');
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.remove('order');
-        Future.delayed(Duration.zero, () {
-          //Navigator.pushNamed(context, '  3
-          // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ aQ433client/payments/stripe/existingcards');
-          // Navigator.pushNamedAndRemoveUntil(
-          //     context,
-          //     'client/payments/stripe/existingcards',
-          //         (route) => false,
-          //     arguments: {
-          //       'totalPs': totalPayment,
-          //
-          //     }
-          // );
+      //
+      // Addresss a = Addresss.fromJson(await _sharedPref.read('address') ?? {});
+      // List<Product> selectedProducts = Product.fromJsonList(await _sharedPref.read('order')).toList;
+      // Order order = new Order(
+      //     idClient: user.id,
+      //     idAddress: a.id,
+      //     products: selectedProducts
+      // );
+      // ResponseApi responseApi = await _ordersProvider.create(order);
+      // if(responseApi.success) {
+      //   print('@222222 $totalPayment');
+      //   SharedPreferences preferences = await SharedPreferences.getInstance();
+      //   await preferences.remove('order');
+      //   Future.delayed(Duration.zero, () {
+      //     //Navigator.pushNamed(context, '  3
+      //     // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ aQ433client/payments/stripe/existingcards');
+      //     // Navigator.pushNamedAndRemoveUntil(
+      //     //     context,
+      //     //     'client/payments/stripe/existingcards',
+      //     //         (route) => false,
+      //     //     arguments: {
+      //     //       'totalPs': totalPayment,
+      //     //
+      //     //     }
+      //     // );
           Future.delayed(Duration.zero, () {
 
             Navigator.pushAndRemoveUntil<void>(
@@ -145,9 +151,9 @@ class ClientAddressListController {
             );
 
           });
-         
 
-        });
+
+        // });
 
         //  }
         // // Navigator.pushNamedAndRemoveUntil(context, 'client/payments/status', (route) => false);
@@ -158,7 +164,7 @@ class ClientAddressListController {
         //   progressDialog.close();
         // }
       }
-  }
+
 
   //Orden que se paga en efectivo
   void createOrderCash() async {
@@ -264,6 +270,15 @@ class ClientAddressListController {
     // }
   }
 
+  void goToCreateCard() async {
+    Navigator.pushAndRemoveUntil<void>(
+      context,
+      MaterialPageRoute<void>(builder: (BuildContext context) =>  ExistingCardsPage()),
+      ModalRoute.withName('client/payments/stripe/existingcards',),
+    );
+
+
+  }
 
 
 }

@@ -12,6 +12,7 @@ import '../../../../models/user.dart';
 import '../../../../provider/address_provider.dart';
 import '../../../../provider/orders_provider.dart';
 import '../../../../utils/shared_pref.dart';
+import '../../states/request/request_cleaner_page.dart';
 
 class StripeExistingCardsController {
 
@@ -93,7 +94,13 @@ class StripeExistingCardsController {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       await preferences.remove('order');
       Future.delayed(Duration.zero, () {
-        Navigator.pushNamedAndRemoveUntil(context, 'client/products/list', (route) => false);
+
+        Navigator.pushAndRemoveUntil<void>(
+          context,
+          MaterialPageRoute<void>(builder: (BuildContext context) => const RequestCleanerPage()),
+          ModalRoute.withName('client/states/cleaner',),
+        );
+
       });
 
     }

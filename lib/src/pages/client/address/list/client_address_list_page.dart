@@ -184,7 +184,7 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
               ),
 
             ),
-            onTap: _con.createOrder,
+            onTap: _con.goToCreateCard,
 
           ),
 
@@ -282,14 +282,7 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
               ),
 
             ),
-            // onTap: () {
-            //   Navigator.push(
-            //     context,
-            //     new MaterialPageRoute(
-            //       builder: (context) => new ClientMenuListPage(),
-            //     ),
-            //   );
-            // },
+            onTap: _con.createOrder,
           ),
 
         ),

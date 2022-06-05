@@ -24,6 +24,8 @@ import '../../../../utils/shared_pref.dart';
 import '../../../../widgets/no_data_widget.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
+import '../../address/list/client_address_list_page.dart';
+
 class ExistingCardsPage extends StatefulWidget {
   CardClient cardClient;
   ExistingCardsPage({Key key, @required this.cardClient}) : super(key: key);
@@ -82,8 +84,6 @@ class ExistingCardsPageState extends State<ExistingCardsPage> {
             ),
             //  _textTotalPrice(),
             (_con.totalPs * 100).floor() >= 0 ? _listAddress() :Container(),
-            // (_con.totalPs * 100).floor() >= 0 ? _buttonReresar() : Container(),
-            // (_con.totalPs * 100).floor() >= 0 ? _textPago() : Container(),
           ],
         ),
       ),
@@ -111,7 +111,7 @@ class ExistingCardsPageState extends State<ExistingCardsPage> {
             children: [
               InkWell(
                 onTap: () {
-                  payViaExistingCard(context, cardClient);
+                 payViaExistingCard(context, cardClient);
                 },
                 child: CreditCardWidget(
                   cardNumber: cardClient.cardNumber,
@@ -508,7 +508,7 @@ class ExistingCardsPageState extends State<ExistingCardsPage> {
               ),
 
             ),
-            onTap: _con.createOrder,
+           // onTap: _con.createOrder,
 
           ),
 
@@ -551,8 +551,13 @@ class ExistingCardsPageState extends State<ExistingCardsPage> {
               ),
 
             ),
-            onTap: _con.createOrder,
-
+            onTap: (){
+              Navigator.pushAndRemoveUntil<void>(
+                context,
+                MaterialPageRoute<void>(builder: (BuildContext context) =>  ClientAddressListPage()),
+                ModalRoute.withName('client/address/list',),
+              );
+              },
           ),
 
         ),
