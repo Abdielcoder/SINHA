@@ -10,6 +10,7 @@ import 'package:uber_clone_flutter/src/pages/client/orders/create/client_orders_
 import 'package:uber_clone_flutter/src/pages/client/orders/list/client_orders_list_page.dart';
 import 'package:uber_clone_flutter/src/pages/client/orders/map/client_orders_map_page.dart';
 import 'package:uber_clone_flutter/src/pages/client/payments/create/client_payments_create_page.dart';
+import 'package:uber_clone_flutter/src/pages/client/payments/create/createmenu/client_payments_create_menu_page.dart';
 import 'package:uber_clone_flutter/src/pages/client/payments/installments/client_payments_installments_page.dart';
 import 'package:uber_clone_flutter/src/pages/client/payments/status/client_payments_status_page.dart';
 import 'package:uber_clone_flutter/src/pages/client/payments/stripe/existingcards/stripe_existing_cards_menu_page.dart';
@@ -109,7 +110,7 @@ class _MyappState extends State<MyApp> {
         'client/orders/list' : (BuildContext context) => ClientOrdersListPage(),
         'restaurant/orders/list': (BuildContext context) => RestaurantOrdersListPage(),
         'client/orders/map' : (BuildContext context) => ClientOrdersMapPage(),
-        'client/payments/create' : (BuildContext context) => ClientPaymentsCreatePage(),
+
         'client/payments/installments' : (BuildContext context) => ClientPaymentsInstallmentsPage(),
         'client/payments/status' : (BuildContext context) => ClientPaymentsStatusPage(),
         'restaurant/categories/create' : (BuildContext context) => RestaurantCategoriesCreatePage(),
@@ -117,6 +118,8 @@ class _MyappState extends State<MyApp> {
         'delivery/orders/list': (BuildContext context) => DeliveryOrdersListPage(),
         'delivery/orders/map' : (BuildContext context) => DeliveryOrdersMapPage(),
         'client/payments/stripe' : (BuildContext context) => StripeStoreCardPage(),
+        'client/payments/create' : (BuildContext context) => ClientPaymentsCreatePage(),
+        'client/payments/menu/create' : (BuildContext context) => ClientPaymentsCreateMenuPage(),
         'client/payments/stripe/existingcards' : (BuildContext context) => ExistingCardsPage(),
         'client/payments/stripe/existingcards/menu' : (BuildContext context) => ExistingCardsMenuPage(),
         'client/finish/clean' : (BuildContext context) => FinishCleanPage(),

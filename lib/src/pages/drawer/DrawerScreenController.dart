@@ -16,6 +16,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../../provider/users_provider.dart';
 import '../client/listcarspay/list_car_pay_page.dart';
+import '../client/payments/stripe/stripe_existing_cards_page.dart';
 import '../client/update/client_update_page.dart';
 
 class DrawerScreenController {
@@ -65,6 +66,17 @@ void goToMyServices(){
   );
   refresh();
 }
+
+  void goToCards(){
+
+    Navigator.push(
+      context,
+      new MaterialPageRoute(
+        builder: (context) => new ExistingCardsMenuPage(),
+      ),
+    );
+    refresh();
+  }
 
 // void goToPaymentMethod(){
 //
