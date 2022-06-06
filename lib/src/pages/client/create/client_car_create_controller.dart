@@ -17,6 +17,8 @@ import '../../../utils/dialog.dart';
 
 class ClientCarCreateController {
 
+  String selectedValueBrand;
+  String selectedValueModel;
   String selectedValue;
   String selectedCarColor;
   String cadenaColorHex;
@@ -25,7 +27,19 @@ class ClientCarCreateController {
     selectedValue = value;
 
 
-    print(selectedValue);
+    print('############ año $selectedValue');
+  }
+  void onSelectedModel(String value) {
+    selectedValueBrand = value;
+
+
+    print('############ marca $selectedValueBrand');
+  }
+  void onSelectedBrand(String value) {
+    selectedValueModel = value;
+
+
+    print('############ modelos $selectedValueModel');
   }
 
   void onSelectedColor(String carColor){
@@ -109,12 +123,12 @@ class ClientCarCreateController {
 
   void createCar() async {
     //GET DATA FROM INPUTS
-    String marca = marcaController.text;
-    String modelo = modeloController.text;
+    // String marca = marcaController.text;
+    // String modelo = modeloController.text;
     String placa = placaController.text;
 
     //VALIDATED INFO
-    if (marca.isEmpty || modelo.isEmpty || placa.isEmpty) {
+    if (selectedValueModel.isEmpty || selectedValueBrand.isEmpty || placa.isEmpty) {
       MySnackbar.show(context, 'Debe ingresar todos los campos');
       return;
     }
@@ -127,8 +141,8 @@ class ClientCarCreateController {
     //CREATE OBJECT FROM INPUTS
     Car mycar = new Car(
       id_user: user.id,
-      marca: marca,
-      modelo: modelo,
+      marca: selectedValueBrand,
+      modelo: selectedValueModel,
       year: selectedValue,
       placa: placa,
       color: cadenaColorHex,

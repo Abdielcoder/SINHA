@@ -12,6 +12,7 @@ import 'package:uber_clone_flutter/src/utils/my_colors.dart';
 import 'package:uber_clone_flutter/src/widgets/no_data_widget.dart';
 
 import '../create/client_car_create_page.dart';
+import '../products/list/client_menu_list.dart';
 import 'list_car_pay_controller.dart';
 
 
@@ -40,8 +41,22 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
         resizeToAvoidBottomInset : false,
         backgroundColor: Colors.transparent,
         appBar: AppBar(
+          leading:InkWell(
+            onTap: () {
+              Navigator.pushAndRemoveUntil<void>(
+                context,
+                MaterialPageRoute<void>(builder: (BuildContext context) => const ClientMenuListPage()),
+                ModalRoute.withName('client/products/list'),
+              );
+            },
+            child: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.white,
+            ),
+          ),
           backgroundColor: Colors.transparent,
           title: Text('Atras'),
+
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -175,7 +190,7 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
                   children: [
                     ListView.builder(
                       reverse: false,
-                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                      padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
                       itemCount: snapshot.data?.length ?? 0,
                       itemBuilder: (_, index) {
                         return _radioSelectorAddress(snapshot.data[index], index);
@@ -226,7 +241,7 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
     int colorCar = int.parse(colorWHex);
     return InkWell(
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 50),
+        margin: EdgeInsets.symmetric(horizontal: 38),
         child: Column(
           children: [
             Row(
@@ -257,9 +272,38 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
+                      padding: const EdgeInsets.only(left: 28,bottom: 10),
+                      child: Text(
+                        'MARCA',
+                        style: TextStyle(
+                            color: MyColors.colorWhite,
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ),
+                    Padding(
                       padding: const EdgeInsets.only(left: 28,bottom: 5),
                       child: Text(
                         cars?.marca ?? '',
+                        style: TextStyle(
+                          color: Colors.black54,
+                          fontFamily: 'Lexendeca-Black',
+
+                          fontSize: 12,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 28,bottom: 10),
+                      child: Text(
+                        'MODELO',
                         style: TextStyle(
                             color: MyColors.colorWhite,
                             fontSize: 13,
@@ -272,7 +316,9 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
                       child: Text(
                         cars?.modelo ?? '',
                         style: TextStyle(
-                          color: Colors.white54,
+                          color: Colors.black54,
+                          fontFamily: 'Lexendeca-Black',
+
                           fontSize: 12,
                         ),
                       ),
@@ -283,11 +329,11 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 8,bottom: 5),
+                      padding: const EdgeInsets.only(left: 8,bottom: 10),
                       child: Text(
                         'AÑO',
                         style: TextStyle(
-                            color: MyColors.colorWhite,
+                            color: Colors.white,
                             fontSize: 13,
                             fontWeight: FontWeight.bold
                         ),
@@ -299,7 +345,8 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
                         cars?.year ?? '',
                         style: TextStyle(
                           fontSize: 12,
-                          color: Colors.white54,
+                          fontFamily: 'Lexendeca-Black',
+                          color: Colors.black54,
                         ),
                       ),
                     ),
@@ -310,7 +357,7 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top:0, left: 8,bottom: 5),
+                      padding: const EdgeInsets.only(top:0, left: 8,bottom: 10),
                       child: Text(
                         'COLOR',
                         style: TextStyle(
@@ -340,7 +387,7 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top:0, left: 8,bottom: 5),
+                      padding: const EdgeInsets.only(top:0, left: 8,bottom: 10),
                       child: Text(
                         'PLACA',
                         style: TextStyle(
@@ -356,24 +403,25 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
                         cars?.placa ?? '',
                         style: TextStyle(
                           fontSize: 12,
-                          color: Colors.white54,
+                          fontFamily: 'Lexendeca-Black',
+                          color: Colors.black54,
                         ),
                       ),
                     ),
                   ],
                 ),
-                // Column(
-                //   crossAxisAlignment: CrossAxisAlignment.start,
-                //
-                //   children: [
-                //
-                //     Padding(
-                //       padding: const EdgeInsets.only(left: 20,bottom: 5),
-                //       child: _iconGo(cars),
-                //     )
-                //
-                //   ],
-                // ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+
+                  children: [
+
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20,bottom: 5),
+                      child: _iconDelete(cars),
+                    )
+
+                  ],
+                ),
 
               ],
             ),
@@ -477,6 +525,15 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
         )
     );
 
+  }
+
+  Widget _iconDelete(Car cars) {
+    return IconButton(
+        onPressed: () {
+          _con.deleteItem(cars);
+        },
+        icon: Icon(Icons.delete, color: Colors.white,)
+    );
   }
 
   void refresh() {

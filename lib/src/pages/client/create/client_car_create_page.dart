@@ -105,17 +105,8 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
   String holder = '';
   String holder2 = '';
   String dropdownValueBrand = "Seleccccc";
-  String dropdownValueBrand2 = "Seleccccc";
-  void getDropDownItem(){
+  String dropdownValueModel = "Seleccccc";
 
-    setState(() {
-      holder = dropdownValueBrand ;
-      holder2 = dropdownValueBrand2 ;
-
-    });
-
-
-  }
 
   ClientCarCreateController _con = new ClientCarCreateController();
   //DEFAULT CAR COLOR
@@ -360,6 +351,7 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
         // hint: "country in menu mode",
         onChanged: (value) {
           setState(() {
+            _con.onSelectedBrand(value);
             dropdownValueBrand = value;
           });
 
@@ -388,7 +380,10 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
         // hint: "country in menu mode",
         onChanged: (value) {
           setState(() {
-            dropdownValueBrand = value;
+            setState(() {
+              _con.onSelectedModel(value);
+              dropdownValueModel = value;
+            });
           });
           print('*************** $value');
         },

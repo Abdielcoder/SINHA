@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:uber_clone_flutter/src/models/car.dart';
 
 import '../models/user.dart';
+import '../pages/client/products/list/client_menu_list.dart';
 import '../provider/car_provider.dart';
 
 class MyDialog {
@@ -34,7 +35,11 @@ class MyDialog {
 
         //CALL API TO ELIMINATE CAR
         await _carProvider.deleteCar(id);
-        Navigator.pushNamedAndRemoveUntil(context, ruta, (route) => false);
+        Navigator.pushAndRemoveUntil<void>(
+          context,
+          MaterialPageRoute<void>(builder: (BuildContext context) => ClientMenuListPage()),
+          ModalRoute.withName('client/products/list'),
+        );
       },
     )..show();
   }

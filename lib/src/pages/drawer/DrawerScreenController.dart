@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uber_clone_flutter/src/models/order.dart';
 import 'package:uber_clone_flutter/src/models/user.dart';
 import 'package:uber_clone_flutter/src/pages/client/create/client_car_create_page.dart';
+import 'package:uber_clone_flutter/src/pages/client/listcars/client_car_list_page.dart';
 import 'package:uber_clone_flutter/src/pages/client/orders/list/client_orders_list_page.dart';
 import 'package:uber_clone_flutter/src/pages/client/payments/stripe/existingcards/stripe_existing_cards_menu_page.dart';
 import 'package:uber_clone_flutter/src/pages/delivery/orders/detail/delivery_orders_detail_page.dart';
@@ -14,6 +15,7 @@ import 'package:uber_clone_flutter/src/utils/shared_pref.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../../provider/users_provider.dart';
+import '../client/listcarspay/list_car_pay_page.dart';
 import '../client/update/client_update_page.dart';
 
 class DrawerScreenController {
@@ -47,7 +49,7 @@ void goToCreateCar(){
   Navigator.push(
     context,
     new MaterialPageRoute(
-      builder: (context) => new CLientCarCreatePage(),
+      builder: (context) => new ListCarPayPage(),
     ),
   );
   refresh();
