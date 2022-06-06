@@ -12,23 +12,18 @@ import 'package:uber_clone_flutter/src/models/product.dart';
 import 'package:uber_clone_flutter/src/pages/client/products/list/client_products_list_controller.dart';
 import 'package:uber_clone_flutter/src/utils/my_colors.dart';
 import 'package:uber_clone_flutter/src/widgets/no_data_widget.dart';
-
 import '../../../../utils/animacion_particulas.dart';
 import '../../../drawer/DrawerScreen.dart';
 import '../../listcarspay/list_car_pay_page.dart';
 import '../../states/request/request_cleaner_page.dart';
-
 class ClientProductsListPage extends StatefulWidget {
   const ClientProductsListPage({Key key}) : super(key: key);
-
   @override
   _ClientProductsListPageState createState() => _ClientProductsListPageState();
 }
-
 class _ClientProductsListPageState extends State<ClientProductsListPage> {
   ProgressDialog _progressDialog;
   ClientProductsListController _con = new ClientProductsListController();
-
   @override
   void initState() {
     // TODO: implement initState
@@ -39,9 +34,7 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
   }
   double xOffset = 0;
   double yOffset = 0;
-
   bool isDrawerOpen = false;
-
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
@@ -49,15 +42,11 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
         ..scale(isDrawerOpen ? 0.85 : 1.00)
         ..rotateZ(isDrawerOpen ? -50 : 0),
       duration: Duration(milliseconds: 200),
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: ExactAssetImage("assets/img/encamino.jpg"),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: ClipRRect(
-        child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 140, sigmaY: 100),
+      decoration: BoxDecoration(
+        color: Colors.purple[900],
+        borderRadius:
+        isDrawerOpen ? BorderRadius.circular(40) : BorderRadius.circular(0),
+      ),
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -65,7 +54,6 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
               height: 50,
             ),
             Container(
-
               margin: EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -73,7 +61,7 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
                   isDrawerOpen
                       ? GestureDetector(
                     child: Icon(Icons.arrow_back_ios,
-                    color: MyColors.colorWhite,),
+                      color: MyColors.colorWhite,),
                     onTap: () {
                       setState(() {
                         xOffset = 0;
@@ -102,12 +90,8 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
                         decoration: TextDecoration.none),
                   ),
                   Container(),
-
                 ],
               ),
-
-
-
             ),
             SizedBox(
               height: 40,
@@ -125,7 +109,6 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
                   // )
                   Stack(
                     children: <Widget>[
-
                       Padding(
                         padding: const EdgeInsets
                             .only(top: 60,left: 90),
@@ -150,7 +133,6 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
                         child: Container(
                           width: 400,
                           height: 200,
-
                           child: Lottie.asset(
                               'assets/json/wash.json',
                               fit: BoxFit.fill
@@ -161,8 +143,8 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
                       //   padding: const EdgeInsets
                       //       .only(top: 400,left: 50),
                       //   child: Container(
-                      //     width: 300,
-                      //     height: 70,
+                      //       width: 300,
+                      //       height: 70,
                       //
                       //       child: ElevatedButton(
                       //           onPressed: () {
@@ -192,104 +174,103 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
                       //       )
                       //   ),
                       // ),
+    Padding(
+    padding: const EdgeInsets.only(top: 400),
+    child: Container(
+    margin: EdgeInsets.only(left: MediaQuery.of(context).size.height * 0.180),
+    child: SizedBox(
+    width: 100,
+    height: 140,
+    child: Stack(children: [
+    Container(
+    height: 500,
+    width: 500,
+    child: Lottie.asset(
+    'assets/json/pulse.json',
+    width: 500,
+    height: 500,
+    ),
+    ),
 
-                      Padding(
-                        padding: const EdgeInsets.only(top: 400),
-                          child: Container(
-                              margin: EdgeInsets.only(left: MediaQuery.of(context).size.height * 0.180),
-                              child: SizedBox(
-                                width: 100,
-                                height: 140,
-                                child: Stack(children: [
-                                  Container(
-                                    height: 500,
-                                    width: 500,
-                                    child: Lottie.asset(
-                                      'assets/json/pulse.json',
-                                      width: 500,
-                                      height: 500,
-                                    ),
-                                  ),
+    Center(
+    child: GestureDetector(
 
-                                  Center(
-                                    child: GestureDetector(
+    child: Container(
+    height: 60,
+    width: 60,
 
-                                      child: Container(
-                                        height: 60,
-                                        width: 60,
+    child: Center(
 
-                                        child: Center(
+    child: Image.asset(
+    "./assets/images/addwash.png",
+    width: 600,
+    ),
+    ),
+    decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(99),
+    color: Colors.deepPurpleAccent,
+    boxShadow: [
+    BoxShadow(color: Colors.white, spreadRadius: 3),
+    ],
+    ),
 
-                                          child: Image.asset(
-                                            "./assets/images/addwash.png",
-                                            width: 600,
-                                          ),
-                                        ),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(99),
-                                          color: Colors.deepPurpleAccent,
-                                          boxShadow: [
-                                            BoxShadow(color: Colors.white, spreadRadius: 3),
-                                          ],
-                                        ),
+    ),
+    onTap: ()
+    {
+    Navigator.push(
+    context,
+    new MaterialPageRoute(
+    builder: (context) => new ListCarPayPage(),
+    ),
+    );
+    }
+    )
 
-                                      ),
-                                       onTap: ()
-                                        {
-                                            Navigator.push(
-                                              context,
-                                              new MaterialPageRoute(
-                                                builder: (context) => new ListCarPayPage(),
-                                              ),
-                                            );
-                                        }
-                                    ),
+    ),
 
-                                  ),
-
-                                ]),
-                              )
-                          )
-                      )
-                ]
-                          )
-      )
+    ]),
+    )
+    )
+    )
+                    ]
+                  )
+              )
             ),
-
             Column(
               children: <Widget>[
                 Stack(
                   children: <Widget>[
                     AnimatedContainer(
-                        width: double.infinity,
-                        curve: Curves.fastLinearToSlowEaseIn,
-                        duration: Duration(milliseconds: 1000),
-                        decoration: BoxDecoration(
-                            gradient: RadialGradient(colors: [
-                              Colors.transparent,
-                            ])),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment
-                              .spaceBetween,
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.all(0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment
-                                    .start,
-                                children: <Widget>[
-                                  SizedBox(
-                                    height: 440.0,
-                                  ),
+                      width: double.infinity,
+                      curve: Curves.fastLinearToSlowEaseIn,
+                      duration: Duration(milliseconds: 1000),
+                      decoration: BoxDecoration(
+                          gradient: RadialGradient(colors: [
+                            Colors.purple[500],
+                            Colors.purple[600],
+                            Colors.purple[700],
+                            Colors.purple[800],
+                            Colors.purple[900],
 
-
-                                ],
-                              ),
+                          ])),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment
+                            .spaceBetween,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.all(20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment
+                                  .start,
+                              children: <Widget>[
+                                SizedBox(
+                                  height: 440.0,
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-
-
+                          ),
+                        ],
+                      ),
                     ),
                     Positioned.fill(
                       child: Opacity(
@@ -300,24 +281,19 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
 
                   ],
                 )
-
               ],
             )
           ],
         ),
-      ),
-    )
-    )
+      )
     );
   }
 }
-
 class NewPadding extends StatelessWidget {
   final String image1;
   final String text1;
   final String image2;
   final String text2;
-
   const NewPadding({
     Key key,
     this.image1,
@@ -325,14 +301,12 @@ class NewPadding extends StatelessWidget {
     this.image2,
     this.text2,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 0),
     );
   }
-
   Widget _buttonRequest() {
     return Container(
       width: double.infinity,
@@ -351,10 +325,6 @@ class NewPadding extends StatelessWidget {
     );
   }
 }
-
-
-
-
 class FadeAnimation extends StatelessWidget {
   final double delay;
   final Widget child;
@@ -368,7 +338,6 @@ class FadeAnimation extends StatelessWidget {
           Duration(milliseconds: 500))..add(
           "translateY", Tween(begin: -30.0, end: 0.0),
           Duration(milliseconds: 500), Curves.easeOut);
-
     return PlayAnimation<MultiTweenValues<String>>(
       delay: Duration(milliseconds: (500 * delay).round()),
       duration: tween.duration,
@@ -380,54 +349,6 @@ class FadeAnimation extends StatelessWidget {
             child: Transform.translate(
                 offset: Offset(0, animation.get("translateY")), child: child),
           ),
-    );
-  }
-
-  Widget _buttonAccept() {
-    return SizedBox(
-      width: 100,
-      height: 140,
-      child: Stack(children: [
-        Container(
-          height: 500,
-          width: 500,
-          child: Lottie.asset(
-            'assets/json/pulse.json',
-            width: 500,
-            height: 500,
-          ),
-        ),
-
-        Center(
-          child: GestureDetector(
-
-            child: Container(
-              height: 60,
-              width: 60,
-
-              child: Center(
-
-                child: Image.asset(
-                  "./assets/images/debit.png",
-                  width: 600,
-                ),
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(99),
-                color: Colors.deepPurpleAccent,
-                boxShadow: [
-                  BoxShadow(color: Colors.white, spreadRadius: 3),
-                ],
-              ),
-
-            ),
-           // onTap: _con.goToCreateCard,
-
-          ),
-
-        ),
-
-      ]),
     );
   }
 }
