@@ -10,6 +10,8 @@ import 'package:uber_clone_flutter/src/provider/users_provider.dart';
 import 'package:uber_clone_flutter/src/utils/my_snackbar.dart';
 import 'package:uber_clone_flutter/src/utils/shared_pref.dart';
 
+import '../products/list/client_menu_list.dart';
+
 class ClientUpdateController {
 
   BuildContext context;
@@ -55,7 +57,7 @@ class ClientUpdateController {
       return;
     }
 
-    _progressDialog.show(max: 100, msg: 'Espere un momento...');
+
     isEnable = false;
 
     User myUser = new User(
@@ -69,8 +71,6 @@ class ClientUpdateController {
     Stream stream = await usersProvider.update(myUser, imageFile);
     stream.listen((res) async {
 
-      _progressDialog.close();
-
       // ResponseApi responseApi = await usersProvider.create(user);
       ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
       // Fluttertoast.showToast(msg: responseApi.message);
@@ -79,7 +79,12 @@ class ClientUpdateController {
         user = await usersProvider.getById(myUser.id); // OBTENIENDO EL USUARIO DE LA DB
         print('Usuario obtenido: ${user.toJson()}');
         _sharedPref.save('user', user.toJson());
-        Navigator.pushNamedAndRemoveUntil(context, 'client/products/list', (route) => false);
+        Navigator.pushAndRemoveUntil<void>(
+          context,
+          MaterialPageRoute<void>(builder: (BuildContext context) => ClientMenuListPage()),
+          ModalRoute.withName('client/products/lis'),
+        );
+
       }
       else {
         isEnable = true;
