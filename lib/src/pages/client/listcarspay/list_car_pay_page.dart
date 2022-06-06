@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:core';
 import 'dart:ui';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -391,7 +392,7 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
       alignment: Alignment.centerLeft,
       margin: EdgeInsets.symmetric(horizontal: 40, vertical: 40),
       child: Text(
-        'Selecciona un vehículo o Añade uno ',
+        'Selecciona un vehículo d Añade uno ',
         style: TextStyle(
           color: Colors.white,
             fontSize: 19,

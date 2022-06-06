@@ -66,6 +66,7 @@ dependencies:
   flutter_gradients: ^1.0.0+2
   google_fonts: ^2.3.2
   easy_dialog: ^1.1.0
+  snippet_coder_utils: ^1.0.12
 
 
 

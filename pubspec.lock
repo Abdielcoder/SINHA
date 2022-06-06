@@ -756,6 +756,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.7"
+  snippet_coder_utils:
+    dependency: "direct main"
+    description:
+      name: snippet_coder_utils
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.12"
   socket_io_client:
     dependency: "direct main"
     description:
