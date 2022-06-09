@@ -45,7 +45,7 @@ class _InprogressCleanerPageState extends State<InprogressCleanerPage> {
           child: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: ExactAssetImage("assets/img/limpiando.jpg"),
+                image: ExactAssetImage("assets/img/encamino.jpg"),
                 fit: BoxFit.cover,
               ),
             ),

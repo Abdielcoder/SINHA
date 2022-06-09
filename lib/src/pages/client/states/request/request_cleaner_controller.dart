@@ -60,6 +60,7 @@ class RequestCleanerCOntroller{
   //     // 'lng': _position.longitude,
   //   });
   // }
+
   void addStatus(String status) {
     print("ENTRE METODO ADD STATUS");
     if(status=="ONWAY"){

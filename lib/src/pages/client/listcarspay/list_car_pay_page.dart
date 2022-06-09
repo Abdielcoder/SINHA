@@ -1,16 +1,11 @@
-import 'dart:async';
 import 'dart:core';
 import 'dart:ui';
-
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:lottie/lottie.dart';
-import 'package:uber_clone_flutter/src/models/addresss.dart';
 import 'package:uber_clone_flutter/src/models/car.dart';
 import 'package:uber_clone_flutter/src/utils/my_colors.dart';
 import 'package:uber_clone_flutter/src/widgets/no_data_widget.dart';
-
 import '../create/client_car_create_page.dart';
 import '../products/list/client_menu_list.dart';
 import 'list_car_pay_controller.dart';
@@ -24,7 +19,6 @@ class ListCarPayPage extends StatefulWidget {
 }
 
 class _ListCarPayPageState extends State<ListCarPayPage> {
-  bool muestraText;
   ListCarPayController _con = new ListCarPayController();
 
   @override
@@ -73,28 +67,11 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
           child: Stack(
               alignment: Alignment.center,
             children: [
-
-
-              Positioned(
-                  top: 0,
-                  child: _textSelecciona(),
-              ),
-              Container(
+            _textTitle(),
+          Container(
                   margin: EdgeInsets.only(top: 100),
-                  child: _listAddress()
+                  child: _listCars()
               ),
-              // Align(
-              //   alignment: FractionalOffset.bottomCenter,
-              //   child: Padding(
-              //     padding: const EdgeInsets.all(8.0),
-              //     child: Positioned(
-              //         top: 0,
-              //         child: _buttonNewCar()
-              //     ),
-              //   ),
-              // ),
-
-
             ],
           ),
 
@@ -179,13 +156,12 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
 
 
 //LIST ADRESS
-  Widget _listAddress() {
+  Widget _listCars() {
     return FutureBuilder(
         future: _con.getCars(),//GET LIST ADRRES FROM PROVIDER
         builder: (context, AsyncSnapshot<List<Car>> snapshot) {
           if (snapshot.hasData) {//VALIDATED
             if (snapshot.data.length > 0) {//VALIDATED
-              muestraText = true;
               return Stack(
                   children: [
                     ListView.builder(
@@ -193,18 +169,15 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
                       padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
                       itemCount: snapshot.data?.length ?? 0,
                       itemBuilder: (_, index) {
-                        return _radioSelectorAddress(snapshot.data[index], index);
+                        return _radioSelectorCars(snapshot.data[index], index);
                       }
                   ),
                     Align(
                       alignment: FractionalOffset.bottomCenter,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Positioned(
-                            top: 0,
-                            child: _buttonNewCar()
+                         child: _buttonNewCar()
                         ),
-                      ),
                     ),
 
                   ],
@@ -214,18 +187,13 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
 
             }
             else {
-              // setState(() {
-              //   muestraText = false;
-              // });
 
               return _noCars();
             }
 
           }
           else {
-            // setState(() {
-            //   muestraText = false;
-            // });
+
             return _noCars();
           }
 
@@ -235,7 +203,7 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
 
   }
 
-  Widget _radioSelectorAddress(Car cars, int index) {
+  Widget _radioSelectorCars(Car cars, int index) {
     String colorCarBd =cars?.color ?? '';
     String colorWHex = "0xFF${colorCarBd}";
     int colorCar = int.parse(colorWHex);
@@ -245,27 +213,21 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
         child: Column(
           children: [
             Row(
-
               children: [
-
-                // Radio(
-                //
-                //   value: index,
-                //   groupValue: _con.radioValue,
-                //   onChanged:  _con.handleRadioValueChange,
-                //
-                // ),
                 Column(children: <Widget>[
                 SizedBox(height: 32.0),
                 GestureDetector(
                 onTap: (){},
-                child:  CircleAvatar(
-                      backgroundImage: cars.image != null
-                          ? NetworkImage(cars.image)
-                          : AssetImage('assets/img/placac.png'),
-                      radius: 40,
-                      backgroundColor: Colors.grey[200],
-                    ),
+                child:  InkWell(
+                  onTap: () => _con.goToAddress(cars),
+                  child: CircleAvatar(
+                        backgroundImage: cars.image != null
+                            ? NetworkImage(cars.image)
+                            : AssetImage('assets/img/logo.png'),
+                        radius: 40,
+                        backgroundColor: Colors.grey[200],
+                      ),
+                ),
                 )],
                 ),
                 Column(
@@ -371,15 +333,7 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
                       padding: const EdgeInsets.only(left: 18,bottom: 5),
                       child: CircleAvatar(
                         radius: 8,
-                        backgroundColor: Colors.white,
-                        child: CircleAvatar(
-                          backgroundImage: cars.color != null
-                              ? AssetImage('')
-                              : AssetImage('assets/img/car_color.png'),
-                          radius: 7,
-                          backgroundColor: Color(colorCar),
-                        ),
-                      ),
+                        backgroundColor: Colors.white),
                     ),
                   ],
                 ),
@@ -435,12 +389,12 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
     );
   }
 
-  Widget _textSelecciona() {
+  Widget _textTitle() {
     return Container(
-      alignment: Alignment.centerLeft,
+      alignment: Alignment.topCenter,
       margin: EdgeInsets.symmetric(horizontal: 40, vertical: 40),
       child: Text(
-        'Selecciona un vehículo d Añade uno ',
+        'Selecciona un vehículo o añade uno ',
         style: TextStyle(
           color: Colors.white,
             fontSize: 19,
@@ -452,85 +406,11 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
   }
 
 
-  //
-  // Widget _textSeleciion() {
-  //   return Container(
-  //     alignment: Alignment.centerLeft,
-  //     margin: EdgeInsets.symmetric(horizontal: 40, vertical: 80),
-  //     child: Text(
-  //       'Presiona el botón para para seleccionar auto',
-  //       style: TextStyle(
-  //         fontFamily: 'Lexendeca-Regular',
-  //         fontSize: 15,
-  //
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  Widget _iconAdd() {
-
-    return Container(
-        margin: EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-            children: [
-              Row(
-                  children: [
-                    Text(
-                      'Agrega un vehiculo',
-                      style: TextStyle(
-                        fontFamily: 'Lexendeca-Regular',
-                        fontSize: 14,
-
-                      ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        IconButton(
-                            onPressed: _con.goToNewCard,
-                            icon: Icon(Icons.add, color: Colors.white)
-                        ),
-
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Regresar',
-                          style: TextStyle(
-                            fontFamily: 'Lexendeca-Regular',
-                            fontSize: 14,
-
-                          ),
-                        ),
-
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        IconButton(
-                            onPressed: _con.goBack,
-                            icon: Icon(Icons.arrow_back, color: Colors.white)
-                        ),
-
-                      ],
-                    ),
-                  ]
-
-              ),
-            ]
-        )
-    );
-
-  }
 
   Widget _iconDelete(Car cars) {
     return IconButton(
         onPressed: () {
-          _con.deleteItem(cars);
+          _con.deleteCar(cars);
         },
         icon: Icon(Icons.delete, color: Colors.white,)
     );

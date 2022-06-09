@@ -67,6 +67,7 @@ dependencies:
   google_fonts: ^2.3.2
   easy_dialog: ^1.1.0
   snippet_coder_utils: ^1.0.12
+  custom_progress_dialog: ^1.0.5
 
 
 

@@ -29,7 +29,6 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       _con.init(context, refresh);
     });
@@ -42,6 +41,26 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset : false,
+      backgroundColor: Colors.transparent,
+      appBar: AppBar(
+        leading:InkWell(
+          onTap: () {
+            Navigator.of(context).pop();
+            // Navigator.pushAndRemoveUntil<void>(
+            //   context,
+            //   MaterialPageRoute<void>(builder: (BuildContext context) => const ClientMenuListPage()),
+            //   ModalRoute.withName('client/products/list'),
+            // );
+          },
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.transparent,
+        title: Text('Atras'),
+      ),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(

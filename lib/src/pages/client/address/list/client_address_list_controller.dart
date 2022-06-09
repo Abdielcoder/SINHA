@@ -1,7 +1,6 @@
+import 'package:custom_progress_dialog/custom_progress_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 import 'package:uber_clone_flutter/src/models/addresss.dart';
 import 'package:uber_clone_flutter/src/models/cards_client.dart';
 import 'package:uber_clone_flutter/src/models/order.dart';
@@ -11,12 +10,8 @@ import 'package:uber_clone_flutter/src/models/user.dart';
 import 'package:uber_clone_flutter/src/provider/StripeProvider.dart';
 import 'package:uber_clone_flutter/src/provider/address_provider.dart';
 import 'package:uber_clone_flutter/src/provider/orders_provider.dart';
-import 'package:uber_clone_flutter/src/utils/my_snackbar.dart';
-// import 'package:uber_clone_flutter/src/provider/orders_provider.dart';
 import 'package:uber_clone_flutter/src/utils/shared_pref.dart';
-import 'package:easy_dialog/easy_dialog.dart';
 import '../../payments/stripe/stripe_existing_cards_page.dart';
-import '../../products/list/client_menu_list.dart';
 import '../../states/request/request_cleaner_page.dart';
 import '../create/client_address_create_page.dart';
 
@@ -45,13 +40,13 @@ class ClientAddressListController {
   OrdersProvider _ordersProvider = new OrdersProvider();
   StripeProvider _stripeProvider = new StripeProvider();
   String cardname;
-  ProgressDialog progressDialog;
   String nameCard;
+  ProgressDialog _progressDialog;
   Future init(BuildContext context, Function refresh) async {
     this.context = context;
     this.refresh = refresh;
 
-    progressDialog = new ProgressDialog(context: context);
+    _progressDialog = ProgressDialog();
     cardsStore = CardClient.fromJsonList(await _sharedPref.read('card')).toList;
     user = User.fromJson(await _sharedPref.read('user'));
     selectedProducts = Product.fromJsonList(await _sharedPref.read('order')).toList;
@@ -64,23 +59,9 @@ class ClientAddressListController {
     if (a.id !=null) {
 
     }
+    _progressDialog.dismissProgressDialog(context);||
     refresh();
   }
-
-
-
-
-
-  //
-  // //Create Item product
-  // void addItem(Product product) {
-  //   int index = selectedProducts.indexWhere((p) => p.id == product.id);
-  //   selectedProducts[index].quantity = selectedProducts[index].quantity + 1;
-  //   _sharedPref.save('order', selectedProducts);
-  //   getTotal();
-  // }
-
-
 
   void getCards() async {
     cardsStore.forEach((c) {
@@ -178,7 +159,7 @@ class ClientAddressListController {
     //Creating de Order
     Order order = new Order(
         idClient: user.id,
-        idDelivery: '-1',
+        idDelivery: '2',
         idAddress: addresses.id,
         lat: addresses.lat,
         lng: addresses.lng,
@@ -207,7 +188,7 @@ class ClientAddressListController {
     }
     // Navigator.pushNamedAndRemoveUntil(context, 'client/payments/status', (route) => false);
     print('ClientAdreess *Response API* : ${responseApi.message}');
-    progressDialog.close();
+
 
   }
 
@@ -218,7 +199,7 @@ class ClientAddressListController {
     totalPayment = 120;
       print('Total a pagar: ${(totalPayment*100).floor()}');
     refresh();
-    progressDialog.close();
+
   }
 
   void handleRadioValueChange(int value) async {
