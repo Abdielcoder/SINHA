@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'dart:ui';
+import 'package:custom_progress_dialog/custom_progress_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:lottie/lottie.dart';
@@ -20,12 +21,13 @@ class ListCarPayPage extends StatefulWidget {
 
 class _ListCarPayPageState extends State<ListCarPayPage> {
   ListCarPayController _con = new ListCarPayController();
-
+  ProgressDialog _progressDialog = ProgressDialog();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      //_progressDialog.dismissProgressDialog(context);
       _con.init(context, refresh);
     });
   }
@@ -138,6 +140,9 @@ class _ListCarPayPageState extends State<ListCarPayPage> {
 
             ),
             onTap: () {
+              _progressDialog.showProgressDialog(context,dismissAfter: Duration(seconds: 3),textToBeDisplayed:'Un momento...',onDismiss:(){
+
+              });
               Navigator.push(
                 context,
                 new MaterialPageRoute(

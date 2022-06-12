@@ -1,17 +1,12 @@
-import 'dart:async';
 import 'dart:ui';
-import 'package:easy_dialog/easy_dialog.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:custom_progress_dialog/custom_progress_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:lottie/lottie.dart';
 import 'package:uber_clone_flutter/src/models/addresss.dart';
 import 'package:uber_clone_flutter/src/models/cards_client.dart';
 import 'package:uber_clone_flutter/src/pages/client/address/create/client_address_create_page.dart';
-import 'package:uber_clone_flutter/src/utils/my_colors.dart';
 import 'package:uber_clone_flutter/src/widgets/no_data_widget.dart';
-import 'package:auto_reload/auto_reload.dart';
-import '../../products/list/client_menu_list.dart';
 import 'client_address_list_controller.dart';
 
 class ClientAddressListPage extends StatefulWidget {
@@ -23,6 +18,7 @@ class ClientAddressListPage extends StatefulWidget {
 
 class _ClientAddressListPageState extends State<ClientAddressListPage> {
   double totalPayment = 0;
+  ProgressDialog _progressDialog = new ProgressDialog();
   ClientAddressListController _con = new ClientAddressListController();
 
   @override
@@ -150,6 +146,9 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
 
             ),
             onTap: () {
+              _progressDialog.showProgressDialog(context,dismissAfter: Duration(seconds: 3),textToBeDisplayed:'Un momento...',onDismiss:(){
+
+              });
               Navigator.push(
                 context,
                 new MaterialPageRoute(

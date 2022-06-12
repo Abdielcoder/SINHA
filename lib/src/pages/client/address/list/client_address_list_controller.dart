@@ -1,3 +1,4 @@
+
 import 'package:custom_progress_dialog/custom_progress_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -41,12 +42,12 @@ class ClientAddressListController {
   StripeProvider _stripeProvider = new StripeProvider();
   String cardname;
   String nameCard;
-  ProgressDialog _progressDialog;
+  ProgressDialog  _progressDialog = new ProgressDialog();
+  // ProgressDialog _progressDialog;
   Future init(BuildContext context, Function refresh) async {
     this.context = context;
     this.refresh = refresh;
 
-    _progressDialog = ProgressDialog();
     cardsStore = CardClient.fromJsonList(await _sharedPref.read('card')).toList;
     user = User.fromJson(await _sharedPref.read('user'));
     selectedProducts = Product.fromJsonList(await _sharedPref.read('order')).toList;
@@ -59,7 +60,6 @@ class ClientAddressListController {
     if (a.id !=null) {
 
     }
-    _progressDialog.dismissProgressDialog(context);||
     refresh();
   }
 
@@ -73,7 +73,9 @@ class ClientAddressListController {
   //Create service lavado.
   void creteService(){
     //Create procduct
+    _progressDialog.showProgressDialog(context,dismissAfter: Duration(seconds: 3),textToBeDisplayed:'Un momento...',onDismiss:(){
 
+    });
     Product product = new Product(
       id: '1',
       name: 'Lavado',
@@ -98,31 +100,7 @@ class ClientAddressListController {
   }
 
   void createOrder() async {
-      //
-      // Addresss a = Addresss.fromJson(await _sharedPref.read('address') ?? {});
-      // List<Product> selectedProducts = Product.fromJsonList(await _sharedPref.read('order')).toList;
-      // Order order = new Order(
-      //     idClient: user.id,
-      //     idAddress: a.id,
-      //     products: selectedProducts
-      // );
-      // ResponseApi responseApi = await _ordersProvider.create(order);
-      // if(responseApi.success) {
-      //   print('@222222 $totalPayment');
-      //   SharedPreferences preferences = await SharedPreferences.getInstance();
-      //   await preferences.remove('order');
-      //   Future.delayed(Duration.zero, () {
-      //     //Navigator.pushNamed(context, '  3
-      //     // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ aQ433client/payments/stripe/existingcards');
-      //     // Navigator.pushNamedAndRemoveUntil(
-      //     //     context,
-      //     //     'client/payments/stripe/existingcards',
-      //     //         (route) => false,
-      //     //     arguments: {
-      //     //       'totalPs': totalPayment,
-      //     //
-      //     //     }
-      //     // );
+
           Future.delayed(Duration.zero, () {
 
             Navigator.pushAndRemoveUntil<void>(
@@ -229,14 +207,7 @@ class ClientAddressListController {
   }
 
   void goToNewAddress() async {
-    // var result = await Navigator.pushNamed(context, 'client/address/create');
 
-    // var result = await  Navigator.push(
-    //   context,
-    //   new MaterialPageRoute(
-    //     builder: (context) => new ClientAddressCreatePage(),
-    //   ),
-    // );
 
     var result = await Navigator.pushAndRemoveUntil<void>(
       context,
@@ -252,6 +223,9 @@ class ClientAddressListController {
   }
 
   void goToCreateCard() async {
+    // _progressDialog.showProgressDialog(context,dismissAfter: Duration(seconds: 3),textToBeDisplayed:'Un momento..',onDismiss:(){
+    //
+    // });
     Navigator.pushAndRemoveUntil<void>(
       context,
       MaterialPageRoute<void>(builder: (BuildContext context) =>  ExistingCardsPage()),

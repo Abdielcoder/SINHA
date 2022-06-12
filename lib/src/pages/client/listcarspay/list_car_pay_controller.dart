@@ -43,12 +43,17 @@ class ListCarPayController {
 
   //Delete car
   void deleteCar(Car cars) {
+    _progressDialog.showProgressDialog(context,dismissAfter: Duration(seconds: 2),textToBeDisplayed:'Un momento...',onDismiss:(){
+
+    });
     MyDialog.info(context, 'ELIMINAR','¿Quieres eliminar el Vehiculo?...','client/car/list',cars.id);
   }
 
   //Go to select address
   void goToAddress(Car cars) async{
-    _progressDialog.showProgressDialog(context);
+    _progressDialog.showProgressDialog(context,dismissAfter: Duration(seconds: 3),textToBeDisplayed:'Un momento...',onDismiss:(){
+
+    });
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) =>  ClientAddressListPage()),
@@ -57,6 +62,9 @@ class ListCarPayController {
 
   //Go to create new car
   void goToNewCard() async {
+    _progressDialog.showProgressDialog(context,dismissAfter: Duration(seconds: 3),textToBeDisplayed:'Sending...',onDismiss:(){
+
+    });
     Navigator.pushAndRemoveUntil<void>(
       context,
       MaterialPageRoute<void>(builder: (BuildContext context) => const CLientCarCreatePage()),

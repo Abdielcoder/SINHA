@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:custom_progress_dialog/custom_progress_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -106,7 +107,7 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
   String holder2 = '';
   String dropdownValueBrand = "Seleccccc";
   String dropdownValueModel = "Seleccccc";
-
+  ProgressDialog _progresDialog = new ProgressDialog();
 
   ClientCarCreateController _con = new ClientCarCreateController();
   //DEFAULT CAR COLOR
@@ -116,6 +117,7 @@ class _CLientCarCreatePageState extends State<CLientCarCreatePage> {
   //void changeColor(Color color) => setState(() => currentColor = color);
   void setStateColor(Color color){
     setState(() {
+      _progresDialog.dismissProgressDialog(context);
       currentColor = color;
       //_con.selectedCarColor =currentColor.toString();
       _con.onSelectedColor(currentColor.toString());

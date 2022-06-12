@@ -1,11 +1,12 @@
 import 'dart:ui';
 
+import 'package:custom_progress_dialog/custom_progress_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sn_progress_dialog/progress_dialog.dart';
+
 import 'package:stripe_payment/stripe_payment.dart';
 import 'package:uber_clone_flutter/src/pages/client/payments/stripe/stripe_existing_cards_controller.dart';
 import 'package:uber_clone_flutter/src/utils/my_snackbar.dart';
@@ -36,7 +37,7 @@ class ExistingCardsPage extends StatefulWidget {
 }
 
 class ExistingCardsPageState extends State<ExistingCardsPage> {
-  ProgressDialog progressDialog;
+  ProgressDialog _progressDialog;
   StripeExistingCardsController _con = new StripeExistingCardsController();
   double totalPs = 120;
   String totalPaymentString = '';
@@ -45,8 +46,10 @@ class ExistingCardsPageState extends State<ExistingCardsPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    progressDialog = new ProgressDialog(context: context);
+    _progressDialog = new ProgressDialog();
+
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      _progressDialog.dismissProgressDialog(context);
       _con.init(context, refresh, widget.cardClient);
     });
     refresh();

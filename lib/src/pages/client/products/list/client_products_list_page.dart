@@ -1,21 +1,15 @@
 import 'dart:ui';
-
+import 'package:custom_progress_dialog/custom_progress_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import 'package:progress_dialog/progress_dialog.dart';
 import 'package:simple_animations/multi_tween/multi_tween.dart';
 import 'package:simple_animations/stateless_animation/play_animation.dart';
-import 'package:uber_clone_flutter/src/models/category.dart';
-import 'package:uber_clone_flutter/src/models/product.dart';
 import 'package:uber_clone_flutter/src/pages/client/products/list/client_products_list_controller.dart';
 import 'package:uber_clone_flutter/src/utils/my_colors.dart';
-import 'package:uber_clone_flutter/src/widgets/no_data_widget.dart';
 import '../../../../utils/animacion_particulas.dart';
-import '../../../drawer/DrawerScreen.dart';
 import '../../listcarspay/list_car_pay_page.dart';
-import '../../states/request/request_cleaner_page.dart';
+
 class ClientProductsListPage extends StatefulWidget {
   const ClientProductsListPage({Key key}) : super(key: key);
   @override
@@ -28,8 +22,9 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    _progressDialog = ProgressDialog();
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      //  _con.init(context, refresh);
+
     });
   }
   double xOffset = 0;
@@ -99,14 +94,6 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
             Container(
               child: FadeAnimation(
                   1,
-                  // Text(
-                  //   "Login & Sign Up Screen",
-                  //   style: TextStyle(
-                  //       color: Colors.white,
-                  //       fontSize: 30,
-                  //       fontWeight: FontWeight.w700,
-                  //       fontFamily: "Sofia"),
-                  // )
                   Stack(
                     children: <Widget>[
                       Padding(
@@ -139,99 +126,68 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
                           ),
                         ),
                       ),
-                      // Padding(
-                      //   padding: const EdgeInsets
-                      //       .only(top: 400,left: 50),
-                      //   child: Container(
-                      //       width: 300,
-                      //       height: 70,
-                      //
-                      //       child: ElevatedButton(
-                      //           onPressed: () {
-                      //             // Navigator.push(
-                      //             //   context,
-                      //             //   new MaterialPageRoute(
-                      //             //     builder: (context) => new RequestCleanerPage(),
-                      //             //   ),
-                      //             // );
-                      //             Navigator.push(
-                      //               context,
-                      //               new MaterialPageRoute(
-                      //                 builder: (context) => new ListCarPayPage(),
-                      //               ),
-                      //             );
-                      //
-                      //
-                      //           },
-                      //           child: Text('SERVICIO'),
-                      //           style: ElevatedButton.styleFrom(
-                      //               primary: Colors.black87,
-                      //               shape: RoundedRectangleBorder(
-                      //                   borderRadius: BorderRadius.circular(30)
-                      //               ),
-                      //               padding: EdgeInsets.symmetric(vertical: 15)
-                      //           )
-                      //       )
-                      //   ),
-                      // ),
-    Padding(
-    padding: const EdgeInsets.only(top: 400),
-    child: Container(
-    margin: EdgeInsets.only(left: MediaQuery.of(context).size.height * 0.180),
-    child: SizedBox(
-    width: 100,
-    height: 140,
-    child: Stack(children: [
-    Container(
-    height: 500,
-    width: 500,
-    child: Lottie.asset(
-    'assets/json/pulse.json',
-    width: 500,
-    height: 500,
-    ),
-    ),
 
-    Center(
-    child: GestureDetector(
+                      Padding(
+                      padding: const EdgeInsets.only(top: 400),
+                      child: Container(
+                      margin: EdgeInsets.only(left: MediaQuery.of(context).size.height * 0.180),
+                      child: SizedBox(
+                      width: 100,
+                      height: 140,
+                      child: Stack(children: [
+                      Container(
+                      height: 500,
+                      width: 500,
+                      child: Lottie.asset(
+                      'assets/json/pulse.json',
+                      width: 500,
+                      height: 500,
+                      ),
+                      ),
 
-    child: Container(
-    height: 60,
-    width: 60,
+                    Center(
+                    child: GestureDetector(
 
-    child: Center(
+                    child: Container(
+                    height: 60,
+                    width: 60,
 
-    child: Image.asset(
-    "./assets/images/addwash.png",
-    width: 600,
-    ),
-    ),
-    decoration: BoxDecoration(
-    borderRadius: BorderRadius.circular(99),
-    color: Colors.deepPurpleAccent,
-    boxShadow: [
-    BoxShadow(color: Colors.white, spreadRadius: 3),
-    ],
-    ),
+                    child: Center(
 
-    ),
-    onTap: ()
-    {
-    Navigator.push(
-    context,
-    new MaterialPageRoute(
-    builder: (context) => new ListCarPayPage(),
-    ),
-    );
-    }
-    )
+                    child: Image.asset(
+                    "./assets/images/addwash.png",
+                    width: 600,
+                    ),
+                    ),
+                    decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(99),
+                    color: Colors.deepPurpleAccent,
+                    boxShadow: [
+                    BoxShadow(color: Colors.white, spreadRadius: 3),
+                    ],
+                    ),
 
-    ),
+                    ),
+                    onTap: ()
+                    {
+                      _progressDialog.showProgressDialog(context,dismissAfter: Duration(seconds: 3),textToBeDisplayed:'Un momento...',onDismiss:(){
 
-    ]),
-    )
-    )
-    )
+                      });
+                    Navigator.push(
+                    context,
+                    new MaterialPageRoute(
+                    builder: (context) => new ListCarPayPage(),
+                    ),
+                    );
+                    }
+                    )
+
+                    ),
+
+               ]),
+            )
+          )
+       )
                     ]
                   )
               )
@@ -307,24 +263,8 @@ class NewPadding extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 0),
     );
   }
-  Widget _buttonRequest() {
-    return Container(
-      width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 50, vertical: 30),
-      child: ElevatedButton(
-        onPressed: (){},
-        child: Text('REGISTRARSE'),
-        style: ElevatedButton.styleFrom(
-            primary: MyColors.primaryColor,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30)
-            ),
-            padding: EdgeInsets.symmetric(vertical: 15)
-        ),
-      ),
-    );
-  }
 }
+
 class FadeAnimation extends StatelessWidget {
   final double delay;
   final Widget child;
