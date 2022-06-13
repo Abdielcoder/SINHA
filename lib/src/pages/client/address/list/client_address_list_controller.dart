@@ -73,9 +73,9 @@ class ClientAddressListController {
   //Create service lavado.
   void creteService(){
     //Create procduct
-    _progressDialog.showProgressDialog(context,dismissAfter: Duration(seconds: 3),textToBeDisplayed:'Un momento...',onDismiss:(){
-
-    });
+    // _progressDialog.showProgressDialog(context,dismissAfter: Duration(seconds: 3),textToBeDisplayed:'Un momento...',onDismiss:(){
+    //
+    // });
     Product product = new Product(
       id: '1',
       name: 'Lavado',
