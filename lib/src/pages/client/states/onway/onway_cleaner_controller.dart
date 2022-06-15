@@ -16,9 +16,6 @@ import '../../../../provider/orders_provider.dart';
 import '../../../../utils/my_colors.dart';
 import '../../../../utils/shared_pref.dart';
 import '../inprogress/inprogress_cleaner_page.dart';
-import '../onway/onway_cleaner_page.dart';
-
-
 import 'package:uber_clone_flutter/src/api/environment.dart';
 import 'package:uber_clone_flutter/src/models/order.dart';
 import 'package:uber_clone_flutter/src/models/user.dart';
@@ -34,11 +31,13 @@ class OnWayCleanerController{
   Function refresh;
   Order order;
   IO.Socket socket;
+  // IO.Socket socket2;
   User user;
   SharedPref _sharedPref = new SharedPref();
   OrdersProvider _ordersProvider = new OrdersProvider();
   Position _position;
-
+  double lat;
+  double lng;
   String addressName;
   LatLng addressLatLng;
 
@@ -57,7 +56,7 @@ class OnWayCleanerController{
 
   Set<Polyline> polylines = {};
   List<LatLng> points = [];
-
+  List<String> dataSokect = [];
 
 
 
@@ -72,44 +71,60 @@ class OnWayCleanerController{
     this.refresh = refresh;
     // order = Order.fromJson(ModalRoute.of(context).settings.arguments as Map<String, dynamic>);
 
+    // socket = IO.io('http://${Environment.API_DELIVERY}/orders/lat', <String, dynamic> {
+    //   'transports': ['websocket'],
+    //   'autoConnect': false
+    // });
+
+
     socket = IO.io('http://${Environment.API_DELIVERY}/orders/status', <String, dynamic> {
       'transports': ['websocket'],
       'autoConnect': false
     });
-    order = Order.fromJson(ModalRoute.of(context).settings.arguments as Map<String, dynamic>);
-    deliveryMarker = await createMarkerFromAsset('assets/img/pinwash.png');
-    homeMarker = await createMarkerFromAsset('assets/img/carrowash.png');
 
-    socket = IO.io('http://${Environment.API_DELIVERY}/orders/delivery', <String, dynamic> {
-      'transports': ['websocket'],
-      'autoConnect': false
-    });
-
+    // socket2 = IO.io('http://${Environment.API_DELIVERY}/orders/lat', <String, dynamic> {
+    //   'transports': ['websocket'],
+    //   'autoConnect': false
+    // });
 
     socket.connect();
-    socket.on('position/${order.id}', (data) {
-      print('DATA EMITIDA: ${data}');
-
-      addMarker(
-          'delivery',
-          data['lat'],
-          data['lng'],
-          'Tu Lavador',
-          '',
-          deliveryMarker
-      );
-
-    });
-
-
+   // socket2.connect();
     int idStatusOrder =1;
 
     socket.on('status/${idStatusOrder}', (data) {
-      print('DATA EMITIDA: ${data}');
-
+      print('DATX EMITIDA: ${data}');
+      print('DATX status: ${data['statusOrder']}');
+      print('DATX lat: ${data['lat']}');
+      print('DATX lng: ${data['lng']}');
       addStatus(data['statusOrder'],);
-
     });
+
+    // socket2.on('lat/${idStatusOrder}', (data) {
+    //   print('DATX EMITIDA: ${data}');
+    //   print('DATX lat: ${data['lat']}');
+    //   print('DATX lng: ${data['lng']}');
+    //   // addStatus(data['lat'],);
+    // });
+
+
+
+    order = Order.fromJson(ModalRoute.of(context).settings.arguments as Map<String, dynamic>);
+    deliveryMarker = await createMarkerFromAsset('assets/img/pinwash.png');
+    homeMarker = await createMarkerFromAsset('assets/img/carrowash.png');
+    print('ORDEN ###: ${order.toJson()}');
+
+
+
+
+
+    // socket.on('lat/${idStatusOrder}', (data) {
+    //   print('DATx COORDENADAS aaa : ~ ${data}');
+    //   dataSokect = data;
+    //   //Capture the data
+    //   //addStatus(data['statusOrder']);
+    // });
+
+
     print("SI ESTOY ENTRANDO AQUI....");
     // user = User.fromJson(await _sharedPref.read('user'));
     // _ordersProvider.init(context, user);

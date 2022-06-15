@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
-import 'package:uber_clone_flutter/src/utils/my_snackbar.dart';
-
 import '../../../../api/environment.dart';
 import '../../../../models/order.dart';
-import '../../../../models/response_api.dart';
 import '../../../../models/user.dart';
 import '../../../../provider/orders_provider.dart';
 import '../../../../utils/shared_pref.dart';
-import '../../products/list/client_menu_list.dart';
 import '../onway/onway_cleaner_page.dart';
 
 
@@ -32,15 +28,15 @@ class RequestCleanerCOntroller{
       'transports': ['websocket'],
       'autoConnect': false
     });
+
     socket.connect();
     int idStatusOrder =1;
 
     socket.on('status/${idStatusOrder}', (data) {
       print('DATA EMITIDA: ${data}');
-
       addStatus(data['statusOrder'],);
-
     });
+
     print("SI ESTOY ENTRANDO AQUI....");
     // user = User.fromJson(await _sharedPref.read('user'));
     // _ordersProvider.init(context, user);

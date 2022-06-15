@@ -152,7 +152,7 @@ class ClientAddressListController {
       print('ClientAdreess *PAGO TOTAL* : $totalPayment');
 
       //Remove order when order s successful
-      await preferences.remove('order');
+     // await preferences.remove('order');
       Future.delayed(Duration.zero, () {
 
         Navigator.pushAndRemoveUntil<void>(
