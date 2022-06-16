@@ -188,32 +188,40 @@ class OnWayCleanerController{
   // }
 
 
-  // Future<void> setPolylines(LatLng from, LatLng to) async {
-  //   PointLatLng pointFrom = PointLatLng(from.latitude, from.longitude);
-  //   PointLatLng pointTo = PointLatLng(to.latitude, to.longitude);
-  //   PolylineResult result = await PolylinePoints().getRouteBetweenCoordinates(
-  //       Environment.API_KEY_MAPS,
-  //       pointFrom,
-  //       pointTo
-  //   );
-  //
-  //   for(PointLatLng point in result.points) {
-  //     points.add(LatLng(point.latitude, point.longitude));
-  //   }
-  //
-  //   Polyline polyline = Polyline(
-  //       polylineId: PolylineId('poly'),
-  //       color: MyColors.primaryColor,
-  //       points: points,
-  //       width: 6
-  //   );
-  //
-  //   polylines.add(polyline);
-  //
-  //
-  //
-  //   refresh();
-  // }
+  Future<void> setPolylines(double lat, double lng, double lat2 ,double lng2) async {
+    print('TEDX 1 LAT ~ $lat');
+    print('TEDX 2 LNG ~ $lng');
+    print('TEDX 3 LAT ~ $lat2');
+    print('TEDX 4 LNG ~ $lng2');
+    PointLatLng pointFrom = PointLatLng(lat, lng);
+    PointLatLng pointTo = PointLatLng(lat2, lng2);
+    print('TEX 7 $pointFrom');
+    print('TEX 8 $pointTo');
+    PolylinePoints polylinePoints = PolylinePoints();
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+        Environment.API_KEY_MAPS,
+        pointFrom,
+        pointTo
+    );
+    print('TEX 6 $result.points');
+    for(PointLatLng point in result.points) {
+      print('TEDX 5');
+      points.add(LatLng(point.latitude, point.longitude));
+    }
+
+    Polyline polyline = Polyline(
+        polylineId: PolylineId('poly'),
+        color: Colors.green,
+        points: points,
+        width: 6
+    );
+
+    polylines.add(polyline);
+
+
+
+    refresh();
+  }
 
   void addMarker(
       String markerId,
@@ -296,7 +304,7 @@ class OnWayCleanerController{
 
       print('DATX1 lng: $lat');
       print('DATX2 lng: $lng');
-      animateCameraToPosition(32.4538054, -116.6761283);
+      animateCameraToPosition(lat, lng);
       addMarker(
           'delivery',
           lat,
@@ -309,8 +317,8 @@ class OnWayCleanerController{
 
       addMarker(
           'home',
-         32.520696,
-        -117.122558,
+          32.471311,
+          -116.688620,
           'Lugar de entrega',
           '',
           homeMarker
@@ -318,8 +326,9 @@ class OnWayCleanerController{
 
       LatLng from = new LatLng(lat, lng);
       LatLng to = new LatLng( 32.520696, -117.122558);
-
-    //  setPolylines(from, to);
+      double lat2 = 32.520696;
+      double lng2 = -117.122558;
+      setPolylines(lat, lng, lat2 ,lng2);
 
       refresh();
     } catch(e) {
@@ -351,7 +360,7 @@ class OnWayCleanerController{
       controller.animateCamera(CameraUpdate.newCameraPosition(
           CameraPosition(
               target: LatLng(lat, lng),
-              zoom: 15,
+              zoom: 18,
               bearing: 0
           )
       ));
