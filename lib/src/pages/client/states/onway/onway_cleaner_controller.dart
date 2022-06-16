@@ -38,11 +38,15 @@ class OnWayCleanerController{
   Position _position;
   double lat;
   double lng;
+  double latSockectString;
+  double lngSockectString;
+  double latSockect;
+  double lngSockect;
   String addressName;
   LatLng addressLatLng;
 
   CameraPosition initialPosition = CameraPosition(
-      target: LatLng(1.2125178, -77.2737861),
+      target: LatLng(32.482150, -116.930685),
       zoom: 14
   );
 
@@ -94,8 +98,12 @@ class OnWayCleanerController{
     socket.on('status/${idStatusOrder}', (data) {
       print('DATX EMITIDA: ${data}');
       print('DATX status: ${data['statusOrder']}');
-      print('DATX lat: ${data['lat']}');
-      print('DATX lng: ${data['lng']}');
+
+      latSockectString = data['lat'];
+      lngSockectString = data['lng'];
+      print('DATX lat: $latSockectString');
+      print('DATX lng: $lngSockectString');
+      updateLocation(data['lat'],data['lng']);
       addStatus(data['statusOrder'],);
     });
 
@@ -108,10 +116,10 @@ class OnWayCleanerController{
 
 
 
-    order = Order.fromJson(ModalRoute.of(context).settings.arguments as Map<String, dynamic>);
+   // order = Order.fromJson(ModalRoute.of(context).settings.arguments as Map<String, dynamic>);
     deliveryMarker = await createMarkerFromAsset('assets/img/pinwash.png');
     homeMarker = await createMarkerFromAsset('assets/img/carrowash.png');
-    print('ORDEN ###: ${order.toJson()}');
+  //  print('ORDEN ###: ${order.toJson()}');
 
 
 
@@ -133,8 +141,8 @@ class OnWayCleanerController{
 
     user = User.fromJson(await _sharedPref.read('user'));
     _ordersProvider.init(context, user);
-    print('ORDEN: ${order.toJson()}');
-    checkGPS();
+ //   print('ORDEN: ${order.toJson()}');
+    //checkGPS();
   }
 
   void dispose() {
@@ -150,6 +158,7 @@ class OnWayCleanerController{
   //   });
   // }
   void addStatus(String status) {
+
     print("ENTRE METODO ADD STATUS");
     if(status=="ARRIVE"){
       print("Navego a siguiente pantalla");
@@ -167,44 +176,44 @@ class OnWayCleanerController{
 
 
   }
-  void isCloseToDeliveryPosition() {
-    _distanceBetween = Geolocator.distanceBetween(
-        _position.latitude,
-        _position.longitude,
-        order.address.lat,
-        order.address.lng
-    );
-
-    print('-------- DISTANCIA ${_distanceBetween} ----------');
-  }
-
-
-  Future<void> setPolylines(LatLng from, LatLng to) async {
-    PointLatLng pointFrom = PointLatLng(from.latitude, from.longitude);
-    PointLatLng pointTo = PointLatLng(to.latitude, to.longitude);
-    PolylineResult result = await PolylinePoints().getRouteBetweenCoordinates(
-        Environment.API_KEY_MAPS,
-        pointFrom,
-        pointTo
-    );
-
-    for(PointLatLng point in result.points) {
-      points.add(LatLng(point.latitude, point.longitude));
-    }
-
-    Polyline polyline = Polyline(
-        polylineId: PolylineId('poly'),
-        color: MyColors.primaryColor,
-        points: points,
-        width: 6
-    );
-
-    polylines.add(polyline);
+  // void isCloseToDeliveryPosition() {
+  //   _distanceBetween = Geolocator.distanceBetween(
+  //       _position.latitude,
+  //       _position.longitude,
+  //       order.address.lat,
+  //       order.address.lng
+  //   );
+  //
+  //   print('-------- DISTANCIA ${_distanceBetween} ----------');
+  // }
 
 
-
-    refresh();
-  }
+  // Future<void> setPolylines(LatLng from, LatLng to) async {
+  //   PointLatLng pointFrom = PointLatLng(from.latitude, from.longitude);
+  //   PointLatLng pointTo = PointLatLng(to.latitude, to.longitude);
+  //   PolylineResult result = await PolylinePoints().getRouteBetweenCoordinates(
+  //       Environment.API_KEY_MAPS,
+  //       pointFrom,
+  //       pointTo
+  //   );
+  //
+  //   for(PointLatLng point in result.points) {
+  //     points.add(LatLng(point.latitude, point.longitude));
+  //   }
+  //
+  //   Polyline polyline = Polyline(
+  //       polylineId: PolylineId('poly'),
+  //       color: MyColors.primaryColor,
+  //       points: points,
+  //       width: 6
+  //   );
+  //
+  //   polylines.add(polyline);
+  //
+  //
+  //
+  //   refresh();
+  // }
 
   void addMarker(
       String markerId,
@@ -230,8 +239,9 @@ class OnWayCleanerController{
   void selectRefPoint() {
     Map<String, dynamic> data = {
       'address': addressName,
-      'lat': addressLatLng.latitude,
-      'lng': addressLatLng.longitude,
+      'lat':  32.520696,
+
+      'lng': -117.122558,
     };
 
     Navigator.pop(context, data);
@@ -243,32 +253,32 @@ class OnWayCleanerController{
     return descriptor;
   }
 
-  Future<Null> setLocationDraggableInfo() async {
-
-    if (initialPosition != null) {
-      double lat = initialPosition.target.latitude;
-      double lng = initialPosition.target.longitude;
-
-      List<Placemark> address = await placemarkFromCoordinates(lat, lng);
-
-      if (address != null) {
-        if (address.length > 0) {
-          String direction = address[0].thoroughfare;
-          String street = address[0].subThoroughfare;
-          String city = address[0].locality;
-          String department = address[0].administrativeArea;
-          String country = address[0].country;
-          addressName = '$direction #$street, $city, $department';
-          addressLatLng = new LatLng(lat, lng);
-          // print('LAT: ${addressLatLng.latitude}');
-          // print('LNG: ${addressLatLng.longitude}');
-
-          refresh();
-        }
-      }
-
-    }
-  }
+  // Future<Null> setLocationDraggableInfo() async {
+  //
+  //   if (initialPosition != null) {
+  //     double lat = initialPosition.target.latitude;
+  //     double lng = initialPosition.target.longitude;
+  //
+  //     List<Placemark> address = await placemarkFromCoordinates(lat, lng);
+  //
+  //     if (address != null) {
+  //       if (address.length > 0) {
+  //         String direction = address[0].thoroughfare;
+  //         String street = address[0].subThoroughfare;
+  //         String city = address[0].locality;
+  //         String department = address[0].administrativeArea;
+  //         String country = address[0].country;
+  //         addressName = '$direction #$street, $city, $department';
+  //         addressLatLng = new LatLng(lat, lng);
+  //         // print('LAT: ${addressLatLng.latitude}');
+  //         // print('LNG: ${addressLatLng.longitude}');
+  //
+  //         refresh();
+  //       }
+  //     }
+  //
+  //   }
+  // }
 
   void onMapCreated(GoogleMapController controller) {
     _mapController.complete(controller);
@@ -276,25 +286,21 @@ class OnWayCleanerController{
 
 
 
-  void updateLocation() async {
+  void updateLocation(double lat, double lng) async {
+
+
     try {
 
-      await _determinePosition(); // OBTENER LA POSICION ACTUAL Y TAMBIEN SOLICITAR LOS PERMISOS
+      //await _determinePosition(); // OBTENER LA POSICION ACTUAL Y TAMBIEN SOLICITAR LOS PERMISOS
 
-      // addMarker(
-      //     'delivery',
-      //     _position.latitude,
-      //     _position.longitude,
-      //     'Tu posicion',
-      //     '',
-      //     deliveryMarker
-      // );
 
-      animateCameraToPosition(order.lat, order.lng);
+      print('DATX1 lng: $lat');
+      print('DATX2 lng: $lng');
+      animateCameraToPosition(32.4538054, -116.6761283);
       addMarker(
           'delivery',
-          order.lat,
-          order.lng,
+          lat,
+          lng,
           'Tu Lavador',
           '',
           deliveryMarker
@@ -303,17 +309,17 @@ class OnWayCleanerController{
 
       addMarker(
           'home',
-          order.address.lat,
-          order.address.lng,
+         32.520696,
+        -117.122558,
           'Lugar de entrega',
           '',
           homeMarker
       );
 
-      LatLng from = new LatLng(order.lat, order.lng);
-      LatLng to = new LatLng(order.address.lat, order.address.lng);
+      LatLng from = new LatLng(lat, lng);
+      LatLng to = new LatLng( 32.520696, -117.122558);
 
-      setPolylines(from, to);
+    //  setPolylines(from, to);
 
       refresh();
     } catch(e) {
@@ -321,11 +327,11 @@ class OnWayCleanerController{
     }
   }
 
-  void call() {
-    launch("tel://${order.client.phone}");
-  }
+  // void call() {
+  //   launch("tel://${order.client.phone}");
+  // }
 
-  void checkGPS() async {
+/*  void checkGPS() async {
     bool isLocationEnabled = await Geolocator.isLocationServiceEnabled();
 
     if (isLocationEnabled) {
@@ -337,7 +343,7 @@ class OnWayCleanerController{
         updateLocation();
       }
     }
-  }
+  }*/
 
   Future animateCameraToPosition(double lat, double lng) async {
     GoogleMapController controller = await _mapController.future;
@@ -352,33 +358,33 @@ class OnWayCleanerController{
     }
   }
 
-  void close() {
-    Navigator.pop(context);
-  }
-
-  Future<Position> _determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
-    }
-
-    return await Geolocator.getCurrentPosition();
-  }
+  // void close() {
+  //   Navigator.pop(context);
+  // }
+  //
+  // Future<Position> _determinePosition() async {
+  //   bool serviceEnabled;
+  //   LocationPermission permission;
+  //
+  //   serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  //   if (!serviceEnabled) {
+  //     return Future.error('Location services are disabled.');
+  //   }
+  //
+  //   permission = await Geolocator.checkPermission();
+  //   if (permission == LocationPermission.denied) {
+  //     permission = await Geolocator.requestPermission();
+  //     if (permission == LocationPermission.denied) {
+  //       return Future.error('Location permissions are denied');
+  //     }
+  //   }
+  //
+  //   if (permission == LocationPermission.deniedForever) {
+  //     return Future.error('Location permissions are permanently denied, we cannot request permissions.');
+  //   }
+  //
+  //   return await Geolocator.getCurrentPosition();
+  // }
 
 
 }

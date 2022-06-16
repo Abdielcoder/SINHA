@@ -53,7 +53,7 @@ class _OnwayCleanerPageState extends State<OnwayCleanerPage> {
           SafeArea(
             child: Column(
               children: [
-                _buttonBack(),
+              //  _buttonBack(),
                 //_buttonCenterPosition(),
 
                 Spacer(),
@@ -130,10 +130,10 @@ class _OnwayCleanerPageState extends State<OnwayCleanerPage> {
                 borderRadius: BorderRadius.all(Radius.circular(15)),
                 color: Colors.grey[200]
             ),
-            child: IconButton(
-              onPressed: _con.call,
-              icon: Icon(Icons.phone, color: Colors.black,),
-            ),
+            // child: IconButton(
+            //   onPressed: _con.call,
+            //   icon: Icon(Icons.phone, color: Colors.black,),
+            // ),
           )
         ],
       ),
@@ -180,28 +180,28 @@ class _OnwayCleanerPageState extends State<OnwayCleanerPage> {
     );
   }
 
-  Widget _buttonBack() {
-    return GestureDetector(
-      onTap: _con.close,
-      child: Container(
-        alignment: Alignment.centerLeft,
-        margin: EdgeInsets.symmetric(horizontal: 5),
-        child: Card(
-          shape: CircleBorder(),
-          color: Colors.white,
-          elevation: 4.0,
-          child: Container(
-            padding: EdgeInsets.all(10),
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.grey[600],
-              size: 20,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget _buttonBack() {
+  //   return GestureDetector(
+  //     onTap: _con.close,
+  //     child: Container(
+  //       alignment: Alignment.centerLeft,
+  //       margin: EdgeInsets.symmetric(horizontal: 5),
+  //       child: Card(
+  //         shape: CircleBorder(),
+  //         color: Colors.white,
+  //         elevation: 4.0,
+  //         child: Container(
+  //           padding: EdgeInsets.all(10),
+  //           child: Icon(
+  //             Icons.arrow_back_ios,
+  //             color: Colors.grey[600],
+  //             size: 20,
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
 
 
