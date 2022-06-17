@@ -45,6 +45,8 @@ class OnWayCleanerController{
   String addressName;
   LatLng addressLatLng;
 
+
+
   CameraPosition initialPosition = CameraPosition(
       target: LatLng(32.482150, -116.930685),
       zoom: 14
@@ -80,6 +82,9 @@ class OnWayCleanerController{
     //   'autoConnect': false
     // });
 
+    Map<String, dynamic> map = await _sharedPref.read('service');
+    double tesLat = map['lat'];
+    print('SERX1: ${tesLat}');
 
     socket = IO.io('http://${Environment.API_DELIVERY}/orders/status', <String, dynamic> {
       'transports': ['websocket'],

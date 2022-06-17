@@ -137,12 +137,16 @@ class ClientAddressListController {
     //Creating de Order
     Order order = new Order(
         idClient: user.id,
-        idDelivery: '2',
+        idDelivery: '2',//PROMETEO - CAMBIAR DINAMICO
         idAddress: addresses.id,
         lat: addresses.lat,
         lng: addresses.lng,
         products: selectedProducts
     );
+
+    _sharedPref.save('service', order);
+
+
 
     //Sending data to API
     ResponseApi responseApi = await _ordersProvider.createOrderCash(order);
