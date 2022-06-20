@@ -88,7 +88,7 @@ class _OnwayCleanerPageState extends State<OnwayCleanerPage> {
       child: Column(
         children: [
           _listTileAddress(_con.order?.address?.neighborhood, 'Barrio', Icons.my_location),
-          _listTileAddress(_con.order?.address?.address, 'Direccion', Icons.location_on),
+          _listTileAddress(_con.addressName, 'Direccion', Icons.location_on),
           Divider(color: Colors.grey[400], endIndent: 30, indent: 30,),
           _clientInfo(),
         ],
