@@ -44,8 +44,8 @@ class OnWayCleanerController{
   double lngSockect;
   String addressName;
   LatLng addressLatLng;
-
-
+  double latFromShared;
+  double lngFromShared;
 
   CameraPosition initialPosition = CameraPosition(
       target: LatLng(32.482150, -116.930685),
@@ -83,8 +83,9 @@ class OnWayCleanerController{
     // });
 
     Map<String, dynamic> map = await _sharedPref.read('service');
-    double tesLat = map['lat'];
-    print('SERX1: ${tesLat}');
+    latFromShared = map['lat'];
+    lngFromShared = map['lng'];
+
 
     socket = IO.io('http://${Environment.API_DELIVERY}/orders/status', <String, dynamic> {
       'transports': ['websocket'],
@@ -181,54 +182,57 @@ class OnWayCleanerController{
 
 
   }
-  // void isCloseToDeliveryPosition() {
-  //   _distanceBetween = Geolocator.distanceBetween(
-  //       _position.latitude,
-  //       _position.longitude,
-  //       order.address.lat,
-  //       order.address.lng
-  //   );
-  //
-  //   print('-------- DISTANCIA ${_distanceBetween} ----------');
-  // }
+  void isCloseToDeliveryPosition() {
+    _distanceBetween = Geolocator.distanceBetween(
+        _position.latitude,
+        _position.longitude,
+        order.address.lat,
+        order.address.lng
+    );
 
+    print('-------- DISTANCIA ${_distanceBetween} ----------');
+  }
 
-  // Future<void> setPolylines(double lat, double lng, double lat2 ,double lng2) async {
-  //   print('TEDX 1 LAT ~ $lat');
-  //   print('TEDX 2 LNG ~ $lng');
-  //   print('TEDX 3 LAT ~ $lat2');
-  //   print('TEDX 4 LNG ~ $lng2');
-  //   PointLatLng pointFrom = PointLatLng(lat, lng);
-  //   PointLatLng pointTo = PointLatLng(lat2, lng2);
-  //   print('TEX 7 $pointFrom');
-  //   print('TEX 8 $pointTo');
-  //   PolylinePoints polylinePoints = PolylinePoints();
-  //   PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-  //       Environment.API_KEY_MAPS,
-  //       pointFrom,
-  //       pointTo
-  //   );
-  //   print('TEX 6 $result.points');
-  //   for(PointLatLng point in result.points) {
-  //     print('TEDX 5');
-  //     points.add(LatLng(point.latitude, point.longitude));
-  //   }
-  //
-  //   Polyline polyline = Polyline(
-  //       polylineId: PolylineId('poly'),
-  //       color: Colors.green,
-  //       points: points,
-  //       width: 6
-  //   );
-  //
-  //   polylines.add(polyline);
-  //
-  //
-  //
-  //   refresh();
-  // }
 
   Future<void> setPolylines(LatLng from, LatLng to) async {
+    PointLatLng pointFrom = PointLatLng(from.latitude, from.longitude);
+    PointLatLng pointTo = PointLatLng(to.latitude, to.longitude);
+    PolylineResult result = await PolylinePoints().getRouteBetweenCoordinates(
+        Environment.API_KEY_MAPS,
+        pointFrom,
+        pointTo
+    );
+   // int count = 0;
+   //  for(PointLatLng point in result.points) {
+   //    count += 1;
+   //
+   //    points.add(LatLng(point.latitude, point.longitude));
+   //
+   //
+   //    print('CUENTA $count');
+   //  }
+    if (result.points.isNotEmpty) {
+      points = []; // EMPTY THE VARIABLE <---------
+      result.points.forEach((PointLatLng point) {
+        points.add(LatLng(point.latitude, point.longitude));
+      });
+    }
+
+    Polyline polyline = Polyline(
+        geodesic: false,
+        polylineId: PolylineId('poly'),
+        color: MyColors.primaryColor,
+        points: points,
+        width: 6
+    );
+    refresh();
+    polylines.add(polyline);
+
+
+
+  }
+
+  /*Future<void> setPolylines(LatLng from, LatLng to) async {
     PointLatLng pointFrom = PointLatLng(from.latitude, from.longitude);
     PointLatLng pointTo = PointLatLng(to.latitude, to.longitude);
     PolylineResult result = await PolylinePoints().getRouteBetweenCoordinates(
@@ -251,7 +255,7 @@ class OnWayCleanerController{
     polylines.add(polyline);
 
     refresh();
-  }
+  }*/
 
   void addMarker(
       String markerId,
@@ -274,16 +278,16 @@ class OnWayCleanerController{
     refresh();
   }
 
-  void selectRefPoint() {
+  /*void selectRefPoint() {
     Map<String, dynamic> data = {
       'address': addressName,
-      'lat':  32.520696,
+      'lat': latFromShared,
 
-      'lng': -117.122558,
+      'lng': lngFromShared,
     };
 
     Navigator.pop(context, data);
-  }
+  }*/
 
   Future<BitmapDescriptor> createMarkerFromAsset(String path) async {
     ImageConfiguration configuration = ImageConfiguration();
@@ -347,17 +351,15 @@ class OnWayCleanerController{
 
       addMarker(
           'home',
-          32.471311,
-          -116.688620,
+          latFromShared,
+          lngFromShared,
           'Lugar de entrega',
           '',
           homeMarker
       );
 
       LatLng from = new LatLng(lat, lng);
-      LatLng to = new LatLng(  32.471311,  -116.688620);
-      double lat2 = 32.520696;
-      double lng2 = -117.122558;
+      LatLng to = new LatLng( latFromShared,  lngFromShared);
       setPolylines(from,to);
 
       refresh();
@@ -390,7 +392,7 @@ class OnWayCleanerController{
       controller.animateCamera(CameraUpdate.newCameraPosition(
           CameraPosition(
               target: LatLng(lat, lng),
-              zoom: 14,
+              zoom: 13,
               bearing: 0
           )
       ));
