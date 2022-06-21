@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:progress_timeline/progress_timeline.dart';
 
 import '../../../../utils/my_colors.dart';
 import 'onway_cleaner_controller.dart';
@@ -23,9 +24,25 @@ class OnwayCleanerPage extends StatefulWidget {
 class _OnwayCleanerPageState extends State<OnwayCleanerPage> {
   PageController pageController = new PageController(initialPage: 0);
   OnWayCleanerController _con = new OnWayCleanerController();
+  ProgressTimeline screenProgress;
+  List<SingleState> allStages = [
+    SingleState(stateTitle: "En camino"),
+    SingleState(stateTitle: "Lavando"),
+    SingleState(stateTitle: "Finalizado"),
+
+  ];
 
   @override
   void initState() {
+
+    screenProgress = new ProgressTimeline(
+      states: allStages,
+      checkedIcon: Icon(Icons.check),
+      connectorColor: Colors.blue,
+      connectorWidth: 8.0,
+      currentIcon: Icon(Icons.ac_unit),
+      iconSize: 35,
+    );
     // TODO: implement initState
     super.initState();
 
@@ -68,7 +85,7 @@ class _OnwayCleanerPageState extends State<OnwayCleanerPage> {
 
   Widget _cardOrderInfo() {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.33,
+      height: MediaQuery.of(context).size.height * 0.36,
       width: double.infinity,
       decoration: BoxDecoration(
           color: Colors.white,
@@ -87,7 +104,7 @@ class _OnwayCleanerPageState extends State<OnwayCleanerPage> {
       ),
       child: Column(
         children: [
-          _listTileAddress(_con.order?.address?.neighborhood, 'Barrio', Icons.my_location),
+         _step(),
           _listTileAddress(_con.addressName, 'Direccion', Icons.location_on),
           Divider(color: Colors.grey[400], endIndent: 30, indent: 30,),
           _clientInfo(),
@@ -96,6 +113,12 @@ class _OnwayCleanerPageState extends State<OnwayCleanerPage> {
     );
   }
 
+Widget _step(){
+  return Container(
+    margin: EdgeInsets.only(top: 20),
+      child: screenProgress
+  );
+}
   Widget _clientInfo() {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 35, vertical: 20),
