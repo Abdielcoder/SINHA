@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:progress_timeline/progress_timeline.dart';
-
 import '../../../../utils/my_colors.dart';
 import 'onway_cleaner_controller.dart';
 
@@ -39,9 +38,9 @@ class _OnwayCleanerPageState extends State<OnwayCleanerPage> {
       states: allStages,
       checkedIcon: Icon(Icons.check),
       connectorColor: Colors.blue,
-      connectorWidth: 8.0,
-      currentIcon: Icon(Icons.ac_unit),
-      iconSize: 35,
+      connectorWidth: 5.0,
+      currentIcon: Icon(Icons.check),
+      iconSize: 25,
     );
     // TODO: implement initState
     super.initState();
@@ -84,7 +83,9 @@ class _OnwayCleanerPageState extends State<OnwayCleanerPage> {
   }
 
   Widget _cardOrderInfo() {
-    return Container(
+    return Stack(
+      children: [
+        Container(
       height: MediaQuery.of(context).size.height * 0.36,
       width: double.infinity,
       decoration: BoxDecoration(
@@ -102,26 +103,28 @@ class _OnwayCleanerPageState extends State<OnwayCleanerPage> {
             )
           ]
       ),
-      child: Column(
+      child: Stack(
         children: [
-         _step(),
-          _listTileAddress(_con.addressName, 'Direccion', Icons.location_on),
-          Divider(color: Colors.grey[400], endIndent: 30, indent: 30,),
           _clientInfo(),
+          _step(),
+          _listTileAddress(_con.addressName),
+          Divider(color: Colors.grey[400], endIndent: 0, indent: 30,),
+
         ],
       ),
-    );
+
+    )]);
   }
 
 Widget _step(){
   return Container(
-    margin: EdgeInsets.only(top: 20),
-      child: screenProgress
+      margin: EdgeInsets.only(right: MediaQuery.of(context).size.height * 0.16, left: MediaQuery.of(context).size.height * 0.16, top:  MediaQuery.of(context).size.height * 0.03),
+      child:   screenProgress,
   );
 }
   Widget _clientInfo() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 35, vertical: 20),
+      margin: EdgeInsets.only(left: MediaQuery.of(context).size.height * 0.03, top:  MediaQuery.of(context).size.height * 0.03),
       child: Row(
         children: [
           Container(
@@ -130,57 +133,73 @@ Widget _step(){
             child: FadeInImage(
               image: _con.order?.delivery?.image != null
                   ? NetworkImage(_con.order?.delivery?.image)
-                  : AssetImage('assets/img/no-image.png',),
+                  : AssetImage('assets/img/add_image.png',),
               fit: BoxFit.cover,
               fadeInDuration: Duration(milliseconds: 50),
-              placeholder: AssetImage('assets/img/no-image.png'),
+              placeholder: AssetImage('assets/img/add_image.png'),
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(left: 10),
-            child: Text(
-              '${_con.order?.delivery?.name ?? ''} ${_con.order?.delivery?.lastname ?? ''}',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16
-              ),
-              maxLines: 1,
-            ),
-          ),
-          Spacer(),
-          Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(15)),
-                color: Colors.grey[200]
-            ),
-            // child: IconButton(
-            //   onPressed: _con.call,
-            //   icon: Icon(Icons.phone, color: Colors.black,),
-            // ),
-          )
+          // Container(
+          //   margin: EdgeInsets.only(left: 10),
+          //   child: Text(
+          //     '${_con.order?.delivery?.name ?? ''} ${_con.order?.delivery?.lastname ?? ''}',
+          //     style: TextStyle(
+          //         color: Colors.black,
+          //         fontSize: 16
+          //     ),
+          //     maxLines: 1,
+          //   ),
+          // ),
+          //Spacer(),
+          // Container(
+          //   decoration: BoxDecoration(
+          //       borderRadius: BorderRadius.all(Radius.circular(15)),
+          //       color: Colors.grey[200]
+          //   ),
+          //   // child: IconButton(
+          //   //   onPressed: _con.call,
+          //   //   icon: Icon(Icons.phone, color: Colors.black,),
+          //   // ),
+          // )
         ],
       ),
     );
   }
 
 
-  Widget _listTileAddress(String title, String subtitle, IconData iconData) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 30),
-      child: ListTile(
-        title: Text(
-          title ?? '',
-          style: TextStyle(
-              fontSize: 13
+  Widget _listTileAddress(String title) {
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.topCenter,
+          margin: EdgeInsets.only(right: MediaQuery.of(context).size.height * 0.0, left: MediaQuery.of(context).size.height * 0.0, top:  MediaQuery.of(context).size.height * 0.12),
+          child: Text(
+            'Lugar servicio ',
+            style: TextStyle(
+              fontFamily: 'Lexendeca-Black',
+              color: Colors.blue[900],
+                fontSize: 14
+            ),
           ),
+
         ),
-        subtitle: Text(subtitle),
-        trailing: Icon(iconData),
-      ),
+        Container(
+          margin: EdgeInsets.only(right: MediaQuery.of(context).size.height * 0, left: MediaQuery.of(context).size.height * 0.0, top:  MediaQuery.of(context).size.height * 0.01),
+            child: Text(
+              title ?? '',
+              style: TextStyle(
+                  fontFamily: 'Lexendeca-Regular',
+                  fontSize: 14
+              ),
+            ),
+
+
+        ),
+      ],
     );
   }
 
-  Widget _buttonCenterPosition() {
+/*  Widget _buttonCenterPosition() {
     return GestureDetector(
       onTap: () {},
       child: Container(
@@ -201,7 +220,7 @@ Widget _step(){
         ),
       ),
     );
-  }
+  }*/
 
   // Widget _buttonBack() {
   //   return GestureDetector(
@@ -294,68 +313,68 @@ Widget _step(){
 
 }
 
-class Slide extends StatelessWidget {
-  final Widget hero;
-  final String title;
-  final String subtitle;
-  final VoidCallback onNext;
-
-  const Slide({Key key, this.hero, this.title, this.subtitle, this.onNext})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(child: hero),
-          Padding(
-            padding: const EdgeInsets.all(1),
-            child: Column(
-              children: [
-                Text(
-                  title,
-                  style: kTitleStyle,
-
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  subtitle,
-                  style: kSubtitleStyle,
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-               // ProgressButton(onNext: onNext),
-              ],
-            ),
-          ),
-          // GestureDetector(
-          //   onTap: () {
-          //     Navigator.push(
-          //       context,
-          //       new MaterialPageRoute(
-          //         builder: (context) => new ClientMenuListPage(),
-          //       ),
-          //     );
-          //   },
-          //   child: Text(
-          //     "Cancelar",
-          //     style: kSubtitleStyle,
-          //   ),
-          // ),
-          SizedBox(
-            height: 50,
-          )
-        ],
-      ),
-    );
-  }
-}
+// class Slide extends StatelessWidget {
+//   final Widget hero;
+//   final String title;
+//   final String subtitle;
+//   final VoidCallback onNext;
+//
+//   const Slide({Key key, this.hero, this.title, this.subtitle, this.onNext})
+//       : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       child: Column(
+//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//         children: [
+//           Expanded(child: hero),
+//           Padding(
+//             padding: const EdgeInsets.all(1),
+//             child: Column(
+//               children: [
+//                 Text(
+//                   title,
+//                   style: kTitleStyle,
+//
+//                 ),
+//                 SizedBox(
+//                   height: 20,
+//                 ),
+//                 Text(
+//                   subtitle,
+//                   style: kSubtitleStyle,
+//                   textAlign: TextAlign.center,
+//                 ),
+//                 SizedBox(
+//                   height: 15,
+//                 ),
+//                // ProgressButton(onNext: onNext),
+//               ],
+//             ),
+//           ),
+//           // GestureDetector(
+//           //   onTap: () {
+//           //     Navigator.push(
+//           //       context,
+//           //       new MaterialPageRoute(
+//           //         builder: (context) => new ClientMenuListPage(),
+//           //       ),
+//           //     );
+//           //   },
+//           //   child: Text(
+//           //     "Cancelar",
+//           //     style: kSubtitleStyle,
+//           //   ),
+//           // ),
+//           SizedBox(
+//             height: 50,
+//           )
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 // class ProgressButton extends StatelessWidget {
 //   final VoidCallback onNext;
