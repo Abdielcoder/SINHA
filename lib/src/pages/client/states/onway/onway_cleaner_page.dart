@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:progress_timeline/progress_timeline.dart';
 import '../../../../utils/my_colors.dart';
@@ -30,7 +33,8 @@ class _OnwayCleanerPageState extends State<OnwayCleanerPage> {
     SingleState(stateTitle: "Finalizado"),
 
   ];
-
+  int minutesWait = 1;
+  String mensajeTimer= 'Min.';
   @override
   void initState() {
 
@@ -44,7 +48,7 @@ class _OnwayCleanerPageState extends State<OnwayCleanerPage> {
     );
     // TODO: implement initState
     super.initState();
-
+    _startTime();
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       _con.init(context, refresh);
     });
@@ -82,6 +86,23 @@ class _OnwayCleanerPageState extends State<OnwayCleanerPage> {
     );
   }
 
+
+  void _startTime(){
+    print('TIMEX 1');
+    print('TIMEX 2 $minutesWait');
+    Timer.periodic(Duration(minutes: 1), (timer) {
+      setState(() {
+        if(minutesWait == 1){
+          mensajeTimer= 'Arrivando';
+        }
+      minutesWait--;
+      print('TIMEX 3 $minutesWait');
+      });
+    });
+
+
+  }
+
   Widget _cardOrderInfo() {
     return Stack(
       children: [
@@ -107,6 +128,7 @@ class _OnwayCleanerPageState extends State<OnwayCleanerPage> {
         children: [
           _clientInfo(),
           _step(),
+          _timerW(),
           _listTileAddress(_con.addressName),
           Divider(color: Colors.grey[400], endIndent: 0, indent: 30,),
 
@@ -118,10 +140,56 @@ class _OnwayCleanerPageState extends State<OnwayCleanerPage> {
 
 Widget _step(){
   return Container(
-      margin: EdgeInsets.only(right: MediaQuery.of(context).size.height * 0.16, left: MediaQuery.of(context).size.height * 0.16, top:  MediaQuery.of(context).size.height * 0.03),
-      child:   screenProgress,
+    alignment: Alignment.topRight,
+      margin: EdgeInsets.only(right: MediaQuery.of(context).size.height * 0.04, left: MediaQuery.of(context).size.height * 0.0, top:  MediaQuery.of(context).size.height * 0.03),
+      child:  Column(
+        children: [
+          Container(
+              color: Colors.black ,
+                  child: Container(
+                  width: 75,
+                  height: 45,
+                  color: Colors.black,
+                  child: Center(child: Text(
+                      "$minutesWait",
+                  style: TextStyle(
+                    fontSize: 25,
+                      color: Colors.white
+                  ),
+                  )
+                  ),
+
+              ),
+          ),
+          Container(
+            color: Colors.black ,
+            child: Container(
+              width: 75,
+              color: Colors.black,
+              padding: EdgeInsets.only(bottom: 7),
+              child: Center(child: Text(
+                "$mensajeTimer",
+                style: TextStyle(
+                    color: Colors.white
+                ),
+              )
+              ),
+
+            ),
+          ),
+        ],
+      ),
+
   );
 }
+
+  Widget _timerW(){
+    return Container(
+      margin: EdgeInsets.only(right: MediaQuery.of(context).size.height * 0.16, left: MediaQuery.of(context).size.height * 0.16, top:  MediaQuery.of(context).size.height * 0.03),
+      child:   screenProgress,
+    );
+  }
+
   Widget _clientInfo() {
     return Container(
       margin: EdgeInsets.only(left: MediaQuery.of(context).size.height * 0.03, top:  MediaQuery.of(context).size.height * 0.03),

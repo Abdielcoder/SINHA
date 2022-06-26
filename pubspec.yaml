@@ -69,6 +69,7 @@ dependencies:
   snippet_coder_utils: ^1.0.12
   custom_progress_dialog: ^1.0.5
   progress_timeline: ^0.0.5
+  dio: ^4.0.6
 
 
 

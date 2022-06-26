@@ -1,5 +1,6 @@
 import 'dart:async';
-
+import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -10,6 +11,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:location/location.dart' as location;
 import '../../../../api/environment.dart';
+import '../../../../models/directions_model.dart';
 import '../../../../models/order.dart';
 import '../../../../models/user.dart';
 import '../../../../provider/orders_provider.dart';
@@ -111,6 +113,8 @@ class OnWayCleanerController{
       print('DATX lng: $lngSockectString');
       updateLocation(data['lat'],data['lng']);
       addStatus(data['statusOrder'],);
+      _getTimeTravel(data['lat'],data['lng'],latFromShared,lngFromShared);
+      print( _getTimeTravel(data['lat'],data['lng'],latFromShared,lngFromShared));
     });
 
     // socket2.on('lat/${idStatusOrder}', (data) {
@@ -231,20 +235,54 @@ class OnWayCleanerController{
 
   }
 
-  _getLocation() async
-  {
+  Future _getTimeTravel(double latW, double lngW,double latS, double lngS)async{
 
-    List<Placemark> addresses = await
-    placemarkFromCoordinates(latFromShared,lngFromShared);
-    String direction = addresses[0].thoroughfare;
-    String street = addresses[0].subThoroughfare;
-    String city = addresses[0].locality;
-    String department = addresses[0].administrativeArea;
-    String country = addresses[0].country;
-    addressName = '$direction #$street, $city, $department';
-    // var first = addresses.first;
-    print("LATXLNGX : ${addressName} ");
+    //Response response=await dio.get("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=$latW,$lngW&destinations=$latS,$lngS&key=AIzaSyAxip-78Cucl0wl2x7gF4F4MP_UhtC7iDw");
+
+    const String _baseUrl = 'https://maps.googleapis.com/maps/api/directions/json?';
+
+      Dio _dio;
+
+    Response response =await _dio.get("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=$latW,$lngW&destinations=$latS,$lngS&key=AIzaSyAxip-78Cucl0wl2x7gF4F4MP_UhtC7iDw");
+
+    //DirectionsRepository({Dio dio}) : _dio = dio ?? Dio();
+
+    // final response = await _dio.get(
+    // _baseUrl,
+    // queryParameters: {
+    // 'origin': '$latW,$lngW',
+    // 'destination': '$latS,$lngS',
+    // 'key': 'AIzaSyAxip-78Cucl0wl2x7gF4F4MP_UhtC7iDw',
+    // },
+    // );
+
+    // Check if response is successful
+    if (response.statusCode == 200) {
+      print('LOCALEX');
+      // var ss = Directions.fromMap(response.data);
+      // print('LOCALEX $ss');
+    return Directions.fromMap(response.data);
+
+    }
+    return null;
   }
+
+
+  
+  // _getLocation() async
+  // {
+  //
+  //   List<Placemark> addresses = await
+  //   placemarkFromCoordinates(latFromShared,lngFromShared);
+  //   String direction = addresses[0].thoroughfare;
+  //   String street = addresses[0].subThoroughfare;
+  //   String city = addresses[0].locality;
+  //   String department = addresses[0].administrativeArea;
+  //   String country = addresses[0].country;
+  //   addressName = '$direction #$street, $city, $department';
+  //   // var first = addresses.first;
+  //   print("LATXLNGX : ${addressName} ");
+  // }
 
 
   /*Future<void> setPolylines(LatLng from, LatLng to) async {
@@ -376,7 +414,8 @@ class OnWayCleanerController{
       LatLng from = new LatLng(lat, lng);
       LatLng to = new LatLng( latFromShared,  lngFromShared);
       setPolylines(from,to);
-      _getLocation();
+    //  _getLocation();
+
       refresh();
     } catch(e) {
       print('Error: $e');
@@ -443,4 +482,15 @@ class OnWayCleanerController{
   // }
 
 
+}
+class Element {
+  final String text;
+  final int value;
+
+  Element.fromJson(dynamic json)
+      : text = json['text'] as String,
+        value = json['value'] as int;
+
+  @override
+  String toString() => 'text: $text\nvalue: $value';
 }
