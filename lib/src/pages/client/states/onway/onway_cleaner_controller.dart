@@ -269,20 +269,20 @@ class OnWayCleanerController{
 
 
   
-  // _getLocation() async
-  // {
-  //
-  //   List<Placemark> addresses = await
-  //   placemarkFromCoordinates(latFromShared,lngFromShared);
-  //   String direction = addresses[0].thoroughfare;
-  //   String street = addresses[0].subThoroughfare;
-  //   String city = addresses[0].locality;
-  //   String department = addresses[0].administrativeArea;
-  //   String country = addresses[0].country;
-  //   addressName = '$direction #$street, $city, $department';
-  //   // var first = addresses.first;
-  //   print("LATXLNGX : ${addressName} ");
-  // }
+  _getLocation() async
+  {
+
+    List<Placemark> addresses = await
+    placemarkFromCoordinates(latFromShared,lngFromShared);
+    String direction = addresses[0].thoroughfare;
+    String street = addresses[0].subThoroughfare;
+    String city = addresses[0].locality;
+    String department = addresses[0].administrativeArea;
+    String country = addresses[0].country;
+    addressName = '$direction #$street, $city, $department';
+    // var first = addresses.first;
+    print("LATXLNGX : ${addressName} ");
+  }
 
 
   /*Future<void> setPolylines(LatLng from, LatLng to) async {
@@ -331,16 +331,16 @@ class OnWayCleanerController{
     refresh();
   }
 
-  /*void selectRefPoint() {
-    Map<String, dynamic> data = {
-      'address': addressName,
-      'lat': latFromShared,
-
-      'lng': lngFromShared,
-    };
-
-    Navigator.pop(context, data);
-  }*/
+  // /*void selectRefPoint() {
+  //   Map<String, dynamic> data = {
+  //     'address': addressName,
+  //     'lat': latFromShared,
+  //
+  //     'lng': lngFromShared,
+  //   };
+  //
+  //   Navigator.pop(context, data);
+  // }*/
 
   Future<BitmapDescriptor> createMarkerFromAsset(String path) async {
     ImageConfiguration configuration = ImageConfiguration();
@@ -414,7 +414,7 @@ class OnWayCleanerController{
       LatLng from = new LatLng(lat, lng);
       LatLng to = new LatLng( latFromShared,  lngFromShared);
       setPolylines(from,to);
-    //  _getLocation();
+      _getLocation();
 
       refresh();
     } catch(e) {

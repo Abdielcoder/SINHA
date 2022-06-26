@@ -27,8 +27,14 @@ class _OnwayCleanerPageState extends State<OnwayCleanerPage> {
   PageController pageController = new PageController(initialPage: 0);
   OnWayCleanerController _con = new OnWayCleanerController();
   ProgressTimeline screenProgress;
+  ProgressTimeline screenProgress2;
   List<SingleState> allStages = [
     SingleState(stateTitle: "En camino"),
+    SingleState(stateTitle: ""),
+
+  ];
+
+  List<SingleState> allStages2 = [
     SingleState(stateTitle: "Lavando"),
     SingleState(stateTitle: "Finalizado"),
 
@@ -40,12 +46,26 @@ class _OnwayCleanerPageState extends State<OnwayCleanerPage> {
 
     screenProgress = new ProgressTimeline(
       states: allStages,
-      checkedIcon: Icon(Icons.check),
-      connectorColor: Colors.blue,
+      checkedIcon: Icon(Icons.check,color: Colors.green),
+      connectorColor: Colors.green,
+      currentIcon: Icon(Icons.album_rounded,color: Colors.green),
+      connectorLength: 40,
       connectorWidth: 5.0,
-      currentIcon: Icon(Icons.check),
+     textStyle: TextStyle(color: Colors.green),
+     // uncheckedIcon: Icon(Icons.album_rounded),
       iconSize: 25,
     );
+    screenProgress2 = new ProgressTimeline(
+      states: allStages2,
+      checkedIcon: Icon(Icons.check),
+      connectorColor: Colors.black,
+      currentIcon: Icon(Icons.adjust),
+
+      connectorWidth: 5.0,
+      uncheckedIcon: Icon(Icons.adjust),
+      iconSize: 25,
+    );
+
     // TODO: implement initState
     super.initState();
     _startTime();
@@ -66,7 +86,7 @@ class _OnwayCleanerPageState extends State<OnwayCleanerPage> {
       body: Stack(
         children: [
           Container(
-              height: MediaQuery.of(context).size.height * 0.67,
+              height: MediaQuery.of(context).size.height * 0.81,
               child: _googleMaps()
 
           ),
@@ -107,7 +127,7 @@ class _OnwayCleanerPageState extends State<OnwayCleanerPage> {
     return Stack(
       children: [
         Container(
-      height: MediaQuery.of(context).size.height * 0.36,
+      height: MediaQuery.of(context).size.height * 0.20,
       width: double.infinity,
       decoration: BoxDecoration(
           color: Colors.white,
@@ -184,10 +204,25 @@ Widget _step(){
 }
 
   Widget _timerW(){
-    return Container(
-      margin: EdgeInsets.only(right: MediaQuery.of(context).size.height * 0.16, left: MediaQuery.of(context).size.height * 0.16, top:  MediaQuery.of(context).size.height * 0.03),
-      child:   screenProgress,
-    );
+    return  Stack(
+          children: [
+            Container(
+              alignment: Alignment.topLeft,
+                margin: EdgeInsets.only(right: MediaQuery.of(context).size.height * 0.0, left: MediaQuery.of(context).size.height * 0.19, top:  MediaQuery.of(context).size.height * 0.03),
+              width: 100,
+                height: 70,
+                child: screenProgress
+            ),
+            Container(
+                width: 200,
+                height: 70,
+                margin: EdgeInsets.only(right: MediaQuery.of(context).size.height * 0.0, left: MediaQuery.of(context).size.height * 0.2709, top:  MediaQuery.of(context).size.height * 0.03),
+                child: screenProgress2
+            ),
+
+          ],
+        );
+
   }
 
   Widget _clientInfo() {
@@ -256,6 +291,7 @@ Widget _step(){
             child: Text(
               title ?? '',
               style: TextStyle(
+                color: Colors.black,
                   fontFamily: 'Lexendeca-Regular',
                   fontSize: 14
               ),
