@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:lottie/lottie.dart';
 import 'package:progress_timeline/progress_timeline.dart';
 import 'package:uber_clone_flutter/src/pages/client/states/inprogress/inprogress_cleaner_controller.dart';
@@ -27,7 +28,7 @@ class FinishCleanerPage extends StatefulWidget {
 class _FinishCleanerPage extends State<FinishCleanerPage> {
   PageController pageController = new PageController(initialPage: 0);
   InprogressCleanerController _con = new InprogressCleanerController();
-
+  double _ratingValue;
   ProgressTimeline screenProgress;
   ProgressTimeline screenProgress2;
   ProgressTimeline screenProgress3;
@@ -198,6 +199,8 @@ class _FinishCleanerPage extends State<FinishCleanerPage> {
                 _step(),
                 _timerW(),
                 _listTileAddress(_con.addressName),
+                _ratingBar('Califica el servicio'),
+                _Finish(),
                 Divider(color: Colors.grey[400], endIndent: 0, indent: 30,),
 
               ],
@@ -303,14 +306,98 @@ class _FinishCleanerPage extends State<FinishCleanerPage> {
       ),
     );
   }
+  Widget _ratingBar(String title) {
+    return Container(
+      margin: EdgeInsets.only(left: MediaQuery.of(context).size.height * 0.22, top:  MediaQuery.of(context).size.height * 0.17),
+      child: Column(
 
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            SizedBox(
+              height: 0.0,
+            ),
+      RatingBar(
+      initialRating: 0,
+      direction: Axis.horizontal,
+      allowHalfRating: true,
+      itemCount: 5,
+      ratingWidget: RatingWidget(
+      full: const Icon(Icons.star, color: Colors.orange),
+      half: const Icon(
+      Icons.star_half,
+      color: Colors.orange,
+      ),
+      empty: const Icon(
+      Icons.star_outline,
+      color: Colors.orange,
+      )),
+      onRatingUpdate: (value) {
+      setState(() {
+      _ratingValue = value;
+      });
+      }),
+      const SizedBox(height: 1),
+      // Display the rate in number
+      Container(
+      width: 50,
+      height: 50,
+      decoration: const BoxDecoration(
+      color: Colors.black, shape: BoxShape.circle),
+      alignment: Alignment.center,
+      child: Text(
+      _ratingValue != null ? _ratingValue.toString() : 'Califica!',
+      style: const TextStyle(color: Colors.white, fontSize: 12),
+      ),
+      )
+      ]),
+    );
+  }
+
+  Widget _Finish() {
+    return Container(
+      margin: EdgeInsets.only(left: MediaQuery.of(context).size.height * 0.5, top:  MediaQuery.of(context).size.height * 0.22),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            SizedBox(
+              height: 0.0,
+            ),
+            ElevatedButton(
+                child: Text(
+                    "Finalizar".toUpperCase(),
+                    style: TextStyle(fontSize: 14)
+                ),
+                style: ButtonStyle(
+                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                    backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(color: Colors.purple)
+                        )
+                    )
+                ),
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil<void>(
+                    context,
+                    MaterialPageRoute<void>(builder: (BuildContext context) => ClientMenuListPage()),
+                    ModalRoute.withName('client/states/cleaner',),
+                  );
+
+                }
+            )
+          ]),
+    );
+  }
 
   Widget _listTileAddress(String title) {
     return Column(
       children: [
         Container(
           alignment: Alignment.topCenter,
-          margin: EdgeInsets.only(right: MediaQuery.of(context).size.height * 0.0, left: MediaQuery.of(context).size.height * 0.0, top:  MediaQuery.of(context).size.height * 0.12),
+          margin: EdgeInsets.only(right: MediaQuery.of(context).size.height * 0.0, left: MediaQuery.of(context).size.height * 0.0, top:  MediaQuery.of(context).size.height * 0.10),
           child: Text(
             'Lugar servicio ',
             style: TextStyle(
@@ -338,6 +425,7 @@ class _FinishCleanerPage extends State<FinishCleanerPage> {
     );
   }
 
+
   void nextPage() {
 
   }
@@ -352,243 +440,6 @@ class _FinishCleanerPage extends State<FinishCleanerPage> {
     if (!mounted) return;
     setState(() {});
   }
-
-
-
-
-// class ProgressButton extends StatelessWidget {
-//   final VoidCallback onNext;
-//   const ProgressButton({Key key, this.onNext}) : super(key: key);
-
-// @override
-// Widget build(BuildContext context) {
-//   return SizedBox(
-//     width: 140,
-//     height: 140,
-//     child: Stack(children: [
-//       Container(
-//         height: 500,
-//         width: 500,
-//         child: Lottie.asset(
-//           'assets/json/pulse.json',
-//           width: 500,
-//           height: 500,
-//         ),
-//       ),
-//
-//       // Center(
-//       //   child: GestureDetector(
-//       //
-//       //     child: Container(
-//       //       height: 60,
-//       //       width: 60,
-//       //
-//       //       child: Center(
-//       //
-//       //         child: Image.asset(
-//       //           "./assets/images/cancelarlavador.png",
-//       //           width: 600,
-//       //         ),
-//       //       ),
-//       //       decoration: BoxDecoration(
-//       //         borderRadius: BorderRadius.circular(99),
-//       //         color: Colors.deepPurpleAccent,
-//       //         boxShadow: [
-//       //           BoxShadow(color: Colors.white, spreadRadius: 3),
-//       //         ],
-//       //       ),
-//       //
-//       //     ),
-//       //     onTap: () {
-//       //       Navigator.push(
-//       //         context,
-//       //         new MaterialPageRoute(
-//       //           builder: (context) => new ClientMenuListPage(),
-//       //         ),
-//       //       );
-//       //     },
-//       //   ),
-//       //
-//       // ),
-//
-//     ]),
-//   );
-// }
-
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.transparent,
-//       body: SafeArea(
-//           child: Container(
-//             decoration: BoxDecoration(
-//               image: DecorationImage(
-//                 image: ExactAssetImage("assets/img/encamino.jpg"),
-//                 fit: BoxFit.cover,
-//               ),
-//             ),
-//             child: ClipRRect( // make sure we apply clip it properly
-//               child: BackdropFilter(
-//                   filter: ImageFilter.blur(sigmaX: 30, sigmaY: 10),
-//
-//                   child: PageView(
-//                       controller: pageController,
-//                       physics: NeverScrollableScrollPhysics(),
-//                       children: [
-//                         Container(
-//                           child: Slide(
-//                               hero: Lottie.asset(
-//                                   'assets/json/limpiando.json',
-//                                   fit: BoxFit.fill
-//                               ),
-//                               title: "Tú servicio esta en curso",
-//                               subtitle:
-//                               "En espera de terminar el servicio...",
-//                               onNext: nextPage),
-//                         ),
-//                       ])),
-//             ),
-//           )
-//       ),
-//     );
-//   }
-//
-//
-//   void nextPage() {
-//
-//   }
-//
-//   void goToLogin() {
-//     Navigator.pushNamedAndRemoveUntil(context, 'login', (route) => false);
-//
-//   }
-//   void refresh() {
-//     setState(() {}); // CTRL + S
-//   }
-// }
-//
-// class Slide extends StatelessWidget {
-//   final Widget hero;
-//   final String title;
-//   final String subtitle;
-//   final VoidCallback onNext;
-//
-//   const Slide({Key key, this.hero, this.title, this.subtitle, this.onNext})
-//       : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//               Expanded(child: hero),
-//           Padding(
-//             padding: const EdgeInsets.all(1),
-//             child: Column(
-//               children: [
-//                 Text(
-//                   title,
-//                   style: kTitleStyle,
-//
-//                 ),
-//                 SizedBox(
-//                   height: 20,
-//                 ),
-//                 Text(
-//                   subtitle,
-//                   style: kSubtitleStyle,
-//                   textAlign: TextAlign.center,
-//                 ),
-//                 SizedBox(
-//                   height: 15,
-//                 ),
-//                 ProgressButton(onNext: onNext),
-//               ],
-//             ),
-//           ),
-//           // GestureDetector(
-//           //   onTap: () {
-//           //     Navigator.push(
-//           //       context,
-//           //       new MaterialPageRoute(
-//           //         builder: (context) => new ClientMenuListPage(),
-//           //       ),
-//           //     );
-//           //   },
-//           //   child: Text(
-//           //     "Cancelar",
-//           //     style: kSubtitleStyle,
-//           //   ),
-//           // ),
-//           SizedBox(
-//             height: 50,
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }
-//
-// class ProgressButton extends StatelessWidget {
-//   final VoidCallback onNext;
-//   const ProgressButton({Key key, this.onNext}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return SizedBox(
-//       width: 140,
-//       height: 140,
-//       child: Stack(children: [
-//         Container(
-//           height: 500,
-//           width: 500,
-//           child: Lottie.asset(
-//             'assets/json/pulse.json',
-//             width: 500,
-//             height: 500,
-//           ),
-//         ),
-//
-//         // Center(
-//         //   child: GestureDetector(
-//         //
-//         //     child: Container(
-//         //       height: 60,
-//         //       width: 60,
-//         //
-//         //       child: Center(
-//         //
-//         //         child: Image.asset(
-//         //           "./assets/images/cancelarlavador.png",
-//         //           width: 600,
-//         //         ),
-//         //       ),
-//         //       decoration: BoxDecoration(
-//         //         borderRadius: BorderRadius.circular(99),
-//         //         color: Colors.deepPurpleAccent,
-//         //         boxShadow: [
-//         //           BoxShadow(color: Colors.white, spreadRadius: 3),
-//         //         ],
-//         //       ),
-//         //
-//         //     ),
-//         //     onTap: () {
-//         //       Navigator.push(
-//         //         context,
-//         //         new MaterialPageRoute(
-//         //           builder: (context) => new ClientMenuListPage(),
-//         //         ),
-//         //       );
-//         //     },
-//         //   ),
-//         //
-//         // ),
-//
-//       ]),
-//     );
-//   }
 
 }
 

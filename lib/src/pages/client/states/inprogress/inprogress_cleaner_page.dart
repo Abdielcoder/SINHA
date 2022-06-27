@@ -47,7 +47,7 @@ class _InprogressCleanerPageState extends State<InprogressCleanerPage> {
   ];
 
   int minutesWait = 30;
-  String mensajeTimer= 'Min.';
+  String mensajeTimer= 'Lavando';
   @override
   void initState() {
 
