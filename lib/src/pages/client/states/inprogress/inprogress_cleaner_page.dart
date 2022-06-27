@@ -106,7 +106,7 @@ class _InprogressCleanerPageState extends State<InprogressCleanerPage> {
         children: [
           Container(
               height: MediaQuery.of(context).size.height * 0.81,
-             // child: _googleMaps()
+              child: _ngk()
 
           ),
           SafeArea(
@@ -125,7 +125,40 @@ class _InprogressCleanerPageState extends State<InprogressCleanerPage> {
     );
   }
 
+  Widget _ngk() {
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: SafeArea(
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: ExactAssetImage("assets/img/buscando.jpg"),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: ClipRRect( // make sure we apply clip it properly
+              child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 30, sigmaY: 10),
 
+                  child: PageView(
+                      controller: pageController,
+                      physics: NeverScrollableScrollPhysics(),
+                      children: [
+                        Slide(
+                            hero: Lottie.asset(
+                                'assets/json/limpio.json',
+                                fit: BoxFit.fill
+                            ),
+                            title: "Tu servicio esta en proceso",
+                            subtitle:
+                            "Te avisaremos una vez concluya...",
+                            onNext: nextPage),
+                      ])),
+            ),
+          )
+      ),
+    );
+  }
   void _startTime(){
     print('TIMEX 1');
     print('TIMEX 2 $minutesWait');
@@ -329,68 +362,6 @@ class _InprogressCleanerPageState extends State<InprogressCleanerPage> {
 
 
 
-// class Slide extends StatelessWidget {
-//   final Widget hero;
-//   final String title;
-//   final String subtitle;
-//   final VoidCallback onNext;
-//
-//   const Slide({Key key, this.hero, this.title, this.subtitle, this.onNext})
-//       : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           Expanded(child: hero),
-//           Padding(
-//             padding: const EdgeInsets.all(1),
-//             child: Column(
-//               children: [
-//                 Text(
-//                   title,
-//                   style: kTitleStyle,
-//
-//                 ),
-//                 SizedBox(
-//                   height: 20,
-//                 ),
-//                 Text(
-//                   subtitle,
-//                   style: kSubtitleStyle,
-//                   textAlign: TextAlign.center,
-//                 ),
-//                 SizedBox(
-//                   height: 15,
-//                 ),
-//                // ProgressButton(onNext: onNext),
-//               ],
-//             ),
-//           ),
-//           // GestureDetector(
-//           //   onTap: () {
-//           //     Navigator.push(
-//           //       context,
-//           //       new MaterialPageRoute(
-//           //         builder: (context) => new ClientMenuListPage(),
-//           //       ),
-//           //     );
-//           //   },
-//           //   child: Text(
-//           //     "Cancelar",
-//           //     style: kSubtitleStyle,
-//           //   ),
-//           // ),
-//           SizedBox(
-//             height: 50,
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }
 
 // class ProgressButton extends StatelessWidget {
 //   final VoidCallback onNext;
@@ -626,4 +597,67 @@ class _InprogressCleanerPageState extends State<InprogressCleanerPage> {
 //     );
 //   }
 
+}
+
+class Slide extends StatelessWidget {
+  final Widget hero;
+  final String title;
+  final String subtitle;
+  final VoidCallback onNext;
+
+  const Slide({Key key, this.hero, this.title, this.subtitle, this.onNext})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(child: hero),
+          Padding(
+            padding: const EdgeInsets.all(1),
+            child: Column(
+              children: [
+                Text(
+                  title,
+                  style: kTitleStyle,
+
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  subtitle,
+                  style: kSubtitleStyle,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                // ProgressButton(onNext: onNext),
+              ],
+            ),
+          ),
+          // GestureDetector(
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       new MaterialPageRoute(
+          //         builder: (context) => new ClientMenuListPage(),
+          //       ),
+          //     );
+          //   },
+          //   child: Text(
+          //     "Cancelar",
+          //     style: kSubtitleStyle,
+          //   ),
+          // ),
+          SizedBox(
+            height: 50,
+          )
+        ],
+      ),
+    );
+  }
 }
