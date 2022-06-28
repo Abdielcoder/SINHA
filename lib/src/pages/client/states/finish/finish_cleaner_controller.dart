@@ -58,5 +58,8 @@ class FinishCleanearController{
 
   void dispose() {
     socket?.disconnect();
+    print("FINITOX entre");
+    _sharedPref.remove('service');
+    _sharedPref.remove('order');
   }
 }
