@@ -48,6 +48,10 @@ class OnWayCleanerController{
   LatLng addressLatLng;
   double latFromShared;
   double lngFromShared;
+  String idClientSharedP;
+  String idAddressSharedP;
+  String idClientSokect;
+  String idAddressSokect;
 
   CameraPosition initialPosition = CameraPosition(
       target: LatLng(32.482150, -116.930685),
@@ -87,7 +91,8 @@ class OnWayCleanerController{
     Map<String, dynamic> map = await _sharedPref.read('service');
     latFromShared = map['lat'];
     lngFromShared = map['lng'];
-
+    idClientSharedP = map['idClient'];
+    idAddressSharedP = map['idAddress'];
 
     socket = IO.io('http://${Environment.API_DELIVERY}/orders/status', <String, dynamic> {
       'transports': ['websocket'],
@@ -103,9 +108,11 @@ class OnWayCleanerController{
    // socket2.connect();
     int idStatusOrder =1;
 
+    //leer data
     socket.on('status/${idStatusOrder}', (data) {
       print('DATX EMITIDA: ${data}');
       print('DATX status: ${data['statusOrder']}');
+
 
       latSockectString = data['lat'];
       lngSockectString = data['lng'];

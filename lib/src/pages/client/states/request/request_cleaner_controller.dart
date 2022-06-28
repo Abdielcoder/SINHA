@@ -14,16 +14,24 @@ class RequestCleanerCOntroller{
   Function refresh;
   Order order;
   IO.Socket socket;
+  IO.Socket socket2;
   User user;
   SharedPref _sharedPref = new SharedPref();
   OrdersProvider _ordersProvider = new OrdersProvider();
-
-
+  double latFromShared;
+  double lngFromShared;
+  String idClientSharedP;
+  String idAddressSharedP;
+  String idClientSokect;
+  String idAddressSokect;
+  String userid;
   Future init(BuildContext context, Function refresh) async {
     this.context = context;
     this.refresh = refresh;
     // order = Order.fromJson(ModalRoute.of(context).settings.arguments as Map<String, dynamic>);
 
+
+    user = User.fromJson(await _sharedPref.read('user'));
     socket = IO.io('http://${Environment.API_DELIVERY}/orders/status', <String, dynamic> {
       'transports': ['websocket'],
       'autoConnect': false
@@ -42,6 +50,30 @@ class RequestCleanerCOntroller{
     // _ordersProvider.init(context, user);
     // print('ORDEN: ${order.toJson()}');
     // checkGPS();
+
+    Map<String, dynamic> map = await _sharedPref.read('service');
+   // idClientSharedP = map['idClient'];
+    idAddressSharedP = map['id_address'];
+
+    latFromShared = map['lat'];
+    lngFromShared = map['lng'];
+    userid = user.id;
+    print("BENX $userid");
+    print("BENX $idAddressSharedP");
+    print("BENX $latFromShared");
+    print("BENX $lngFromShared");
+    emitOrder();
+  }
+
+  void emitOrder() {
+    socket.emit('status', {
+      'id_order': 1,
+      'statusOrder': "PETITION",
+      'idClient': userid,
+      'idAdress': idAddressSharedP,
+      'lat': latFromShared,
+      'lng': lngFromShared,
+    });
   }
 
   void dispose() {

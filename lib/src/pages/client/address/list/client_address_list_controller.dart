@@ -12,10 +12,11 @@ import 'package:uber_clone_flutter/src/provider/StripeProvider.dart';
 import 'package:uber_clone_flutter/src/provider/address_provider.dart';
 import 'package:uber_clone_flutter/src/provider/orders_provider.dart';
 import 'package:uber_clone_flutter/src/utils/shared_pref.dart';
+import '../../../../api/environment.dart';
 import '../../payments/stripe/stripe_existing_cards_page.dart';
 import '../../states/request/request_cleaner_page.dart';
 import '../create/client_address_create_page.dart';
-
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 class ClientAddressListController {
 
   BuildContext context;
@@ -44,6 +45,14 @@ class ClientAddressListController {
   String nameCard;
   ProgressDialog  _progressDialog = new ProgressDialog();
   // ProgressDialog _progressDialog;
+  IO.Socket socket;
+  String idClientSharedP;
+  String idAddressSharedP;
+  String idClientSokect;
+  String idAddressSokect;
+  double latFromShared;
+  double lngFromShared;
+
   Future init(BuildContext context, Function refresh) async {
     this.context = context;
     this.refresh = refresh;
@@ -60,6 +69,11 @@ class ClientAddressListController {
     if (a.id !=null) {
 
     }
+    socket = IO.io('http://${Environment.API_DELIVERY}/orders/catch', <String, dynamic> {
+      'transports': ['websocket'],
+      'autoConnect': false
+    });
+    socket.connect();
     refresh();
   }
 
@@ -137,20 +151,26 @@ class ClientAddressListController {
     //Creating de Order
     Order order = new Order(
         idClient: user.id,
-        idDelivery: '2',//PROMETEO - CAMBIAR DINAMICO
-        idAddress: addresses.id,
+        id_address: addresses.id,
         lat: addresses.lat,
         lng: addresses.lng,
         products: selectedProducts
     );
-
+    // print("BENX-1 $user.id");
+    // print("BENX-1 :  $addresses.id.id");
     _sharedPref.save('service', order);
 
-
-
+    // List<Product>  service = Product.fromJsonList(await _sharedPref.read('order')).toList;
+    // String servicess = service.toString();
+    // print("BENX-1 :  $servicess");
     //Sending data to API
     ResponseApi responseApi = await _ordersProvider.createOrderCash(order);
     if(responseApi.success){
+
+
+
+
+
       SharedPreferences preferences = await SharedPreferences.getInstance();
      // await preferences.remove('order');
       print('ClientAdreess *PAGO TOTAL* : $totalPayment');

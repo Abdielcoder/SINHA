@@ -97,8 +97,8 @@ class ClientPaymentsInstallmentsController {
     }
 
     Order order =  new Order(
-      idAddress: address.id,
-      idClient: user.id,
+        id_address: address.id,
+        idClient: user.id,
       products: selectedProducts
     );
 
