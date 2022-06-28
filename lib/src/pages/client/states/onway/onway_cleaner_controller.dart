@@ -281,7 +281,7 @@ class OnWayCleanerController{
     String country = addresses[0].country;
     addressName = '$direction #$street, $city, $department';
     // var first = addresses.first;
-    print("LATXLNGX : ${addressName} ");
+    print("SERVICEX-1 : ${addressName} ");
   }
 
 

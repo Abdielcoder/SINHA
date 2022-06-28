@@ -67,7 +67,7 @@ class InprogressCleanerController{
     String country = addresses[0].country;
     addressName = '$direction #$street, $city, $department';
     // var first = addresses.first;
-    print("LATXLNGX : ${addressName} ");
+    print("SERVICEX-2 : ${addressName} ");
   }
   void dispose() {
     socket?.disconnect();

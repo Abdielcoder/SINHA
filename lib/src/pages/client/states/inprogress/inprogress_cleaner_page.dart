@@ -48,6 +48,7 @@ class _InprogressCleanerPageState extends State<InprogressCleanerPage> {
 
   int minutesWait = 30;
   String mensajeTimer= 'Lavando';
+  String addressService;
   @override
   void initState() {
 
@@ -88,6 +89,7 @@ class _InprogressCleanerPageState extends State<InprogressCleanerPage> {
     // TODO: implement initState
     super.initState();
     _startTime();
+    _startInitAdress();
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       _con.init(context, refresh);
     });
@@ -159,6 +161,19 @@ class _InprogressCleanerPageState extends State<InprogressCleanerPage> {
       ),
     );
   }
+
+  void _startInitAdress(){
+
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        addressService = _con.addressName;
+      });
+    });
+
+
+  }
+
+
   void _startTime(){
     print('TIMEX 1');
     print('TIMEX 2 $minutesWait');
@@ -204,7 +219,7 @@ class _InprogressCleanerPageState extends State<InprogressCleanerPage> {
                 _clientInfo(),
                 _step(),
                 _timerW(),
-                _listTileAddress(_con.addressName),
+                _listTileAddress(addressService),
                 Divider(color: Colors.grey[400], endIndent: 0, indent: 30,),
 
               ],

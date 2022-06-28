@@ -99,6 +99,7 @@ class _MyappState extends State<MyApp> {
         'client/finish/cleaner': (BuildContext context) => FinishCleanerPage(),
 
         'client/products/list': (BuildContext context) => ClientMenuListPage(),
+        //'client/products/list': (BuildContext context) => OnwayCleanerPage(),
         'client/update': (BuildContext context) => ClientUpdatePage(),
         'client/create/car': (BuildContext context) => CLientCarCreatePage(),
         'client/car/list': (BuildContext context) => ClientCarsListPage(),

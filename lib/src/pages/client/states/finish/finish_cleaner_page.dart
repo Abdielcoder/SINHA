@@ -27,7 +27,7 @@ class FinishCleanerPage extends StatefulWidget {
 
 class _FinishCleanerPage extends State<FinishCleanerPage> {
   PageController pageController = new PageController(initialPage: 0);
-  InprogressCleanerController _con = new InprogressCleanerController();
+  FinishCleanearController _con = new FinishCleanearController();
   double _ratingValue;
   ProgressTimeline screenProgress;
   ProgressTimeline screenProgress2;
@@ -50,6 +50,7 @@ class _FinishCleanerPage extends State<FinishCleanerPage> {
 
   int minutesWait = 0;
   String mensajeTimer= 'Min.';
+  String addressService;
   @override
   void initState() {
 
@@ -89,6 +90,7 @@ class _FinishCleanerPage extends State<FinishCleanerPage> {
     // TODO: implement initState
     super.initState();
     _startTime();
+    _startInitAdress();
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       _con.init(context, refresh);
     });
@@ -160,6 +162,19 @@ class _FinishCleanerPage extends State<FinishCleanerPage> {
       ),
     );
   }
+
+  void _startInitAdress(){
+
+    Timer.periodic(Duration(minutes: 1), (timer) {
+      setState(() {
+        addressService = _con.addressName;
+      });
+    });
+
+
+  }
+
+
   void _startTime(){
     print('TIMEX 1');
     print('TIMEX 2 $minutesWait');
@@ -198,7 +213,7 @@ class _FinishCleanerPage extends State<FinishCleanerPage> {
                 _clientInfo(),
                 _step(),
                 _timerW(),
-                _listTileAddress(_con.addressName),
+                _listTileAddress(addressService),
                 _ratingBar('Califica el servicio'),
                 _Finish(),
                 Divider(color: Colors.grey[400], endIndent: 0, indent: 30,),
