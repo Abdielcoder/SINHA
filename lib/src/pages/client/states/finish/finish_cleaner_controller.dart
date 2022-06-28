@@ -32,29 +32,29 @@ class FinishCleanearController{
     Map<String, dynamic> map = await _sharedPref.read('service');
     latFromShared = map['lat'];
     lngFromShared = map['lng'];
-
+    print("FINISHX $latFromShared");
+    print("FINISHX $lngFromShared");
 
     print("SI ESTOY ENTRANDO AQUI....");
     // user = User.fromJson(await _sharedPref.read('user'));
     // _ordersProvider.init(context, user);
     // print('ORDEN: ${order.toJson()}');
     // checkGPS();
-    _getLocation() async
-    {
-      List<Placemark> addresses = await
-      placemarkFromCoordinates(latFromShared, lngFromShared);
-      String direction = addresses[0].thoroughfare;
-      String street = addresses[0].subThoroughfare;
-      String city = addresses[0].locality;
-      String department = addresses[0].administrativeArea;
-      String country = addresses[0].country;
-      addressName = '$direction #$street, $city, $department';
-      // var first = addresses.first;
-      print("SERVICEX-3 : ${addressName} ");
-    }
-
-
+    _getLocation();
   }
+  _getLocation() async {
+    List<Placemark> addresses = await
+    placemarkFromCoordinates(latFromShared, lngFromShared);
+    String direction = addresses[0].thoroughfare;
+    String street = addresses[0].subThoroughfare;
+    String city = addresses[0].locality;
+    String department = addresses[0].administrativeArea;
+    String country = addresses[0].country;
+    addressName = '$direction #$street, $city, $department';
+    // var first = addresses.first;
+    print("SERVICEX-3 : ${addressName} ");
+  }
+
 
   void dispose() {
     socket?.disconnect();

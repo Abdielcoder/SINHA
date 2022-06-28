@@ -165,9 +165,10 @@ class _FinishCleanerPage extends State<FinishCleanerPage> {
 
   void _startInitAdress(){
 
-    Timer.periodic(Duration(minutes: 1), (timer) {
+    Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
         addressService = _con.addressName;
+
       });
     });
 
